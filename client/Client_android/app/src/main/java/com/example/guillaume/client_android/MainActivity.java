@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-    private TCPClient c1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                connectClient();
+                new ConnectTask().execute("");
 
 
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                disconnectClient();
+               // disconnectClient();
 
 
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -68,16 +67,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void connectClient(){
-        c1 = new TCPClient();
-        c1.connect("localhost", 2525, "Guillaume");
 
-    }
-
-    public void disconnectClient(){
-        c1.disconnect();
-
-    }
 }
 
 
