@@ -1,6 +1,4 @@
 import com.google.inject.AbstractModule
-import java.time.Clock
-import services.{AtomicCounter, Counter, Launcher}
 
 /**
   * This class is a Guice module that tells Guice how to bind several
@@ -15,13 +13,8 @@ import services.{AtomicCounter, Counter, Launcher}
 class Module extends AbstractModule {
 
 	override def configure() = {
-		// Use the system clock as the default implementation of Clock
-		bind(classOf[Clock]).toInstance(Clock.systemDefaultZone)
-		// Ask Guice to create an instance of ClientServer when the
-		// application starts.
-		bind(classOf[Launcher]).asEagerSingleton()
-		// Set AtomicCounter as the implementation for Counter.
-		bind(classOf[Counter]).to(classOf[AtomicCounter])
+		//(classOf[Launcher]).asEagerSingleton()
+		requestInjection(models.pkg)
 	}
 
 }
