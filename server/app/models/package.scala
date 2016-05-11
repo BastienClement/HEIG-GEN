@@ -6,10 +6,10 @@ import slick.lifted.Query
 
 package object models {
 	val pkg = this
-	@Inject var dbConfig: DatabaseConfigProvider = null
+	@Inject var dbc: DatabaseConfigProvider = null
 
 	lazy val mysql = slick.driver.MySQLDriver.api
-	lazy val DB = dbConfig.get[JdbcProfile].db
+	lazy val DB = dbc.get[JdbcProfile].db
 
 	implicit class QueryExecutor[A](val q: Query[_, A, Seq]) extends AnyVal {
 		import mysql._
