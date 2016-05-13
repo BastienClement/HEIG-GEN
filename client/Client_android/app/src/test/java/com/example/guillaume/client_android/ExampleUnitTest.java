@@ -1,4 +1,4 @@
-package com.example.guillaume.client_android;
+package com.heigvd.gen.chat;
 
 import org.junit.Test;
 

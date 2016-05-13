@@ -1,4 +1,4 @@
-package com.example.guillaume.client_android;
+package com.heigvd.gen.chat;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
