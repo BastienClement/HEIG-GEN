@@ -13,21 +13,25 @@ class ApiController @Inject()(implicit ec: ExecutionContext) extends Controller 
 
 	def login = Action.async(parse.json) { req =>
 		val user = (req.body \ "user").as[String]
-		val password = (req.body \ "password").as[String]
+		val pass = (req.body \ "pass").as[String]
 
 		val res = for {
 			u <- Users.findByUsername(user).run
-			if PasswordHasher.check(password, u.pass)
-		} yield Json.obj("res" -> "ok")
+			if PasswordHasher.check(pass, u.pass)
+		} yield u
 
-		res.map(Ok(_)).recover { case e => Unauthorized(Json.obj("res" -> "nok", "err" -> e.getMessage)) }
+		res.map {
+			case u => Ok(Json.obj("res" -> "ok"))
+		}.recover {
+			case e => Unauthorized(Json.obj("res" -> "nok", "err" -> e.getMessage))
+		}
 	}
 
 	def register = Action.async(parse.json) { req =>
-		val username = (req.body \ "user").as[String]
-		val password = (req.body \ "password").as[String]
+		val user = (req.body \ "user").as[String]
+		val pass = (req.body \ "pass").as[String]
 
-		val insert = Users += User(0, username.toLowerCase, PasswordHasher.hash(password), false)
+		val insert = Users += User(0, user.toLowerCase, PasswordHasher.hash(pass), admin = false)
 
 		insert.run.map {
 			case _ => Ok(Json.obj("res" -> "ok"))
