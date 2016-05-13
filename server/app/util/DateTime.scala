@@ -4,9 +4,10 @@ import java.sql.Timestamp
 import java.time._
 import java.time.format.DateTimeFormatter
 import java.time.temporal.{ChronoUnit, TemporalAmount}
-import java.util.{Calendar, GregorianCalendar}
 import java.util.concurrent.TimeUnit
+import java.util.{Calendar, GregorianCalendar}
 import models.mysql._
+import play.api.libs.json.Json.JsValueWrapper
 import play.api.libs.json.{Format, JsSuccess, JsValue, Json}
 import scala.concurrent.duration.FiniteDuration
 import scala.language.implicitConversions
@@ -58,6 +59,8 @@ object DateTime {
 		def reads(json: JsValue) = JsSuccess(DateTime.parse(json.as[String]))
 		def writes(dt: DateTime) = Json.obj("$date" -> dt.toISOString)
 	}
+
+	implicit def toJsValueWrapper(dt: DateTime): JsValueWrapper = implicitly[Format[DateTime]].writes(dt)
 
 	// Slick definitions
 	implicit val DateTimeColumnType = MappedColumnType.base[DateTime, Timestamp](_.toTimestamp, fromTimestamp)
