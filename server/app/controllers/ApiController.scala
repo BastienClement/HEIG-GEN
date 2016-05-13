@@ -3,13 +3,15 @@ package controllers
 import com.google.inject.{Inject, Singleton}
 import models._
 import models.mysql._
+import play.api.Configuration
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import scala.concurrent.ExecutionContext
-import util.PasswordHasher
+import util.{Crypto, DateTime}
+import util.DateTime.Units
 
 @Singleton
-class ApiController @Inject()(implicit ec: ExecutionContext) extends Controller {
+class ApiController @Inject()(implicit ec: ExecutionContext, conf: Configuration) extends Controller {
 
 	def login = Action.async(parse.json) { req =>
 		val user = (req.body \ "user").as[String]
@@ -17,11 +19,13 @@ class ApiController @Inject()(implicit ec: ExecutionContext) extends Controller 
 
 		val res = for {
 			u <- Users.findByUsername(user).run
-			if PasswordHasher.check(pass, u.pass)
+			if Crypto.check(pass, u.pass)
 		} yield u
 
 		res.map {
-			case u => Ok(Json.obj("res" -> "ok"))
+			case u =>
+				val token = Json.obj("user" -> u.id, "admin" -> u.admin, "expires" -> (DateTime.now + 1.year))
+				Ok(Json.obj("res" -> "ok", "token" -> Crypto.sign(token).toString()))
 		}.recover {
 			case e => Unauthorized(Json.obj("res" -> "nok", "err" -> e.getMessage))
 		}
@@ -31,7 +35,7 @@ class ApiController @Inject()(implicit ec: ExecutionContext) extends Controller 
 		val user = (req.body \ "user").as[String]
 		val pass = (req.body \ "pass").as[String]
 
-		val insert = Users += User(0, user.toLowerCase, PasswordHasher.hash(pass), admin = false)
+		val insert = Users += User(0, user.toLowerCase, Crypto.hash(pass), admin = false)
 
 		insert.run.map {
 			case _ => Ok(Json.obj("res" -> "ok"))

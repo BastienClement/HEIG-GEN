@@ -1,20 +1,42 @@
-package com.example.guillaume.client_android;
+package com.heigvd.gen.chat;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.support.design.widget.TextInputLayout;
 
-public class SubscribeActivity extends AppCompatActivity {
+
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subscribe);
+        setContentView(R.layout.activity_login);
+
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioButtons);
+        radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // checkedId is the RadioButton selected
+                TextInputLayout server = (TextInputLayout) findViewById(R.id.serverLayout);
+                if (checkedId == R.id.radioButton_privateServer) {
+                    server.setVisibility(View.VISIBLE);
+                }
+                else {
+                    server.setVisibility(View.GONE);
+                }
+            }
+        });
 
         final EditText login = (EditText)findViewById(R.id.login);
         login.addTextChangedListener(new TextWatcher() {
@@ -31,11 +53,7 @@ public class SubscribeActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (validateNotEmpty(login.getText())) {
-                    if (validateLogin(login.getText())) {
-                        login.setError(null);
-                    } else {
-                        login.setError("Invalid username");
-                    }
+                    login.setError(null);
                 } else {
                     login.setError("Required");
                 }
@@ -65,26 +83,14 @@ public class SubscribeActivity extends AppCompatActivity {
             }
         });
 
-        final EditText passwordConfirmationBox = (EditText)findViewById(R.id.passwordConfirmation);
-        passwordConfirmationBox.addTextChangedListener(new TextWatcher() {
+        final Button loginButton = (Button)findViewById(R.id.login_button);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onClick(View v) {
+                Log.d(LoginActivity.class.getSimpleName(), "wtf");
+                JsonSender jsender = new JsonSender();
+                jsender.sendJson("myusername","mypassword");
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(validateNotEmpty(passwordConfirmationBox.getText())) {
-                    passwordConfirmationBox.setError(null);
-                }
-                else {
-                    passwordConfirmationBox.setError("Required");
-                }
             }
         });
 
@@ -92,21 +98,14 @@ public class SubscribeActivity extends AppCompatActivity {
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // check if passwords are the same
-                if (passwordBox.getText().equals(passwordConfirmationBox.getText())) {
-                    // todo : call server to create account
-                } else{
-                    passwordConfirmationBox.setError("The passwords don't match");
-                }
+                Intent intent = new Intent(LoginActivity.this, SubscribeActivity.class);
+                startActivity(intent);
             }
         });
-    }
-
-    private boolean validateLogin(Editable login) {
-        return login.toString().equals("correct");
     }
 
     private boolean validateNotEmpty(Editable s) {
         return !TextUtils.isEmpty(s.toString());
     }
 }
+

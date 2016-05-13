@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:layout_margin="25dp"
     android:focusableInTouchMode="true"
-    tools:context="com.example.guillaume.client_android.SubscribeActivity">
+    tools:context="com.heigvd.gen.chat.SubscribeActivity">
 
     <ScrollView
         android:id="@+id/login_form"
