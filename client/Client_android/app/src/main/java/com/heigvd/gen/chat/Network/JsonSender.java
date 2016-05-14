@@ -1,9 +1,9 @@
-package com.heigvd.gen.chat;
+package com.heigvd.gen.chat.Network;
 
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.heigvd.gen.chat.Network.Query.Query;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,14 +16,14 @@ import java.net.URL;
  */
 public class JsonSender {
 
-    protected void sendJson(final String username,final String password ){
+    public static void send(final Query query){
         Thread t = new Thread() {
 
             public void run() {
 
                 //Send Json Message to server
                 try {
-                    String url = "http://loki.cpfk.net:9999/api/register";
+                    String url = Configuration.url + query.getName();
                     URL object = new URL(url);
                     HttpURLConnection con =  (HttpURLConnection) object.openConnection();
                     con.setDoOutput(true);
@@ -33,13 +33,12 @@ public class JsonSender {
                     con.setRequestProperty("Accept", "application/json");
                     con.setRequestMethod("POST");
 
-                    //Create the JSon object
-                    JSONObject message = new JSONObject();
-                    message.put("user", username);
-                    message.put("pass", password);
+                    Gson gson = new Gson();
+                    String json = gson.toJson(query);
+                    System.out.println(json);
 
                     OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream());
-                    writer.write(message.toString());
+                    writer.write(json);
                     writer.flush();
 
                     //Recieve Response
@@ -54,7 +53,7 @@ public class JsonSender {
                         }
                         br.close();
                         Log.d(JsonSender.class.getSimpleName(), sb.toString());
-            /* restore state */
+                    /* restore state */
                     } else {
                         BufferedReader br = new BufferedReader(
                                 new InputStreamReader(con.getInputStream(), "utf-8"));
@@ -66,17 +65,12 @@ public class JsonSender {
                         Log.d(JsonSender.class.getSimpleName(), sb.toString());
                         Log.d(JsonSender.class.getSimpleName(), con.getResponseMessage());
                     }
-
-                }catch (JSONException e){
-                    Log.d(JsonSender.class.getSimpleName(), e.getMessage());
                 }catch(Exception e){ //Catch all
                     Log.d(JsonSender.class.getSimpleName(), e.getMessage());
                 }
-
             }
         };
 
         t.start();
-
     }
 }

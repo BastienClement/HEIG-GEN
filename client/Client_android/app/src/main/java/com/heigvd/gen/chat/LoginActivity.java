@@ -14,6 +14,9 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.support.design.widget.TextInputLayout;
 
+import com.heigvd.gen.chat.Network.JsonSender;
+import com.heigvd.gen.chat.Network.Query.Register;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -87,10 +90,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(LoginActivity.class.getSimpleName(), "wtf");
                 JsonSender jsender = new JsonSender();
-                jsender.sendJson("myusername","mypassword");
-
+                Log.d(SubscribeActivity.class.getSimpleName(), "Registering with username : " + login.getText().toString() + " and password : " + passwordBox.getText().toString());
+                jsender.send(new Register(login.getText().toString(),passwordBox.getText().toString()));
             }
         });
 

@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.heigvd.gen.chat.Network.JsonSender;
+import com.heigvd.gen.chat.Network.Query.Register;
 
 public class SubscribeActivity extends AppCompatActivity {
 
@@ -93,8 +97,10 @@ public class SubscribeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // check if passwords are the same
-                if (passwordBox.getText().equals(passwordConfirmationBox.getText())) {
-                    // todo : call server to create account
+                if (passwordBox.getText().toString().equals(passwordConfirmationBox.getText().toString())) {
+                    JsonSender jsender = new JsonSender();
+                    Log.d(SubscribeActivity.class.getSimpleName(), "Registering with username : " + login.getText().toString() + " and password : " + passwordBox.getText().toString());
+                    jsender.send(new Register(login.getText().toString(),passwordBox.getText().toString()));
                 } else{
                     passwordConfirmationBox.setError("The passwords don't match");
                 }
@@ -103,7 +109,7 @@ public class SubscribeActivity extends AppCompatActivity {
     }
 
     private boolean validateLogin(Editable login) {
-        return login.toString().equals("correct");
+        return true; //return login.toString().equals("correct");
     }
 
     private boolean validateNotEmpty(Editable s) {
