@@ -7,4 +7,8 @@
     <!-- Login Activity -->
     <color name="buttonBackground">#6495ED</color>
     <color name="buttonTextColor">#FFFFFF</color>
+
+    <!-- Contact Edit Activity -->
+    <color name="buttonRemoveBackground">#FF0000</color>
+    <color name="buttonRemoveTextColor">#FFFFFF</color>
 </resources>
