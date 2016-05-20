@@ -1,6 +1,7 @@
 package models
 
 import models.mysql._
+import util.Crypto
 
 case class User(id: Int, name: String, pass: String, admin: Boolean)
 
@@ -16,5 +17,9 @@ class Users(tag: Tag) extends Table[User](tag, "users") {
 object Users extends TableQuery(new Users(_)) {
 	def findByUsername(username: String) = {
 		Users.filter(u => u.name === username.toLowerCase).result.head
+	}
+
+	def register(username: String, password: String, admin: Boolean = false) = {
+		Users += User(0, username.toLowerCase, Crypto.hash(password), admin)
 	}
 }
