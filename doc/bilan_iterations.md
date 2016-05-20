@@ -57,3 +57,75 @@ Mise en place des fonctionnalités de création / suppression de compte et de 
 		*début de réflexion concernant la validation du nom de l’utilisateur: il faut qu’on se mette d’accord sur le format (commence par une lettre, pas d’espaces, lettres autorisées?) et sur la vérification de doublons (contact avec le serveur pour interdire l’utilisation d’un username déjà existant par exemple)
 *Commencer la rédaction du rapport final
 	*Pas encore eu le temps de commencer
+
+
+##Bilan itération 3##
+###Objectif###
+TODO
+###Avancement###
+TODO
+###Bilans personnels (Temps prévus/ Temps consacré)###
+TODO
+####Antoine (TODO/TODO)####
+*TODO
+####Bastien (TODO/TODO)####
+*TODO
+####Guillaume (TODO/TODO)####
+*TODO
+####Amel (TODO/TODO)####
+*TODO
+
+	
+
+##Bilan itération 4##
+###Objectif###
+TODO
+###Avancement###
+TODO
+###Bilans personnels (Temps prévus/ Temps consacré)###
+TODO
+####Antoine (TODO/TODO)####
+*TODO
+####Bastien (TODO/TODO)####
+*TODO
+####Guillaume (TODO/TODO)####
+*TODO
+####Amel (TODO/TODO)####
+*TODO
+
+	
+
+##Bilan itération 5##
+###Objectif###
+TODO
+###Avancement###
+TODO
+###Bilans personnels (Temps prévus/ Temps consacré)###
+TODO
+####Antoine (TODO/TODO)####
+*TODO
+####Bastien (TODO/TODO)####
+*TODO
+####Guillaume (TODO/TODO)####
+*TODO
+####Amel (TODO/TODO)####
+*TODO
+
+	
+
+##Bilan itération 6##
+###Objectif###
+TODO
+###Avancement###
+TODO
+###Bilans personnels (Temps prévus/ Temps consacré)###
+TODO
+####Antoine (TODO/TODO)####
+*TODO
+####Bastien (TODO/TODO)####
+*TODO
+####Guillaume (TODO/TODO)####
+*TODO
+####Amel (TODO/TODO)####
+*TODO
+
