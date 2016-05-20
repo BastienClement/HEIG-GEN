@@ -11,16 +11,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.heigvd.gen.chat.LoginActivity"
+            android:name=".LoginActivity"
             android:label="Connexion">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name="com.heigvd.gen.chat.SubscribeActivity"
-            android:label="Subscribe">
+        <activity
+            android:name=".SubscribeActivity"
+            android:label="Subscribe"></activity>
+        <activity
+            android:name=".ContactListActivity"
+            android:label="Contacts">
+
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+
+        </activity>
+        <activity
+            android:name=".ContactEditActivity"
+            android:label="Edit contact">
         </activity>
     </application>
 
