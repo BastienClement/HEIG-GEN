@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 import java.util.{Calendar, GregorianCalendar}
 import models.mysql._
 import play.api.libs.json.Json.JsValueWrapper
-import play.api.libs.json.{Format, JsSuccess, JsValue, Json}
+import play.api.libs.json._
 import scala.concurrent.duration.FiniteDuration
 import scala.language.implicitConversions
 
@@ -56,7 +56,11 @@ object DateTime {
 
 	// Json format
 	implicit val DateTimeFormat = new Format[DateTime] {
-		def reads(json: JsValue) = JsSuccess(DateTime.parse(json.as[String]))
+		def reads(json: JsValue) = json match {
+			case obj: JsObject => JsSuccess(DateTime.parse((obj \ "$date").as[String]))
+			case str: JsString => JsSuccess(DateTime.parse(str.as[String]))
+			case _ => JsError()
+		}
 		def writes(dt: DateTime) = Json.obj("$date" -> dt.toISOString)
 	}
 
