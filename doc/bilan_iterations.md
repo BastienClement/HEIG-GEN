@@ -10,20 +10,28 @@ Pas encore de communication client-serveur suite à un changement de plan apre�
 
 Nous pensons conserver une interface Socket lorsque l’application est ouverte uniquement pour permettre des notifications push au client Android (au lieu d’utiliser les services GCM). Le protocol du socket est donc grandement simplifié et sera défini lors d’une futur itération.
 ###Bilans personnels (Temps prévus/ Temps consacré)###
+
 ####Antoine####
+
 * Apprendre les bases du développement Scala
 	* J’ai commencé à apprendre le langage Scala. Je vais devoir également étudier le framework Play que l’on va utiliser pour faire le serveur.
 * Définition de la première version du protocole de communication
 	* Nous avions d’abord prévu d’utiliser un connexion TCP ainsi qu’un protocole de communication binaire, mais après discussion avec l’assistant, nous allons mettre en place une communication REST en JSON et une communication TCP pour les notifications de type PUSH. Nous devons donc encore en parler avant de tout mettre en place.
 	* J’ai également commencé à mettre en place une communication simple du côté client.
+
 ####Bastien####
+
 * Aucun souci particulier à mentionner. La mise en place d’un hook GitHub pour automatiser le déployement du serveur permettra d’avoir facilement une version “stable” du serveur accessible à tout moment pour le développement de l’application Android.
 * La communication côté serveur a été développée avec en tête un protocole entièrement basé sur un socket bidirectionnel. Après discussion, ces fonctionnalités ne seront pas utiles puisque nous pouvons développer une grande partie de l’application en utilisant une API REST, très simple à mettre en oeuvre avec Play.
+
 ####Guillaume (5h/6h)####
+
 * Apprendre les bases du développement Android (3h)
 Début de l’apprentissage d’Android. Création du projet client avec une première Activity. Plusieurs interrogations concernant la gestion des IO sur Android et la mise en place de l’API Rest à clarifier avec l’assistant.
 * Mise en place de la communication côté client Pas encore de communication effective coté client (cf ci-dessus) Mise à jour du rapport (1h)
+
 ####Amel####
+
 * Apprendre les bases du développement Android
 	* Installation et configuration d’Android Studio, et d’un “device” pour tester et débugger les applications.
 	* Prise en main de l’environnement de développement, de la structure des projets Android (ressources, contrôleurs en Java), etc. Un peu de peine à comprendre certaines notions, comme les fichiers de configuration “gradle” par exemple.
