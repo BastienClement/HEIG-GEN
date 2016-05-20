@@ -43,18 +43,26 @@ Début de l’apprentissage d’Android. Création du projet client avec une p
 Mise en place des fonctionnalités de création / suppression de compte et de connexion.
 ###Avancement###
 ###Bilans personnels (Temps prévus/ Temps consacré)###
+
 ####Antoine####
+
 * Ajouter les fonctionnalités de gestion de compte et de connexion au protocole de communication
 * Interfacer l’application serveur avec la base de données
 	* J’ai créer la base de données et Bastien s’est occupé de l’interfacer avec la base de données.
+
 ####Bastien####
+
 * Une gestion de compte relativement simple est disponible côté serveur. Les opérations de connexion et d’inscription sont disponibles.
+
 ####Guillaume (5h/5h)####
+
 * Implémenter la gestion des comptes et de connexion au niveau du client
 	* Envoi d’un register/login .
 	* Pas encore de token retourné par le serveur
 	* Replanification: Si possible discuter vendredi 20 mai avec Jonathan Bischof et Bastien Clément au sujet des IO pour déterminer le protocole à utiliser.
+
 ####Amel####
+
 * Finaliser l’interface utilisateur pour la création de compte et la connexion
 	* L’activité de Login a été complété avec quelques fonctionnalités :
 		* l’affichage ou non du champ texte pour le nom du serveur prive ́est maintenant automatique, selon la sélection des boutons radio
@@ -74,13 +82,21 @@ TODO
 TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
+
 ####Antoine (TODO/TODO)####
+
 * TODO
+
 ####Bastien (TODO/TODO)####
+
 * TODO
+
 ####Guillaume (TODO/TODO)####
+
 * TODO
+
 ####Amel (TODO/TODO)####
+
 * TODO
 
 
@@ -91,15 +107,22 @@ TODO
 TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
+
 ####Antoine (TODO/TODO)####
+
 * TODO
+
 ####Bastien (TODO/TODO)####
+
 * TODO
+
 ####Guillaume (TODO/TODO)####
+
 * TODO
+
 ####Amel (TODO/TODO)####
+
 * TODO
-	
 
 
 ##Bilan itération 5##
@@ -109,14 +132,22 @@ TODO
 TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
+
 ####Antoine (TODO/TODO)####
+
 * TODO
+
 ####Bastien (TODO/TODO)####
+
 * TODO
+
 ####Guillaume (TODO/TODO)####
+
 * TODO
+
 ####Amel (TODO/TODO)####
-* TODO	
+
+* TODO
 
 
 ##Bilan itération 6##
@@ -126,12 +157,24 @@ TODO
 TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
+
 ####Antoine (TODO/TODO)####
+
 * TODO
+
 ####Bastien (TODO/TODO)####
+
 * TODO
+
 ####Guillaume (TODO/TODO)####
+
 * TODO
+
 ####Amel (TODO/TODO)####
+
 * TODO
+
+
+
+
 
