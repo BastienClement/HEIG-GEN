@@ -52,15 +52,15 @@ class AuthController @Inject()(implicit val ec: ExecutionContext, val conf: Conf
 		val pass = (req.body \ "pass").as[String]
 
 		if (user.length < 3) {
-			BadRequest(Json.obj("err" -> "REGISTER_NAME_TOO_SHORT"))
+			UnprocessableEntity(Json.obj("err" -> "REGISTER_NAME_TOO_SHORT"))
 		} else if (pass.length < 5) {
 			// 5 chars password is quite sad :(
-			BadRequest(Json.obj("err" -> "REGISTER_PASS_TOO_SHORT"))
+			UnprocessableEntity(Json.obj("err" -> "REGISTER_PASS_TOO_SHORT"))
 		} else {
 			Users.register(user, pass).run.flatMap { _ =>
 				Users.findByUsername(user.toLowerCase).run
 			}.map { user =>
-				Ok(Json.obj("token" -> genToken(user)))
+				Created(Json.obj("token" -> genToken(user)))
 			}.recover { case _ =>
 				Conflict(Json.obj("err" -> "REGISTER_ALREADY_TAKEN"))
 			}
@@ -68,6 +68,6 @@ class AuthController @Inject()(implicit val ec: ExecutionContext, val conf: Conf
 	}
 
 	def test = UserAction { req =>
-		Ok(req.user.toString)
+		throw new IllegalArgumentException()
 	}
 }
