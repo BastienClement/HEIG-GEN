@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
         });
     }
 
-    public void login(final View view) {
+    public void login(final View view) {cd
         Intent intent = new Intent(this, ContactListActivity.class);
         startActivity(intent);
         /*if (login.getText().toString().isEmpty()) {

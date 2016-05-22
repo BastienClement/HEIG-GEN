@@ -1,9 +1,12 @@
 package ch.heigvd.gen.models;
 
+import java.util.List;
+
 public class User implements Comparable<User> {
 
     private final int id;
     private final String username;
+    private List<User> contacts;
 
     public User(final int id, final String username) {
         this.id = id;
