@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Client Android</string>
+
+    <!-- LoginActivity -->
+    <string name="radio_button_public_server">Public Server</string>
+    <string name="radio_button_private_server">Private Server</string>
+    <string name="hint_private_server_name">Enter private server name</string>
+    <string name="hint_username">Enter your username</string>
+    <string name="hint_password">Enter your password</string>
+    <string name="button_login">Login</string>
+    <string name="button_register">No login? Subscribe!</string>
+    <string name="error_required">Required</string>
+    <string name="title_activity_register">RegisterActivity</string>
+
+    <!-- RegisterActivity -->
+    <string name="hint_register_username">Enter a username</string>
+    <string name="hint_register_password">Enter a password</string>
+    <string name="hint_register_confirm_password">Confirm the password</string>
+    <string name="button_send_register">Register</string>
+    <string name="error_passwords_dont_match">Passwords don\'t match</string>
+
+    <!-- ContactListActivity -->
+    <string name="hint_filter">Filter: username</string>
+    <string name="placeholder_none_found">No users found&#8230;</string>
+</resources>
