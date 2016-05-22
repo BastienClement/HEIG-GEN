@@ -47,6 +47,7 @@ Mise en place des fonctionnalités de création / suppression de compte et de 
 ####Antoine####
 
 * Ajouter les fonctionnalités de gestion de compte et de connexion au protocole de communication
+	* J'ai refactoré le client Android et j'ai implémenter les boutons de logins et d'inscription afin qu'ils communiquent avec le serveur.
 * Interfacer l’application serveur avec la base de données
 	* J’ai créer la base de données et Bastien s’est occupé de l’interfacer avec la base de données.
 
@@ -85,7 +86,10 @@ TODO
 
 ####Antoine (TODO/TODO)####
 
-* TODO
+* Ajouter les fonctionnalités de recherche et de gestion de contact au protocole de communicaton.
+	* ...
+* Implémenter la recherche et la gestion de client au niveau du client.
+	* ...
 
 ####Bastien (TODO/TODO)####
 
