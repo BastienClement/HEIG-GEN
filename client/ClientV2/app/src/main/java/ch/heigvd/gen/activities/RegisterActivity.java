@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
                 new RequestPOST(new ICallback<String>() {
                     @Override
                     public void success(String result) {
-                        // TODO: Implement proper success case !
+                        finishActivity(0);
                         Log.i(TAG, "Success : " + result);
                     }
 

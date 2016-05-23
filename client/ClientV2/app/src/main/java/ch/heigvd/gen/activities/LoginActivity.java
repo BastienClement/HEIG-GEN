@@ -4,13 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import ch.heigvd.gen.R;
+import ch.heigvd.gen.communications.RequestPOST;
+import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.IJSONKeys;
 import ch.heigvd.gen.interfaces.IRequests;
+import ch.heigvd.gen.models.User;
+import ch.heigvd.gen.utilities.Utils;
 
 public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequests {
 
@@ -44,10 +49,9 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
         });
     }
 
-    public void login(final View view) {cd
-        Intent intent = new Intent(this, ContactListActivity.class);
-        startActivity(intent);
-        /*if (login.getText().toString().isEmpty()) {
+    public void login(final View view) {
+        final Intent intent = new Intent(this, ContactListActivity.class);
+        if (login.getText().toString().isEmpty()) {
             login.setError(getString(R.string.error_required));
         } else if (passwordBox.getText().toString().isEmpty()) {
             passwordBox.setError(getString(R.string.error_required));
@@ -59,7 +63,8 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
                 new RequestPOST(new ICallback<String>() {
                     @Override
                     public void success(String result) {
-                        // TODO: Implement proper success case !
+                        //Utils.setToken(result.toString());
+                        startActivity(intent);
                         Log.i(TAG, "Success : " + result);
                     }
 
@@ -71,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
             } catch (Exception ex) {
                 Log.e(TAG, ex.getMessage());
             }
-        }*/
+        }
     }
 
     public void register(final View view) {
