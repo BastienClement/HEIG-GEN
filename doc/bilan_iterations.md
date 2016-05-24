@@ -81,7 +81,9 @@ Mise en place des fonctionnalités de création / suppression de compte et de 
 TODO
 ###Avancement###
 Le projet avance bien, le refactoring de l'assistant nous a permis d'avoir un code plus propre côté client mais nous a fait perdre un peu de temps pour la fusion et l'adpation à la nouvelle architecture. Nous avons un petit retard sur la gestion des contacts mais ça devrait être rapidement rattrapé maintenant que tout est en place.
+
 Du côté serveur tout se passe bien.
+
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 
 ####Antoine (9H/5H)####
