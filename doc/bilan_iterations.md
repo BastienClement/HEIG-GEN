@@ -78,7 +78,7 @@ Mise en place des fonctionnalités de création / suppression de compte et de 
 
 ##Bilan itération 3##
 ###Objectif###
-TODO
+Mise en place des fonctionnalités de recherche et de gestion de contacts
 ###Avancement###
 Le projet avance bien, le refactoring de l'assistant nous a permis d'avoir un code plus propre côté client mais nous a fait perdre un peu de temps pour la fusion et l'adpation à la nouvelle architecture. Nous avons un petit retard sur la gestion des contacts mais ça devrait être rapidement rattrapé maintenant que tout est en place.
 
@@ -110,9 +110,16 @@ Le temps supplémentaire relatif à la planification est lié à la mise de méc
 
 Par la suite, il sera possible de se baser sur le status administrateur du client pour déterminer si l'exception doit ou non être détaillée.
 
-####Guillaume (TODO/TODO)####
+####Guillaume (3h/5h)####
 
-* TODO
+* Implémenter la gestion des comptes et de connexion au niveau du client 
+	* Compréhension et intégration du client v2 refactoré par l'assistant.
+	* Login / obtention du token  fonctionnel
+* Implémenter la recherche et la gestion de contact au niveau du client
+	* Recherche fonctionelle sur liste de contacts codées en dur
+	* Suite à l'intégration du client v2, pas encore pu 
+* Ajout de l’interface de recherche de contact
+	* Interface de recherche fonctionelle
 
 ####Amel (5h/5h)####
 
