@@ -91,9 +91,15 @@ TODO
 * Implémenter la recherche et la gestion de client au niveau du client.
 	* ...
 
-####Bastien (TODO/TODO)####
+####Bastien (5h/4h)####
 
-* TODO
+* Implémenter la recherche et de gestion de contacts au niveau du serveur
+
+La fonctionnalité a été implémentée sans difficulté. L'API REST est entièrement fonctionnelle pour les opérations de gestion de contacts.
+
+Le temps supplémentaire relatif à la planification est lié à la mise de mécanisme de traitement d'erreur au niveau du serveur qui ne sont pas directement liés à la gestion de contact. Il est maintenant plus aisé de communiquer un échec au client de l'API et le serveur devrait maintenant retourner les exceptions non-attrapées au consommateur de l'API en format JSON.
+
+Par la suite, il sera possible de se baser sur le status administrateur du client pour déterminer si l'exception doit ou non être détaillée.
 
 ####Guillaume (TODO/TODO)####
 
