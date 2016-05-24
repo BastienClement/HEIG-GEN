@@ -11,10 +11,10 @@ Pas encore de communication client-serveur suite à un changement de plan apre�
 Nous pensons conserver une interface Socket lorsque l’application est ouverte uniquement pour permettre des notifications push au client Android (au lieu d’utiliser les services GCM). Le protocol du socket est donc grandement simplifié et sera défini lors d’une futur itération.
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 
-####Antoine####
+####Antoine (5H/5H)####
 
 * Apprendre les bases du développement Scala
-	* J’ai commencé à apprendre le langage Scala. Je vais devoir également étudier le framework Play que l’on va utiliser pour faire le serveur.
+	* J'ai mis en place mon environnement de développement. J’ai commencé à apprendre le langage Scala. Je vais devoir également étudier le framework Play que l’on va utiliser pour faire le serveur.
 * Définition de la première version du protocole de communication
 	* Nous avions d’abord prévu d’utiliser un connexion TCP ainsi qu’un protocole de communication binaire, mais après discussion avec l’assistant, nous allons mettre en place une communication REST en JSON et une communication TCP pour les notifications de type PUSH. Nous devons donc encore en parler avant de tout mettre en place.
 	* J’ai également commencé à mettre en place une communication simple du côté client.
@@ -84,16 +84,29 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (TODO/TODO)####
+####Antoine (8H/5H)####
 
 * Ajouter les fonctionnalités de recherche et de gestion de contact au protocole de communicaton.
-	* ...
+	* Comme l'assistant a refactoré le client et Amel a fait des changements en même temps, j'ai dû fusionner les deux ce qui m'a pris pas mal de temps. J'ai également dû faire refonctionner le login et le register (itération 2).
+	* J'ai créé les classes RequestPUT et RequestDelete pour l'envoi de requête HTTP PUT et DELETE.
+	* J'ai créé l'activité ContactViewActivity qui permet de voir les messages envoyés avec un contact.
+	* J'ai implémenté le bouton suppression d'un contact, mais je n'ai pas encore pu le tester (problème avec le token voir ci-dessous).
+	* J'ai avancer sur la récupération du token pendant l'authentification/enregistrement.
+	* J'ai commencé à récupérer la liste des contacts afin de les afficher mais il y a un problème avec la fonction getToken du côté client qui permet de récupérer le token d'authentification.
 * Implémenter la recherche et la gestion de client au niveau du client.
-	* ...
+	* Je n'ai pas pu implémenter la recherche et la gestion dû au problème de récupération du token.
 
-####Bastien (TODO/TODO)####
+En résumé je n'ai pas pu implémenter la recherche, la gestion des contacts au niveau client. Il faudra donc peut-être revoir la planification.
 
-* TODO
+####Bastien (5h/4h)####
+
+* Implémenter la recherche et de gestion de contacts au niveau du serveur
+
+La fonctionnalité a été implémentée sans difficulté. L'API REST est entièrement fonctionnelle pour les opérations de gestion de contacts.
+
+Le temps supplémentaire relatif à la planification est lié à la mise de mécanisme de traitement d'erreur au niveau du serveur qui ne sont pas directement liés à la gestion de contact. Il est maintenant plus aisé de communiquer un échec au client de l'API et le serveur devrait maintenant retourner les exceptions non-attrapées au consommateur de l'API en format JSON.
+
+Par la suite, il sera possible de se baser sur le status administrateur du client pour déterminer si l'exception doit ou non être détaillée.
 
 ####Guillaume (TODO/TODO)####
 

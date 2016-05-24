@@ -32,14 +32,14 @@ class AuthController @Inject()(implicit val ec: ExecutionContext, val conf: Conf
 	/**
 	  * Request for a new authentication token from credentials
 	  */
-	def token = Action.async(parse.json) { req =>
+	def token = UnauthenticatedApiAction.async(parse.json) { req =>
 		val user = (req.body \ "user").as[String]
 		val pass = (req.body \ "pass").as[String]
 
 		Users.findByUsername(user).run.filter(u => Crypto.check(pass, u.pass)).map { u =>
 			Ok(Json.obj("token" -> genToken(u)))
 		}.recover { case e =>
-			Unauthorized(Json.obj("err" -> "TOKEN_BAD_CREDENTIALS"))
+			Unauthorized('TOKEN_BAD_CREDENTIALS)
 		}
 	}
 
@@ -47,22 +47,22 @@ class AuthController @Inject()(implicit val ec: ExecutionContext, val conf: Conf
 	  * Account creation request, returns a token for the newly created account
 	  * Username and password must be at least 5 chars long.
 	  */
-	def register = Action.async(parse.json) { req =>
+	def register = UnauthenticatedApiAction.async(parse.json) { req =>
 		val user = (req.body \ "user").as[String]
 		val pass = (req.body \ "pass").as[String]
 
 		if (user.length < 3) {
-			UnprocessableEntity(Json.obj("err" -> "REGISTER_NAME_TOO_SHORT"))
+			UnprocessableEntity('AUTH_REGISTER_NAME_TOO_SHORT)
 		} else if (pass.length < 5) {
 			// 5 chars password is quite sad :(
-			UnprocessableEntity(Json.obj("err" -> "REGISTER_PASS_TOO_SHORT"))
+			UnprocessableEntity('AUTH_REGISTER_PASS_TOO_SHORT)
 		} else {
 			Users.register(user, pass).run.flatMap { _ =>
 				Users.findByUsername(user.toLowerCase).run
 			}.map { user =>
 				Created(Json.obj("token" -> genToken(user)))
 			}.recover { case _ =>
-				Conflict(Json.obj("err" -> "REGISTER_ALREADY_TAKEN"))
+				Conflict('AUTH_REGISTER_NAME_ALREADY_TAKEN)
 			}
 		}
 	}

@@ -8,10 +8,10 @@ GET           /                                   controllers.HomeController.ind
 POST          /api/auth                           controllers.api.AuthController.token
 POST          /api/register                       controllers.api.AuthController.register
 
-GET           /api/users                          controllers.api.DummyController.nyi0
-GET           /api/users/:id                      controllers.api.DummyController.nyi1(id)
-GET           /api/users/self                     controllers.api.DummyController.nyi0
-DELETE        /api/users/self                     controllers.api.DummyController.nyi0
+GET           /api/users                          controllers.api.UsersController.list
+GET           /api/users/self                     controllers.api.UsersController.self
+DELETE        /api/users/self                     controllers.api.UsersController.delete
+GET           /api/users/:id                      controllers.api.UsersController.user(id: Int)
 
 GET           /api/chats                          controllers.api.DummyController.nyi0
 POST          /api/chats                          controllers.api.DummyController.nyi0
