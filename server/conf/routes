@@ -3,12 +3,38 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET         /                    controllers.HomeController.index
+GET           /                                   controllers.HomeController.index
 
-POST        /api/auth            controllers.ApiController.token
-POST        /api/register        controllers.ApiController.register
+POST          /api/auth                           controllers.api.AuthController.token
+POST          /api/register                       controllers.api.AuthController.register
 
-GET         /api/test            controllers.ApiController.test
+GET           /api/users                          controllers.api.DummyController.nyi0
+GET           /api/users/:id                      controllers.api.DummyController.nyi1(id)
+GET           /api/users/self                     controllers.api.DummyController.nyi0
+DELETE        /api/users/self                     controllers.api.DummyController.nyi0
+
+GET           /api/chats                          controllers.api.DummyController.nyi0
+POST          /api/chats                          controllers.api.DummyController.nyi0
+GET           /api/chats/:id                      controllers.api.DummyController.nyi1(id)
+DELETE        /api/chats/:id                      controllers.api.DummyController.nyi1(id)
+GET           /api/chats/:id/messages             controllers.api.DummyController.nyi1(id)
+POST          /api/chats/:id/messages             controllers.api.DummyController.nyi1(id)
+DELETE        /api/chats/:id/messages/:msg        controllers.api.DummyController.nyi2(id, msg)
+GET           /api/chats/:id/members              controllers.api.DummyController.nyi1(id)
+POST          /api/chats/:id/members              controllers.api.DummyController.nyi1(id)
+DELETE        /api/chats/:id/members/:user        controllers.api.DummyController.nyi2(id, user)
+
+GET           /api/contacts                       controllers.api.ContactsController.list
+PUT           /api/contacts/:id                   controllers.api.ContactsController.add(id: Int)
+DELETE        /api/contacts/:id                   controllers.api.ContactsController.delete(id: Int)
+
+GET           /api/test                           controllers.api.AuthController.test
+
+GET           /api/*path                          controllers.api.DummyController.undefined(path)
+POST          /api/*path                          controllers.api.DummyController.undefined(path)
+PUT           /api/*path                          controllers.api.DummyController.undefined(path)
+PATCH         /api/*path                          controllers.api.DummyController.undefined(path)
+DELETE        /api/*path                          controllers.api.DummyController.undefined(path)
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
+GET           /assets/*file                       controllers.Assets.versioned(path="/public", file: Asset)
