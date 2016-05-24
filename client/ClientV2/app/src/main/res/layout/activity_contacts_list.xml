@@ -9,27 +9,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".ContactListActivity">
+    tools:context="ch.heigvd.gen.activities.ContactListActivity">
 
-    <EditText
-        android:id="@+id/filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_filter" />
-
-    <ListView
-        android:id="@+id/listView"
+    <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:listSelector="@android:color/transparent" />
+        android:id="@+id/search"
+        android:queryHint="Search"/>
 
-    <TextView
-        android:id="@+id/placeholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:textStyle="bold|italic"
-        android:textSize="18sp"
-        android:text="@string/placeholder_none_found" />
+    <ListView
+        android:id="@+id/contact_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

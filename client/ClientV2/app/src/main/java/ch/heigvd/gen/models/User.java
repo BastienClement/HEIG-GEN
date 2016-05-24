@@ -28,4 +28,6 @@ public class User implements Comparable<User> {
     public int compareTo(User u) {
         return username.compareTo(u.getUsername());
     }
+
+    public String toString(){ return username; }
 }

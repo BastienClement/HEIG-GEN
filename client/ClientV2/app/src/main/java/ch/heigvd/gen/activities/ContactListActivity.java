@@ -1,83 +1,76 @@
 package ch.heigvd.gen.activities;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import android.widget.SearchView;
 
 import ch.heigvd.gen.R;
-import ch.heigvd.gen.adapters.ContactListViewAdapter;
-import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.User;
 
-public class ContactListActivity extends AppCompatActivity implements IRequests {
+public class ContactListActivity extends AppCompatActivity {
 
-    private final static String TAG = ContactListActivity.class.getSimpleName();
-
-    private List<User> list;
-    private ContactListViewAdapter adapter;
-    private EditText filter;
-    private ListView listView;
+    // simple test contacts
+    private User[] contactsArray = { new User(1, "Amel"), new User(2, "Antoine"), new User(3, "Bastien"), new User(4, "Guillaume")};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_list);
+        setContentView(R.layout.activity_contacts_list);
 
-        list = new LinkedList<>();
-        adapter = new ContactListViewAdapter(this, R.layout.contact_list_item, list);
-        filter = (EditText) findViewById(R.id.filter);
-        listView = (ListView) findViewById(R.id.listView);
+        // enable back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        filter.addTextChangedListener(new TextWatcher() {
+        // todo : load contacts (local storage)
+
+        // create adapter
+        // TODO : Order by last message
+        ArrayAdapter adapter = new ArrayAdapter<User>(this, R.layout.contacts_list_item, contactsArray);
+
+        // fill listview
+        final ListView listView = (ListView) findViewById(R.id.contact_list);
+        listView.setAdapter(adapter);
+        listView.setTextFilterEnabled(true);
+
+        // handle click on contact
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                /* Nothing to do here ! */
-            }
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+                // get contact
+                final User item = (User) parent.getItemAtPosition(position);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                /* Nothing to do here ! */
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                adapter.getFilter().filter(filter.getText().toString());
+                // start contact edit activity
+                Intent intent = new Intent(ContactListActivity.this, ContactViewActivity.class);
+                Bundle b = new Bundle();
+                b.putString("contact", item.getUsername());
+                b.putInt("id", item.getId());
+                intent.putExtras(b);
+                startActivity(intent);
             }
         });
 
-        listView.setAdapter(adapter);
-        listView.setEmptyView(findViewById(R.id.placeholder));
-        loadUsers();
-    }
-
-    private void loadUsers() {
-        String[] contactsArray = {"Toto" /* pour montrer que la liste sera ordonnée */, "Amel", "Antoine", "Bastien", "Guillaume"};
-        int i = 0;
-        for (String s : contactsArray) {
-            list.add(new User(i++, s));
-        }
-        Collections.sort(list);
-        adapter.notifyDataSetChanged();
-        /*
-        new RequestGET(new ICallback<String>() {
+        // search view
+        SearchView search = (SearchView) findViewById(R.id.search);
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void success(String result) {
-                // TODO: Parse result, create User item, add users to list, and notifyDataSetChanged the adapter.
-                Log.i(TAG, "Success : " + result);
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
 
             @Override
-            public void failure(Exception ex) {
-                Log.e(TAG, ex.getMessage());
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)) {
+                    listView.clearTextFilter();
+                } else {
+                    listView.setFilterText(newText.toString());
+                }
+                return true;
             }
-        }, Utils.getToken(this), BASE_URL + GET_ALL_USERS).execute();
-        */
+        });
     }
 }

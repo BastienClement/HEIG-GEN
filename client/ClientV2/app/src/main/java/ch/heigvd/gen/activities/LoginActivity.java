@@ -72,11 +72,12 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
                     public void failure(Exception ex) {
                         Log.e(TAG, ex.getMessage());
                     }
-                }, Utils.getToken(this), LOGIN, content).execute();
+                }, Utils.getToken(this), BASE_URL + LOGIN, content).execute();
             } catch (Exception ex) {
                 Log.e(TAG, ex.getMessage());
             }
         }
+        startActivity(intent);
     }
 
     public void register(final View view) {

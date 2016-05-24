@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
                     public void failure(Exception ex) {
                         Log.e(TAG, ex.getMessage());
                     }
-                }, Utils.getToken(this), REGISTER, content).execute();
+                }, Utils.getToken(this), BASE_URL + REGISTER, content).execute();
             } catch (Exception ex) {
                 Log.e(TAG, ex.getMessage());
             }
