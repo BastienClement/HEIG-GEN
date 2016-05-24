@@ -1,14 +1,15 @@
 package controllers.api
 
+import _root_.util.Implicits.futureWrapper
+import _root_.util.{Crypto, DateTime}
 import play.api.Configuration
+import play.api.http.Writeable
 import play.api.libs.json.Json.JsValueWrapper
-import play.api.libs.json.{JsNull, JsObject, JsValue, Json}
+import play.api.libs.json._
 import play.api.mvc.Results._
 import play.api.mvc._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
-import util.{Crypto, DateTime}
-import util.Implicits.futureWrapper
 
 /**
   * API request with user ID and admin flag
@@ -27,6 +28,34 @@ case class ApiRequest[A](user: Int, admin: Boolean, request: Request[A]) extends
 trait ApiActionBuilder {
 	implicit val conf: Configuration
 	implicit val ec: ExecutionContext
+
+	/**
+	  * Serializes Throwable instance into JSON objects.
+	  * A null Throwable is serialized to JsNull.
+	  */
+	private[this] def serializeThrowable(t: Throwable, seen: Set[Throwable] = Set()): JsValue = {
+		if (t == null || seen.contains(t)) JsNull
+		else Json.obj(
+			"class" -> t.getClass.getName,
+			"message" -> t.getMessage,
+			"trace" -> Try { t.getStackTrace.map(_.toString): JsValueWrapper }.getOrElse(Json.arr()),
+			"cause" -> serializeThrowable(t, seen + t)
+		)
+	}
+
+	implicit val throwableWrites: Writes[Throwable] = Writes[Throwable](serializeThrowable(_))
+
+	/** Error message JS object */
+	val writeSymbol: (Symbol => JsObject) = sym => Json.obj("err" -> sym.name)
+
+	implicit val errorSymbol = Writeable[Symbol](
+		writeSymbol.andThen(implicitly[Writeable[JsValue]].transform),
+		Some("application/json")
+	)
+
+	implicit class WithCause(val sym: Symbol) {
+		def withCause(t: Throwable): JsObject = writeSymbol(sym) + ("cause" -> serializeThrowable(t))
+	}
 
 	/** An authenticated user action */
 	object UserAction extends ActionBuilder[ApiRequest] {
@@ -53,21 +82,7 @@ trait ApiActionBuilder {
 			try {
 				block(req)
 			} catch {
-				case err: Throwable =>
-					def serialize(e: Throwable): JsValue = {
-						if (e == null) JsNull
-						else Json.obj(
-							"class" -> e.getClass.getName,
-							"message" -> e.getMessage,
-							"trace" -> Try { e.getStackTrace.map(_.toString): JsValueWrapper }.getOrElse(Json.arr()),
-							"cause" -> serialize(e.getCause)
-						)
-					}
-
-					InternalServerError(Json.obj(
-						"err" -> "UNCAUGHT_EXCEPTION",
-						"exception" -> serialize(err)
-					))
+				case err: Throwable => InternalServerError('UNCAUGHT_EXCEPTION.withCause(err))
 			}
 		}
 
@@ -77,7 +92,5 @@ trait ApiActionBuilder {
 	}
 
 	/** A placeholder for not implemented actions */
-	def NotYetImplemented = Action { req =>
-		NotImplemented(Json.obj("err" -> "Not yet implemented"))
-	}
+	def NotYetImplemented = Action { req => NotImplemented('NOT_YET_IMPLEMENTED) }
 }
