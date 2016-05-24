@@ -84,17 +84,18 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (8H/5H)####
+####Antoine (9H/5H)####
 
 * Ajouter les fonctionnalités de recherche et de gestion de contact au protocole de communicaton.
 	* Comme l'assistant a refactoré le client et Amel a fait des changements en même temps, j'ai dû fusionner les deux ce qui m'a pris pas mal de temps. J'ai également dû faire refonctionner le login et le register (itération 2).
 	* J'ai créé les classes RequestPUT et RequestDelete pour l'envoi de requête HTTP PUT et DELETE.
 	* J'ai créé l'activité ContactViewActivity qui permet de voir les messages envoyés avec un contact.
-	* J'ai implémenté le bouton suppression d'un contact, mais je n'ai pas encore pu le tester (problème avec le token voir ci-dessous).
-	* J'ai avancer sur la récupération du token pendant l'authentification/enregistrement.
-	* J'ai commencé à récupérer la liste des contacts afin de les afficher mais il y a un problème avec la fonction getToken du côté client qui permet de récupérer le token d'authentification.
+	* J'ai implémenté le bouton suppression d'un contact, mais je n'ai pas encore pu le tester
+	* J'ai fait fonctionner la récupération du token pendant l'authentification/enregistrement.
+	* J'ai fait fonctionner les fonctions GetToken et SetToken du client.
+	* J'ai commencé à récupérer la liste des contacts afin de les afficher 
 * Implémenter la recherche et la gestion de client au niveau du client.
-	* Je n'ai pas pu implémenter la recherche et la gestion dû au problème de récupération du token.
+	* Je n'ai pas eu le temps d'implémenter la recherche et la gestion car j'ai d'abord du faire fonctionner le login/register et fusionner les deux projets.
 
 En résumé je n'ai pas pu implémenter la recherche, la gestion des contacts au niveau client. Il faudra donc peut-être revoir la planification.
 
