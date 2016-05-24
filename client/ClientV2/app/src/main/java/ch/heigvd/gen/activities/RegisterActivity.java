@@ -1,10 +1,13 @@
 package ch.heigvd.gen.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import org.json.JSONObject;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.communications.RequestPOST;
@@ -45,7 +48,15 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
                 new RequestPOST(new ICallback<String>() {
                     @Override
                     public void success(String result) {
-                        finishActivity(0);
+                        try{
+                            JSONObject json = new JSONObject(result);
+                            Utils.setToken(RegisterActivity.this, json.getString("token"));
+                            Log.i(TAG, "Token : " + json.getString("token"));
+                        } catch (Exception ex){
+                            Log.e(TAG, ex.getMessage());
+                        }
+                        Intent intent = new Intent(RegisterActivity.this, ContactListActivity.class);
+                        startActivity(intent);
                         Log.i(TAG, "Success : " + result);
                     }
 

@@ -1,5 +1,7 @@
 package ch.heigvd.gen.communications;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -16,6 +18,8 @@ public class RequestPOST extends Communication<String> {
     private String token;
     private String url;
     private String content;
+
+    private final static String TAG = RequestPOST.class.getSimpleName();
 
     public RequestPOST(ICallback<String> callback, String token, String url, String content) {
         setCallback(callback);
@@ -36,8 +40,7 @@ public class RequestPOST extends Communication<String> {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("charset", "utf-8");
             connection.setRequestProperty("Content-Type", "application/json");
-            // TODO: Add your header name for the token !
-            connection.setRequestProperty("custom_header_name_for_token", token);
+            connection.setRequestProperty("X-Auth-Token", token);
             connection.setUseCaches(false);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
             bw.write(content);
@@ -46,10 +49,11 @@ public class RequestPOST extends Communication<String> {
 
             int status = connection.getResponseCode();
             InputStream is;
-            if (status == HttpURLConnection.HTTP_OK) {
+            Log.i(TAG, "HTTP status : " + String.valueOf(status));
+            if (status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_NO_CONTENT || status == HttpURLConnection.HTTP_CREATED ) {
                 is = connection.getInputStream();
             } else {
-                is = connection.getErrorStream();
+                is = connection.getInputStream();
             }
             BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
             String line;
@@ -58,7 +62,7 @@ public class RequestPOST extends Communication<String> {
                 body += line + "\n";
             }
             br.close();
-            if (status != HttpURLConnection.HTTP_OK) {
+            if (status != HttpURLConnection.HTTP_OK && status != HttpURLConnection.HTTP_NO_CONTENT && status != HttpURLConnection.HTTP_CREATED) {
                 setException(new Exception(body));
             }
         } catch (IOException e) {

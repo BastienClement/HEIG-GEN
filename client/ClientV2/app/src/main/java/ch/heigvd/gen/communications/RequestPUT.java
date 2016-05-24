@@ -37,7 +37,7 @@ public class RequestPUT extends Communication<String> {
             connection.setRequestProperty("charset", "utf-8");
             connection.setRequestProperty("Content-Type", "application/json");
             // TODO: Add your header name for the token !
-            connection.setRequestProperty("custom_header_name_for_token", token);
+            connection.setRequestProperty("X-Auth-Token", token);
             connection.setUseCaches(false);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
             bw.write(content);

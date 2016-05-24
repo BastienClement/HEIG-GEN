@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.communications.RequestPOST;
@@ -35,25 +38,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // todo : load contacts (local storage)
-        /*try {
-            String[] keys = new String[]{};
-            String[] values = new String[]{};
-            String content = Utils.createJSONObject(keys, values);
-            new RequestGET(new ICallback<String>() {
-                @Override
-                public void success(String result) {
-                    //Utils.setToken(result.toString());
-                    Log.i(TAG, "Success : " + result);
-                }
-
-                @Override
-                public void failure(Exception ex) {
-                    Log.e(TAG, ex.getMessage());
-                }
-            }, Utils.getToken(this), BASE_URL + GET_CONTACTS).execute();
-        } catch (Exception ex) {
-            Log.e(TAG, ex.getMessage());
-        }*/
+        loadContacts();
 
         // create adapter
         // TODO : Order by last message
@@ -99,5 +84,24 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
                 return true;
             }
         });
+    }
+
+    private void loadContacts(){
+        try {
+            Log.i(TAG, "Token : " + Utils.getToken(this));
+            new RequestGET(new ICallback<String>() {
+                @Override
+                public void success(String result) {
+                    Log.i(TAG, "Success : " + result);
+                }
+
+                @Override
+                public void failure(Exception ex) {
+                    Log.e(TAG, ex.getMessage());
+                }
+            }, Utils.getToken(this), BASE_URL + GET_CONTACTS).execute();
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
+        }
     }
 }

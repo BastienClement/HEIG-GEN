@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import org.json.JSONObject;
+
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.communications.RequestPOST;
 import ch.heigvd.gen.interfaces.ICallback;
@@ -50,7 +52,6 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
     }
 
     public void login(final View view) {
-        final Intent intent = new Intent(this, ContactListActivity.class);
         if (login.getText().toString().isEmpty()) {
             login.setError(getString(R.string.error_required));
         } else if (passwordBox.getText().toString().isEmpty()) {
@@ -63,7 +64,14 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
                 new RequestPOST(new ICallback<String>() {
                     @Override
                     public void success(String result) {
-                        //Utils.setToken(result.toString());
+                        try{
+                            JSONObject json = new JSONObject(result);
+                            Utils.setToken(LoginActivity.this, json.getString("token"));
+                            Log.i(TAG, "Token : " + json.getString("token"));
+                        } catch (Exception ex){
+                            Log.e(TAG, ex.getMessage());
+                        }
+                        Intent intent = new Intent(LoginActivity.this, ContactListActivity.class);
                         startActivity(intent);
                         Log.i(TAG, "Success : " + result);
                     }
@@ -77,7 +85,6 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
                 Log.e(TAG, ex.getMessage());
             }
         }
-        startActivity(intent);
     }
 
     public void register(final View view) {

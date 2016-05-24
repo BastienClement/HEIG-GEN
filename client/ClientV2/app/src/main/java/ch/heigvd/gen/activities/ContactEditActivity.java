@@ -45,9 +45,6 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
 
             public void onClick(View v) {
                 try {
-                    String[] keys = new String[]{};
-                    String[] values = new String[]{};
-                    String content = Utils.createJSONObject(keys, values);
                     new RequestDELETE(new ICallback<String>() {
                         @Override
                         public void success(String result) {
@@ -62,7 +59,7 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
                         public void failure(Exception ex) {
                             Log.e(TAG, ex.getMessage());
                         }
-                    }, Utils.getToken(ContactEditActivity.this), BASE_URL + LOGIN + b.getInt("id"), content).execute();
+                    }, Utils.getToken(ContactEditActivity.this), BASE_URL + LOGIN + b.getInt("id")).execute();
                 } catch (Exception ex) {
                     Log.e(TAG, ex.getMessage());
                 }
