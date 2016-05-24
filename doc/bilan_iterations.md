@@ -80,9 +80,9 @@ Mise en place des fonctionnalités de création / suppression de compte et de 
 ###Objectif###
 TODO
 ###Avancement###
-TODO
+Le projet avance bien, le refactoring de l'assistant nous a permis d'avoir un code plus propre côté client mais nous a fait perdre un peu de temps pour la fusion et l'adpation à la nouvelle architecture. Nous avons un petit retard sur la gestion des contacts mais ça devrait être rapidement rattrapé maintenant que tout est en place.
+Du côté serveur tout se passe bien.
 ###Bilans personnels (Temps prévus/ Temps consacré)###
-TODO
 
 ####Antoine (9H/5H)####
 
@@ -97,8 +97,6 @@ TODO
 	* J'ai créé l'activité de recherche d'utilisateurs, mais je n'ai pas encore remplis la liste des utilisateurs.
 * Implémenter la recherche et la gestion de client au niveau du client.
 	* Je n'ai pas eu le temps d'implémenter la recherche et la gestion car j'ai d'abord du faire fonctionner le login/register et fusionner les deux projets.
-
-En résumé je n'ai pas pu implémenter la recherche, la gestion des contacts au niveau client. Il faudra donc peut-être revoir la planification.
 
 ####Bastien (5h/4h)####
 
