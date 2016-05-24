@@ -114,10 +114,17 @@ Par la suite, il sera possible de se baser sur le status administrateur du clien
 
 * TODO
 
-####Amel (TODO/TODO)####
+####Amel (5h/5h)####
 
-* TODO
-
+* Ajout de l'interface de recherche de contact
+	* Création d'une interface pour lister les contacts de l'utilisateur
+	* Possibilité de faire un recherche avec un widget SearchView (passé un peu de temps à comprendre comment configurer la recherche avec un Adapter, et comment personnaliser l'affichage)
+	* La sélection d'un contact permet d'accéder à l'interface de gestion du contact
+	* Pas encore réussi à charger la liste de contacts directement depuis le serveur
+* Ajout de l'interface de gestion de contact
+	* Création d'une première version de l'interface de gestion d'un contact
+	* Récupère le contact passé en paramètre depuis l'activité précédente
+	* Pour l'instant l'interface contient seulement un bouton pour supprimer le contact (fonctionnel)
 
 ##Bilan itération 4##
 ###Objectif###
