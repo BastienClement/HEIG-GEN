@@ -95,6 +95,7 @@ TODO
 	* J'ai commencé à récupérer la liste des contacts afin de les afficher mais il y a un problème avec la fonction getToken du côté client qui permet de récupérer le token d'authentification.
 * Implémenter la recherche et la gestion de client au niveau du client.
 	* Je n'ai pas pu implémenter la recherche et la gestion dû au problème de récupération du token.
+
 En résumé je n'ai pas pu implémenter la recherche, la gestion des contacts au niveau client. Il faudra donc peut-être revoir la planification.
 
 ####Bastien (5h/4h)####
