@@ -93,7 +93,8 @@ TODO
 	* J'ai implémenté le bouton suppression d'un contact, mais je n'ai pas encore pu le tester
 	* J'ai fait fonctionner la récupération du token pendant l'authentification/enregistrement.
 	* J'ai fait fonctionner les fonctions GetToken et SetToken du client.
-	* J'ai commencé à récupérer la liste des contacts afin de les afficher 
+	* J'ai commencé à récupérer la liste des contacts afin de les afficher.
+	* J'ai créé l'activité de recherche d'utilisateurs, mais je n'ai pas encore remplis la liste des utilisateurs.
 * Implémenter la recherche et la gestion de client au niveau du client.
 	* Je n'ai pas eu le temps d'implémenter la recherche et la gestion car j'ai d'abord du faire fonctionner le login/register et fusionner les deux projets.
 
