@@ -110,7 +110,7 @@ Le temps supplémentaire relatif à la planification est lié à la mise de méc
 
 Par la suite, il sera possible de se baser sur le status administrateur du client pour déterminer si l'exception doit ou non être détaillée.
 
-####Guillaume (3h/5h)####
+####Guillaume (4h/5h)####
 
 * Implémenter la gestion des comptes et de connexion au niveau du client 
 	* Compréhension et intégration du client v2 refactoré par l'assistant.
