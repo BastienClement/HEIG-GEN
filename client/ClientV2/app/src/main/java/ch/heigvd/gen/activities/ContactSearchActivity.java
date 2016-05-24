@@ -22,9 +22,9 @@ import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
-public class ContactListActivity extends AppCompatActivity implements IRequests{
+public class ContactSearchActivity extends AppCompatActivity implements IRequests{
 
-    private final static String TAG = ContactListActivity.class.getSimpleName();
+    private final static String TAG = ContactSearchActivity.class.getSimpleName();
 
     // simple test contacts
     private User[] contactsArray = { new User(1, "Amel"), new User(2, "Antoine"), new User(3, "Bastien"), new User(4, "Guillaume")};
@@ -38,7 +38,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // todo : load contacts (local storage)
-        loadContacts();
+        loadUsers();
 
         // create adapter
         // TODO : Order by last message
@@ -57,7 +57,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
                 final User item = (User) parent.getItemAtPosition(position);
 
                 // start contact edit activity
-                Intent intent = new Intent(ContactListActivity.this, ContactViewActivity.class);
+                Intent intent = new Intent(ContactSearchActivity.this, ContactViewActivity.class);
                 Bundle b = new Bundle();
                 b.putString("contact", item.getUsername());
                 b.putInt("id", item.getId());
@@ -86,7 +86,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         });
     }
 
-    private void loadContacts(){
+    private void loadUsers(){
         try {
             Log.i(TAG, "Token : " + Utils.getToken(this));
             new RequestGET(new ICallback<String>() {
@@ -99,7 +99,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
                 public void failure(Exception ex) {
                     Log.e(TAG, ex.getMessage());
                 }
-            }, Utils.getToken(this), BASE_URL + GET_CONTACTS).execute();
+            }, Utils.getToken(this), BASE_URL + GET_ALL_USERS).execute();
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }
