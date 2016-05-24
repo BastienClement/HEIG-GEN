@@ -32,7 +32,7 @@ class AuthController @Inject()(implicit val ec: ExecutionContext, val conf: Conf
 	/**
 	  * Request for a new authentication token from credentials
 	  */
-	def token = Action.async(parse.json) { req =>
+	def token = UnauthenticatedApiAction.async(parse.json) { req =>
 		val user = (req.body \ "user").as[String]
 		val pass = (req.body \ "pass").as[String]
 
@@ -47,7 +47,7 @@ class AuthController @Inject()(implicit val ec: ExecutionContext, val conf: Conf
 	  * Account creation request, returns a token for the newly created account
 	  * Username and password must be at least 5 chars long.
 	  */
-	def register = Action.async(parse.json) { req =>
+	def register = UnauthenticatedApiAction.async(parse.json) { req =>
 		val user = (req.body \ "user").as[String]
 		val pass = (req.body \ "pass").as[String]
 
