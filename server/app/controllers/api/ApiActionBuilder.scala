@@ -57,10 +57,19 @@ trait ApiActionBuilder {
 		def withCause(t: Throwable): JsObject = writeSymbol(sym) + ("cause" -> serializeThrowable(t))
 	}
 
+	/** Safely invoke the action constructor and catch potential exceptions */
+	private def wrap[R, A](block: R => Future[Result]): R => Future[Result] = {
+		(req: R) => {
+			try {
+				block(req)
+			} catch {
+				case err: Throwable => InternalServerError('UNCAUGHT_EXCEPTION.withCause(err))
+			}
+		}
+	}
+
 	/** An authenticated user action */
 	object UserAction extends ActionBuilder[ApiRequest] {
-		/** Type of the Request handler block */
-		type RequestHandler[A] = (ApiRequest[A]) => Future[Result]
 
 		/** Builds a new ApiRequest from a verified token */
 		def build[A](token: JsObject)(implicit request: Request[A]) =
@@ -77,18 +86,14 @@ trait ApiActionBuilder {
 		/** Failure to authenticate */
 		def failure = Future.successful(Unauthorized(JsNull))
 
-		/** Safely invoke the action constructor and catch potential exceptions */
-		def wrap[A](block: RequestHandler[A]): RequestHandler[A] = (req: ApiRequest[A]) => {
-			try {
-				block(req)
-			} catch {
-				case err: Throwable => InternalServerError('UNCAUGHT_EXCEPTION.withCause(err))
-			}
-		}
-
 		/** Invoke the action's block */
-		override def invokeBlock[A](request: Request[A], block: RequestHandler[A]) =
+		override def invokeBlock[A](request: Request[A], block: ApiRequest[A] => Future[Result]) =
 			transform(request).map(wrap(block)).getOrElse(failure)
+	}
+
+	/** Safely perform unauthenticated request */
+	object UnauthenticatedApiAction extends ActionBuilder[Request] {
+		override def invokeBlock[A](request: Request[A], block: Request[A] => Future[Result]) = wrap(block)(request)
 	}
 
 	/** A placeholder for not implemented actions */
