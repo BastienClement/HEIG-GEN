@@ -145,6 +145,7 @@ TODO
 
 J'ai pu rattraper le retard de l'itération précédente. J'ai fait fonctionner la recherche et l'ajout de contacts, l'affichage de la liste des contacts et la suppression d'un contact.
 J'ai également ajouté l'affichage des erreurs dans le client.
+J'ai fait fonctionner les boutons de retour en arrière.
 
 ####Bastien (TODO/TODO)####
 
