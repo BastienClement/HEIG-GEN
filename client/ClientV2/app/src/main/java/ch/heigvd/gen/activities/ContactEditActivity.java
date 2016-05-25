@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.communications.RequestDELETE;
 import ch.heigvd.gen.communications.RequestPOST;
@@ -19,13 +22,15 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
 
     private final static String TAG = ContactEditActivity.class.getSimpleName();
 
+    Bundle b = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_edit);
 
         // get contact
-        final Bundle b = getIntent().getExtras();
+        b = getIntent().getExtras();
         String contact = null;
         int id;
         if(b != null) {
@@ -39,31 +44,29 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
         // set contact name
         TextView title = (TextView) findViewById(R.id.contact_name);
         title.setText(contact);
+    }
 
-        Button button = (Button) findViewById(R.id.remove_button);
-        button.setOnClickListener(new View.OnClickListener() {
+    public void removeContact(final View view) {
+        try {
+            new RequestDELETE(new ICallback<String>() {
+                @Override
+                public void success(String result) {
+                    finish();
+                    Log.i(TAG, "Success : " + result);
+                }
 
-            public void onClick(View v) {
-                try {
-                    new RequestDELETE(new ICallback<String>() {
-                        @Override
-                        public void success(String result) {
-                            //Utils.setToken(result.toString());
-                            Intent intent = new Intent(ContactEditActivity.this, ContactViewActivity.class);
-                            intent.putExtras(b);
-                            startActivity(intent);
-                            Log.i(TAG, "Success : " + result);
-                        }
-
-                        @Override
-                        public void failure(Exception ex) {
-                            Log.e(TAG, ex.getMessage());
-                        }
-                    }, Utils.getToken(ContactEditActivity.this), BASE_URL + LOGIN + b.getInt("id")).execute();
-                } catch (Exception ex) {
+                @Override
+                public void failure(Exception ex) {
+                    try {
+                        Utils.showAlert(ContactEditActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
                     Log.e(TAG, ex.getMessage());
                 }
-            }
-        });
+            }, Utils.getToken(ContactEditActivity.this), BASE_URL + GET_CONTACT + b.getInt("id")).execute();
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
+        }
     }
 }

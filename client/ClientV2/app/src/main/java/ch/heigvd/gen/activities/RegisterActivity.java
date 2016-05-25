@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import ch.heigvd.gen.R;
@@ -62,6 +63,11 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
 
                     @Override
                     public void failure(Exception ex) {
+                        try {
+                            Utils.showAlert(RegisterActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                        } catch (JSONException e) {
+                            Log.e(TAG, e.getMessage());
+                        }
                         Log.e(TAG, ex.getMessage());
                     }
                 }, Utils.getToken(this), BASE_URL + REGISTER, content).execute();

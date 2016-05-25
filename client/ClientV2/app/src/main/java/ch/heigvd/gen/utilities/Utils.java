@@ -1,7 +1,9 @@
 package ch.heigvd.gen.utilities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 
 import org.json.JSONException;
@@ -48,5 +50,18 @@ public final class Utils {
             throw e;
         }
         return result;
+    }
+
+    public static void showAlert(Context context, String message){
+        new AlertDialog.Builder(context)
+                .setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

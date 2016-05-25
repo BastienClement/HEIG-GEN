@@ -1,5 +1,7 @@
 package ch.heigvd.gen.communications;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +16,8 @@ public class RequestGET extends Communication<String> {
     private String token;
     private String url;
 
+    private final static String TAG = RequestGET.class.getSimpleName();
+
     public RequestGET(ICallback<String> callback, String token, String url) {
         setCallback(callback);
         this.token = token;
@@ -27,12 +31,12 @@ public class RequestGET extends Communication<String> {
             URL url = new URL(this.url);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
-            // TODO: Add your header name for the token !
             connection.setRequestProperty("X-Auth-Token", token);
             connection.setRequestProperty("connection", "close");
             int status = connection.getResponseCode();
             InputStream is;
-            if (status == HttpURLConnection.HTTP_OK) {
+            Log.i(TAG, "HTTP status : " + String.valueOf(status));
+            if (status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_NO_CONTENT) {
                 is = connection.getInputStream();
             } else {
                 is = connection.getErrorStream();
@@ -45,7 +49,7 @@ public class RequestGET extends Communication<String> {
             }
             br.close();
             connection.disconnect();
-            if (status != HttpURLConnection.HTTP_OK) {
+            if (status != HttpURLConnection.HTTP_OK && status != HttpURLConnection.HTTP_NO_CONTENT) {
                 setException(new Exception(body));
             }
         } catch (IOException ex) {

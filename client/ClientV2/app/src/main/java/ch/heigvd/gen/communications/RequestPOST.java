@@ -53,7 +53,7 @@ public class RequestPOST extends Communication<String> {
             if (status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_NO_CONTENT || status == HttpURLConnection.HTTP_CREATED ) {
                 is = connection.getInputStream();
             } else {
-                is = connection.getInputStream();
+                is = connection.getErrorStream();
             }
             BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
             String line;

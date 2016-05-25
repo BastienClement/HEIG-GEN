@@ -6,11 +6,12 @@ public class User implements Comparable<User> {
 
     private final int id;
     private final String username;
-    private List<User> contacts;
+    private final boolean admin;
 
-    public User(final int id, final String username) {
+    public User(final int id, final String username, final boolean admin) {
         this.id = id;
         this.username = username;
+        this.admin = admin;
     }
 
     public int getId() {
@@ -21,6 +22,10 @@ public class User implements Comparable<User> {
         return username;
     }
 
+    public boolean isAdmin() {
+        return admin;
+    }
+
     public boolean contains(String s) {
         return s == null || s.isEmpty() || username.toLowerCase().contains(s.toLowerCase());
     }
@@ -29,5 +34,7 @@ public class User implements Comparable<User> {
         return username.compareTo(u.getUsername());
     }
 
-    public String toString(){ return username; }
+    public String toString(){
+        return username;
+    }
 }
