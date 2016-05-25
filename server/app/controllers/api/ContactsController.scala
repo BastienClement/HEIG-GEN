@@ -8,6 +8,7 @@ import play.api.Configuration
 import play.api.libs.json.JsArray
 import play.api.mvc.Controller
 import scala.concurrent.ExecutionContext
+import util.Implicits.futureWrapper
 
 @Singleton
 class ContactsController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration)
@@ -25,12 +26,16 @@ class ContactsController @Inject()(implicit val ec: ExecutionContext, val conf: 
 	}
 
 	def add(user: Int) = UserAction.async { req =>
-		val query = Contacts += Contact(req.user, user)
-		query.run.map { _ =>
-			NoContent
-		}.recover {
-			case e: SQLException if e.getErrorCode == 1452 => UnprocessableEntity('CONTACTS_ADD_NONEXISTANT)
-			case e: SQLException if e.getErrorCode == 1062 => Conflict('CONTACTS_ADD_DUPLICATE)
+		if (user == req.user) {
+			BadRequest('CONTACTS_ADD_SELF)
+		} else {
+			val query = Contacts += Contact(req.user, user)
+			query.run.map { _ =>
+				NoContent
+			}.recover {
+				case e: SQLException if e.getErrorCode == 1452 => UnprocessableEntity('CONTACTS_ADD_NONEXISTANT)
+				case e: SQLException if e.getErrorCode == 1062 => Conflict('CONTACTS_ADD_DUPLICATE)
+			}
 		}
 	}
 
@@ -38,6 +43,17 @@ class ContactsController @Inject()(implicit val ec: ExecutionContext, val conf: 
 		Contacts.filter(c => c.owner === req.user && c.user === user).delete.run.map { count =>
 			if (count > 0) NoContent
 			else NotFound('CONTACTS_DELETE_NONEXISTANT)
+		}
+	}
+
+	def get(id: Int) = UserAction.async { req =>
+		val request = for {
+			contact <- Contacts if contact.owner === req.user && contact.user === id
+			user <- Users if user.id === id
+ 		} yield user
+
+		request.headOption.map { user =>
+			user.map(u => Ok(u.toJson)).getOrElse(NotFound('CONTACTS_GET_NONEXISTANT))
 		}
 	}
 }

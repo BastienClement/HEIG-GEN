@@ -11,10 +11,10 @@ Pas encore de communication client-serveur suite à un changement de plan apre�
 Nous pensons conserver une interface Socket lorsque l’application est ouverte uniquement pour permettre des notifications push au client Android (au lieu d’utiliser les services GCM). Le protocol du socket est donc grandement simplifié et sera défini lors d’une futur itération.
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 
-####Antoine####
+####Antoine (5H/5H)####
 
 * Apprendre les bases du développement Scala
-	* J’ai commencé à apprendre le langage Scala. Je vais devoir également étudier le framework Play que l’on va utiliser pour faire le serveur.
+	* J'ai mis en place mon environnement de développement. J’ai commencé à apprendre le langage Scala. Je vais devoir également étudier le framework Play que l’on va utiliser pour faire le serveur.
 * Définition de la première version du protocole de communication
 	* Nous avions d’abord prévu d’utiliser un connexion TCP ainsi qu’un protocole de communication binaire, mais après discussion avec l’assistant, nous allons mettre en place une communication REST en JSON et une communication TCP pour les notifications de type PUSH. Nous devons donc encore en parler avant de tout mettre en place.
 	* J’ai également commencé à mettre en place une communication simple du côté client.
@@ -78,31 +78,60 @@ Mise en place des fonctionnalités de création / suppression de compte et de 
 
 ##Bilan itération 3##
 ###Objectif###
-TODO
+Mise en place des fonctionnalités de recherche et de gestion de contacts
 ###Avancement###
-TODO
-###Bilans personnels (Temps prévus/ Temps consacré)###
-TODO
+Le projet avance bien, le refactoring de l'assistant nous a permis d'avoir un code plus propre côté client mais nous a fait perdre un peu de temps pour la fusion et l'adpation à la nouvelle architecture. Nous avons un petit retard sur la gestion des contacts mais ça devrait être rapidement rattrapé maintenant que tout est en place.
 
-####Antoine (TODO/TODO)####
+Du côté serveur tout se passe bien.
+
+###Bilans personnels (Temps prévus/ Temps consacré)###
+
+####Antoine (9H/5H)####
 
 * Ajouter les fonctionnalités de recherche et de gestion de contact au protocole de communicaton.
-	* ...
+	* Comme l'assistant a refactoré le client et Amel a fait des changements en même temps, j'ai dû fusionner les deux ce qui m'a pris pas mal de temps. J'ai également dû faire refonctionner le login et le register (itération 2).
+	* J'ai créé les classes RequestPUT et RequestDelete pour l'envoi de requête HTTP PUT et DELETE.
+	* J'ai créé l'activité ContactViewActivity qui permet de voir les messages envoyés avec un contact.
+	* J'ai implémenté le bouton suppression d'un contact, mais je n'ai pas encore pu le tester
+	* J'ai fait fonctionner la récupération du token pendant l'authentification/enregistrement.
+	* J'ai fait fonctionner les fonctions GetToken et SetToken du client.
+	* J'ai commencé à récupérer la liste des contacts afin de les afficher.
+	* J'ai créé l'activité de recherche d'utilisateurs, mais je n'ai pas encore remplis la liste des utilisateurs.
 * Implémenter la recherche et la gestion de client au niveau du client.
-	* ...
+	* Je n'ai pas eu le temps d'implémenter la recherche et la gestion car j'ai d'abord du faire fonctionner le login/register et fusionner les deux projets.
 
-####Bastien (TODO/TODO)####
+####Bastien (5h/4h)####
 
-* TODO
+* Implémenter la recherche et de gestion de contacts au niveau du serveur
 
-####Guillaume (TODO/TODO)####
+La fonctionnalité a été implémentée sans difficulté. L'API REST est entièrement fonctionnelle pour les opérations de gestion de contacts.
 
-* TODO
+Le temps supplémentaire relatif à la planification est lié à la mise de mécanisme de traitement d'erreur au niveau du serveur qui ne sont pas directement liés à la gestion de contact. Il est maintenant plus aisé de communiquer un échec au client de l'API et le serveur devrait maintenant retourner les exceptions non-attrapées au consommateur de l'API en format JSON.
 
-####Amel (TODO/TODO)####
+Par la suite, il sera possible de se baser sur le status administrateur du client pour déterminer si l'exception doit ou non être détaillée.
 
-* TODO
+####Guillaume (4h/5h)####
 
+* Implémenter la gestion des comptes et de connexion au niveau du client 
+	* Compréhension et intégration du client v2 refactoré par l'assistant.
+	* Login / obtention du token  fonctionnel
+* Implémenter la recherche et la gestion de contact au niveau du client
+	* Recherche fonctionelle sur liste de contacts codées en dur
+	* Suite à l'intégration du client v2, pas encore pu 
+* Ajout de l’interface de recherche de contact
+	* Interface de recherche fonctionelle
+
+####Amel (5h/5h)####
+
+* Ajout de l'interface de recherche de contact
+	* Création d'une interface pour lister les contacts de l'utilisateur
+	* Possibilité de faire un recherche avec un widget SearchView (passé un peu de temps à comprendre comment configurer la recherche avec un Adapter, et comment personnaliser l'affichage)
+	* La sélection d'un contact permet d'accéder à l'interface de gestion du contact
+	* Pas encore réussi à charger la liste de contacts directement depuis le serveur
+* Ajout de l'interface de gestion de contact
+	* Création d'une première version de l'interface de gestion d'un contact
+	* Récupère le contact passé en paramètre depuis l'activité précédente
+	* Pour l'instant l'interface contient seulement un bouton pour supprimer le contact (fonctionnel)
 
 ##Bilan itération 4##
 ###Objectif###
@@ -112,9 +141,9 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (TODO/TODO)####
+####Antoine (3H/5H)####
 
-* TODO
+J'ai pu rattraper le retard de l'itération précédente. J'ai fait fonctionner la recherche et l'ajout de contacts, l'affichage de la liste des contacts et la suppression d'un contact.
 
 ####Bastien (TODO/TODO)####
 

@@ -25,6 +25,7 @@ POST          /api/chats/:id/members              controllers.api.DummyControlle
 DELETE        /api/chats/:id/members/:user        controllers.api.DummyController.nyi2(id, user)
 
 GET           /api/contacts                       controllers.api.ContactsController.list
+GET           /api/contacts/:id                   controllers.api.ContactsController.get(id: Int)
 PUT           /api/contacts/:id                   controllers.api.ContactsController.add(id: Int)
 DELETE        /api/contacts/:id                   controllers.api.ContactsController.delete(id: Int)
 

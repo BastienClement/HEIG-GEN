@@ -28,7 +28,7 @@ public class RequestGET extends Communication<String> {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             // TODO: Add your header name for the token !
-            connection.setRequestProperty("custom_header_name_for_token", token);
+            connection.setRequestProperty("X-Auth-Token", token);
             connection.setRequestProperty("connection", "close");
             int status = connection.getResponseCode();
             InputStream is;
