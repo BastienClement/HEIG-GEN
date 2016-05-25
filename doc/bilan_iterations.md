@@ -141,9 +141,10 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (3H/5H)####
+####Antoine (4H/5H)####
 
 J'ai pu rattraper le retard de l'itération précédente. J'ai fait fonctionner la recherche et l'ajout de contacts, l'affichage de la liste des contacts et la suppression d'un contact.
+J'ai également ajouté l'affichage des erreurs dans le client.
 
 ####Bastien (TODO/TODO)####
 
