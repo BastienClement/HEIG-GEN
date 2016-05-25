@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,9 +37,6 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_list);
-
-        // enable back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Create adapter
         adapter = new ArrayAdapter<User>(this, R.layout.contacts_list_item);
@@ -138,5 +136,10 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         // start contact search activity
         Intent intent = new Intent(ContactListActivity.this, ContactSearchActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Do nothing
     }
 }

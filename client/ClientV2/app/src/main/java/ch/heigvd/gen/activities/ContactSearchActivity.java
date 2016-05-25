@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -139,6 +140,16 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
             }, Utils.getToken(this), BASE_URL + GET_ALL_USERS).execute();
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

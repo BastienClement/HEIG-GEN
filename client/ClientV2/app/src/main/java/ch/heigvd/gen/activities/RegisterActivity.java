@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -30,6 +31,9 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         init();
+
+        // enable back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void createAccount(final View view) {
@@ -81,5 +85,15 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
         login = (EditText)findViewById(R.id.login);
         passwordBox = (EditText)findViewById(R.id.password);
         passwordConfirmationBox = (EditText)findViewById(R.id.passwordConfirmation);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
