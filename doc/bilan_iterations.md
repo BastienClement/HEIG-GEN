@@ -135,7 +135,7 @@ Par la suite, il sera possible de se baser sur le status administrateur du clien
 
 ##Bilan itération 4##
 ###Objectif###
-TODO
+Mise en place des discussions privées
 ###Avancement###
 TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
@@ -143,9 +143,12 @@ TODO
 
 ####Antoine (4H/5H)####
 
-J'ai pu rattraper le retard de l'itération précédente. J'ai fait fonctionner la recherche et l'ajout de contacts, l'affichage de la liste des contacts et la suppression d'un contact.
+J'ai pu rattraper le retard de l'itération précédente. J'ai fait fonctionner la recherche et l'ajout de contacts, l'affichage de la liste des contacts, la suppression d'un contact et les boutons de retour en arrière.
+
 J'ai également ajouté l'affichage des erreurs dans le client.
-J'ai fait fonctionner les boutons de retour en arrière.
+
+*	Ajouter les fonctionnalités de création de discussion privée, d’envoi de messages et d’historique au protocole de communication. 
+*	Implémenter la gestion de l’historique de discussion au niveau du serveur. 3h
 
 ####Bastien (TODO/TODO)####
 
