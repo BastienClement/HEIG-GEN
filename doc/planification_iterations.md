@@ -69,7 +69,7 @@ protocole de communication 3h
 * Finaliser l’interface utilisateur pour la création de compte et la connexion 3h 
 * Commencer la rédaction du rapport final 2h
 
-###Temp consacré### 
+###Temp consacré###
 environ 20 heures (5 heures par personne)
 
 ##Plan itération 3##
