@@ -44,7 +44,7 @@ Mise en place des fonctionnalités de création / suppression de compte et de 
 	* Ces fonctionnalités seront implémentées au niveau du code, mais leur intégration à l’interface utilisateur se fera lors des itérations suivantes (itérations 3 et 5).
 	*Il sera néamoins possible de voir qu’une commande de déconnection est recue coté serveur.
 	*Lors d’une suppression de compte, il sera possible de voir qu’une commande de suppression est recue coté serveur et que les informations du compte sont effectivement supprimées de la base de données.
-* Commencer la rédaction du rapport final, avec la structure des chapitres (Gestion : Rédaction)
+* Commencer la rédaction du rapport final, avec la structure des chapitres (Gestion : Rédaction).
 
 ###Durée###
 1 semaine
