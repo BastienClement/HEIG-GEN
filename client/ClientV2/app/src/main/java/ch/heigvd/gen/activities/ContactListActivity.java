@@ -41,6 +41,35 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         // Create adapter
         adapter = new ArrayAdapter<User>(this, R.layout.contacts_list_item);
 
+        // Load self pref
+        try {
+            new RequestGET(new ICallback<String>() {
+                @Override
+                public void success(String result) {
+                    try{
+                        JSONObject json = new JSONObject(result);
+                        Utils.setToken(ContactListActivity.this, json.getString("id"));
+                        Log.i(TAG, "Id : " + json.getString("id"));
+                    } catch (Exception ex){
+                        Log.e(TAG, ex.getMessage());
+                    }
+                    Log.i(TAG, "Success : " + result);
+                }
+
+                @Override
+                public void failure(Exception ex) {
+                    try {
+                        Utils.showAlert(ContactListActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                    Log.e(TAG, ex.getMessage());
+                }
+            }, Utils.getToken(this), BASE_URL + GET_SELF).execute();
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
+        }
+
         loadContacts();
 
         // fill listview

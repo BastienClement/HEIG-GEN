@@ -14,6 +14,8 @@
         android:id="@+id/email_login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/write_message"
         android:gravity="clip_vertical|center_horizontal"
         android:orientation="vertical">
 
@@ -36,5 +38,12 @@
             android:id="@+id/message_list" />
 
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/write_message"
+        android:layout_width="match_parent"
+        android:hint="write your message..."
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

@@ -23,6 +23,18 @@ public final class Utils {
         editor.commit();
     }
 
+    public static int getId(final Activity a) {
+        SharedPreferences prefs = a.getSharedPreferences("Authentication", Context.MODE_PRIVATE);
+        return prefs.getInt("Id", 0);
+    }
+
+    public static void setId(final Activity a, final int id) {
+        SharedPreferences prefs = a.getSharedPreferences("Authentication", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("Id", id);
+        editor.commit();
+    }
+
     public static String getUser(final Activity a) {
         SharedPreferences prefs = a.getSharedPreferences("Authentication", Context.MODE_PRIVATE);
         return prefs.getString("User", "");
