@@ -19,13 +19,17 @@ lundi 9 mai
 ###Partage du travail, les heures sont indiquées par semaine###
 ####Antoine####
 * Apprendre les bases du développement Scala 3h o Définition de la première version du protocole de communication 2h
+
 ####Bastien####
 * Création de la base de données 2h o Mise en place de la communication côté serveur 2h
+
 ####Guillaume####
 * Apprendre les bases du développement Android 3h o Mise en place de la communication côté client 2h
+
 ####Amel####
 * Apprendre les bases du développement Android 3h o Première ébauche de l’interface de connexion 2h
-###Temp consacre###́
+
+###Temp consacré###
 environ 19 heures par semaines (38 heures au total)
 
 ##Plan itération 2##
