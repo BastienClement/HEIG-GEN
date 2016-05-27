@@ -149,7 +149,7 @@ Par la suite, il sera possible de se baser sur le status administrateur du clien
 ###Objectif###
 Mise en place des discussions privées
 ###Avancement###
-TODO
+Création d'une discussion privée coté client.
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
