@@ -160,15 +160,21 @@ J'ai pu rattraper le retard de l'itération précédente. J'ai fait fonctionner 
 J'ai également ajouté l'affichage des erreurs dans le client.
 
 *	Ajouter les fonctionnalités de création de discussion privée, d’envoi de messages et d’historique au protocole de communication. 
-*	Implémenter la gestion de l’historique de discussion au niveau du serveur. 3h
+*	Implémenter la gestion de l’historique de discussion au niveau du serveur. 
+
 
 ####Bastien (5H/5h)####
 
 * TODO
 
-####Guillaume (TODO/TODO)####
+####Guillaume (5H/5H)####
 
-* TODO
+* Implémenter la création / suppression de discussion, l’envoi de messages et l’affichage de l’historique au niveau du client
+	* Modification de ContactViewActivity, qui permet de modéliser une discussion contenant la liste de messages passé
+	* La suppression de discussion correspond à la suppression du contact
+	* En attente de l'implémentation des messages cotés serveur
+* Continuer la rédaction du rapport
+	*  Ajout d'un fichier planification_iterations.md sur le git, avec la planif mise en forme. Mise à jour de bilan_iteration.md avec les dates.
 
 ####Amel (TODO/TODO)####
 
