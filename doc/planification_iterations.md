@@ -9,6 +9,7 @@ Création de la base de données et mise en place d’une première### commun
 * Définir une première version du protocole de communication (Gestion : Conception)
 * Réaliser une première communication entre le client et le serveur (Développement de l’infrastructure)
 Cet objectif est un pré-requis de tous les cas d’utilisation. A l’issue de l’itération, il sera possible de vérifier qu’un message simple a bien été transmis du client au serveur.
+
 ###Durée###
 2 semaines
 ###Date de début###
