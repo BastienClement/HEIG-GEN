@@ -2,7 +2,7 @@
 ##Plan itération 1##
 
 ###Objectif général###
-Création de la base de données et mise en place d’une première### communication simple entre client-serveur
+Création de la base de données et mise en place d’une première communication simple entre client-serveur
 ###Objectifs détaillés###
 * Apprendre les bases du développement Scala et Android (Gestion)
 * Mettre en place la base de données (Développement de l’infrastructure)
@@ -69,7 +69,8 @@ protocole de communication 3h
 * Finaliser l’interface utilisateur pour la création de compte et la connexion 3h 
 * Commencer la rédaction du rapport final 2h
 
-###Temp consacré### : environ 20 heures (5 heures par personne)
+###Temp consacré### 
+environ 20 heures (5 heures par personne)
 
 ##Plan itération 3##
 ###Objectif général###
@@ -179,7 +180,9 @@ niveau du serveur
 
 ####Amel####
 * Ajout de l’interface de gestion de groupes
-###Temp consacré### : environ 20 heures (5 heures par personne)
+
+###Temp consacré###
+environ 20 heures (5 heures par personne)
 
 ##Plan itération 6##
 ###Objectif général###
@@ -212,7 +215,9 @@ lundi 13 juin
 
 ####Amel####
 * Ajouter les options de signalement et de blocage aux différentes interfaces utilisateur
-* Finaliser les différentes interfaces
-###Temp consacré### : environ 20 heures (5 heures par personne)
+* Finaliser les différentes interfaces.
+
+###Temp consacré###
+environ 20 heures (5 heures par personne)
 
 
