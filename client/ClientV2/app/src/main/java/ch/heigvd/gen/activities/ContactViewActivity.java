@@ -9,6 +9,10 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +22,7 @@ import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.Message;
+import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
 
@@ -81,20 +86,26 @@ public class ContactViewActivity extends AppCompatActivity implements IRequests 
     @Override
     public void onResume()
     {  // After a pause OR at startup
-        System.out.println(b.getInt("id"));
         super.onResume();
-        // Check if it is still a contact
-        new RequestGET(new ICallback<String>() {
-            @Override
-            public void success(String result) {
-                Log.i(TAG, "Success : " + result);
-            }
+        try {
+            Log.i(TAG, "Token : " + Utils.getToken(this));
+            new RequestGET(new ICallback<String>() {
+                @Override
+                public void success(String result) {
 
-            @Override
-            public void failure(Exception ex) {
-                //finish();
-            }
-        }, Utils.getToken(ContactViewActivity.this), BASE_URL + GET_CONTACT + b.getInt("id")).execute();
+                    Log.i(TAG, "Success : " + result);
+                }
+
+                @Override
+                public void failure(Exception ex) {
+                    finish();
+                    Log.e(TAG, ex.getMessage());
+                }
+            }, Utils.getToken(this), BASE_URL + GET_CONTACT + b.getInt("id")).execute();
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
+        }
+
     }
 
     @Override

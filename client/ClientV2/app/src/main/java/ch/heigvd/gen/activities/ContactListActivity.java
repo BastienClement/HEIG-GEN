@@ -42,35 +42,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         adapter = new ArrayAdapter<User>(this, R.layout.contacts_list_item);
 
         // Load self pref
-        try {
-            new RequestGET(new ICallback<String>() {
-                @Override
-                public void success(String result) {
-                    try{
-                        JSONObject json = new JSONObject(result);
-                        Utils.setToken(ContactListActivity.this, json.getString("id"));
-                        Log.i(TAG, "Id : " + json.getString("id"));
-                    } catch (Exception ex){
-                        Log.e(TAG, ex.getMessage());
-                    }
-                    Log.i(TAG, "Success : " + result);
-                }
-
-                @Override
-                public void failure(Exception ex) {
-                    try {
-                        Utils.showAlert(ContactListActivity.this, new JSONObject(ex.getMessage()).getString("err"));
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
-                    }
-                    Log.e(TAG, ex.getMessage());
-                }
-            }, Utils.getToken(this), BASE_URL + GET_SELF).execute();
-        } catch (Exception ex) {
-            Log.e(TAG, ex.getMessage());
-        }
-
-        loadContacts();
+        loadSelfPref();
 
         // fill listview
         final ListView listView = (ListView) findViewById(R.id.contact_list);
@@ -165,6 +137,36 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         // start contact search activity
         Intent intent = new Intent(ContactListActivity.this, ContactSearchActivity.class);
         startActivity(intent);
+    }
+
+    private void loadSelfPref(){
+        try {
+            new RequestGET(new ICallback<String>() {
+                @Override
+                public void success(String result) {
+                    try{
+                        JSONObject json = new JSONObject(result);
+                        Utils.setId(ContactListActivity.this, json.getInt("id"));
+                        Log.i(TAG, "Id : " + json.getString("id"));
+                    } catch (Exception ex){
+                        Log.e(TAG, ex.getMessage());
+                    }
+                    Log.i(TAG, "Success : " + result);
+                }
+
+                @Override
+                public void failure(Exception ex) {
+                    try {
+                        Utils.showAlert(ContactListActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                    Log.e(TAG, ex.getMessage());
+                }
+            }, Utils.getToken(this), BASE_URL + GET_SELF).execute();
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
+        }
     }
 
     @Override
