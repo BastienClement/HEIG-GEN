@@ -1,8 +1,13 @@
 #Bilan des Itérations#
 ##Bilan itération 1##
-###Durée### : 2 semaines
-###Date de début### : vendredi 22 avril
-###Date de fin### : lundi 9 mai
+
+###Durée###
+2 semaines
+###Date de début###
+vendredi 22 avril
+###Date de fin###
+lundi 9 mai
+
 ###Objectif###
 Création de la base de données et mise en place d’une première communication simple entre client-serveur.
 ###Avancement###
@@ -42,9 +47,14 @@ Début de l’apprentissage d’Android. Création du projet client avec une p
 	* Première version de l’activité Login, avec le placement de boutons, de champs textes et de boutons radio. Pas mal de recherche pour trouver les attributs nécessaires pour placer correctement les éléments (alignements, espaces entre les éléments, etc.).
 
 ##Bilan itération 2##
-###Durée### : 1 semaine
-###Date de début### : mardi 10 mai 
-###Date de fin### : lundi 16 mai 
+
+###Durée###
+1 semaine
+###Date de début###
+mardi 10 mai 
+###Date de fin###
+lundi 16 mai 
+
 ###Objectif###
 Mise en place des fonctionnalités de création / suppression de compte et de connexion.
 ###Avancement###
@@ -83,9 +93,12 @@ Mise en place des fonctionnalités de création / suppression de compte et de 
 
 
 ##Bilan itération 3##
-###Durée### : 1 semaine
-###Date de début : mardi 17 mai
-###Date de fin : lundi 23 mai
+###Durée###
+1 semaine
+###Date de début###
+mardi 17 mai
+###Date de fin###
+lundi 23 mai
 ###Objectif###
 Mise en place des fonctionnalités de recherche et de gestion de contacts
 ###Avancement###
@@ -143,9 +156,12 @@ Par la suite, il sera possible de se baser sur le status administrateur du clien
 	* Pour l'instant l'interface contient seulement un bouton pour supprimer le contact (fonctionnel)
 
 ##Bilan itération 4##
-###Durée### : 1 semaine
-###Date de début### : mardi 24 mai 
-###Date de fin### : lundi 30 mai 
+###Durée###
+1 semaine
+###Date de début###
+mardi 24 mai 
+###Date de fin###
+lundi 30 mai 
 ###Objectif###
 Mise en place des discussions privées
 ###Avancement###
@@ -182,9 +198,14 @@ J'ai également ajouté l'affichage des erreurs dans le client.
 
 
 ##Bilan itération 5##
-###Durée### : 1 semaines
-###Date de début### : mardi 31 mai 
-###Date de fin### : lundi 6 juin 
+###Durée###
+1 semaines
+###Date de début###
+mardi 31 mai 
+###Date de fin###
+lundi 6 juin 
+
+###Partage du travail, les heures sont indiquées par semaine###
 ###Objectif###
 TODO
 ###Avancement###
@@ -210,9 +231,13 @@ TODO
 
 
 ##Bilan itération 6##
-###Durée### : 1 semaines
-###Date de début### : mardi 7 juin
-###Date de fin### : lundi 13 juin
+###Durée###
+1 semaines
+###Date de début###
+mardi 7 juin
+###Date de fin###
+lundi 13 juin
+
 ###Objectif###
 TODO
 ###Avancement###

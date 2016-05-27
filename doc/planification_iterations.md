@@ -52,6 +52,7 @@ Mise en place des fonctionnalités de création / suppression de compte et de 
 mardi 10 mai 
 ###Date de fin###
 lundi 16 mai 
+
 ###Partage du travail, les heures sont indiquées par semaine###
 
 ####Antoine####
@@ -88,8 +89,9 @@ un utilisateur dans un groupe public
 1 semaine
 ###Date de début###
 mardi 17 mai
-###Date de fin
-###lundi 23 mai
+###Date de fin###
+lundi 23 mai
+
 ###Partage du travail, les heures sont indiquées par semaine###
 
 ####Antoine####
