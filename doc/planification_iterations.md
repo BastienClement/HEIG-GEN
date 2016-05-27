@@ -69,7 +69,7 @@ protocole de communication 3h
 * Finaliser l’interface utilisateur pour la création de compte et la connexion 3h 
 * Commencer la rédaction du rapport final 2h
 
-###Temp consacre###́ : environ 20 heures (5 heures par personne)
+###Temp consacré### : environ 20 heures (5 heures par personne)
 
 ##Plan itération 3##
 ###Objectif général###
@@ -81,7 +81,7 @@ Mise en place des fonctionnalités de recherche et de gestion de contacts
 * Cas d’utilisation réalisés partiellement : Créer une discussion privée, Ajouter
 un utilisateur dans un groupe public
 * La fonctionnalité de recherche est utilisée dans plusieurs cas d’utilisation. La réalisation complète de ces cas d’utilisation se fera lors des itérations suivantes.
-* Continuer la rédaction du rapport final (Gestion : Rédaction) 
+* Continuer la rédaction du rapport final (Gestion : Rédaction).
 
 ###Durée###
 1 semaine
@@ -118,7 +118,7 @@ Mise en place des discussions privées
 * Cas d’utilisation réalisés complètement : Créer une discussion privée, Envoyer un message, Consulter les messages, Charger les messages de l’historique
 * Cas d’utilisation réalisés partiellement : Créer un groupe de discussion public
 * Une discussion publique est une extension d’une discussion privée, donc certaines fonctionnalités seront identiques. La réalisation complète de ce cas d’utilisation se fera lors des itérations suivantes.
-* Continuer la rédaction du rapport final (Gestion : Rédaction) 
+* Continuer la rédaction du rapport final (Gestion : Rédaction).
 
 ###Durée###
 1 semaine
@@ -154,7 +154,7 @@ Création de discussion publique (discussion de groupe)
 * Ajouter les fonctionnalités de discussion publique (créer, supprimer, rejoindre), et de gestion des membres (ajouter, supprimer, promouvoir administrateur de groupe) d’une discussion publique au protocole de communication (Gestion : Conception)
 * Implémenter toutes les fonctionnalités relatives aux discussions publiques au niveau du serveur et du client, ainsi que les interfaces utilisateur correspondantes (Développement des fonctionnalités)
 * Cas d’utilisation réalisés complètement : Rejoindre une discussion publique, Créer un groupe de discussion public, Supprimer un utilisateur d’un groupe de discussion public, Quitter un groupe, Ajouter un utilisateur dans un groupe
-* Continuer la rédaction du rapport final (Gestion : Rédaction) 
+* Continuer la rédaction du rapport final (Gestion : Rédaction).
 
 ###Durée###
 1 semaines
@@ -188,7 +188,7 @@ Signalement et blocage
 * Ajouter les fonctionnalités de signalement de message et de blocage d’utilisateur au protocole de communication (Gestion : Conception)
 * Implémenter toutes les fonctionnalités relatives au signalement de message et de blocage d’utilisateur au niveau du serveur et du client, ainsi que les interfaces utilisateur correspondantes (Développement des fonctionnalités)
 * Cas d’utilisation réalisés complètement : Consulter les signalements d’un groupe public, Consulter les reports d’un groupe privé, Reporter un autre utilisateur
-* Terminer la première version du rapport final (Gestion : Rédaction) Durée : 1 semaine
+* Terminer la première version du rapport final (Gestion : Rédaction).
 
 ###Durée###
 1 semaines
