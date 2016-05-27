@@ -45,6 +45,7 @@ Mise en place des fonctionnalités de création / suppression de compte et de 
 	*Il sera néamoins possible de voir qu’une commande de déconnection est recue coté serveur.
 	*Lors d’une suppression de compte, il sera possible de voir qu’une commande de suppression est recue coté serveur et que les informations du compte sont effectivement supprimées de la base de données.
 * Commencer la rédaction du rapport final, avec la structure des chapitres (Gestion : Rédaction)
+
 ###Durée###
 1 semaine
 ###Date de début###
@@ -52,17 +53,22 @@ mardi 10 mai
 ###Date de fin###
 lundi 16 mai 
 ###Partage du travail, les heures sont indiquées par semaine###
+
 ####Antoine####
 * Ajouter les fonctionnalités de gestion de compte et de connexion au
 protocole de communication 3h
 * Interfacer l’application serveur avec la base de données 2h
+
 ####Bastien####
 * Implémenter la gestion des comptes et de connexion au niveau du serveur 5h
+
 ####Guillaume####
 * Implémenter la gestion des comptes et de connexion au niveau du client 5h
+
 ####Amel####
 * Finaliser l’interface utilisateur pour la création de compte et la connexion 3h 
 * Commencer la rédaction du rapport final 2h
+
 ###Temp consacre###́ : environ 20 heures (5 heures par personne)
 
 ##Plan itération 3##
@@ -76,6 +82,7 @@ Mise en place des fonctionnalités de recherche et de gestion de contacts
 un utilisateur dans un groupe public
 * La fonctionnalité de recherche est utilisée dans plusieurs cas d’utilisation. La réalisation complète de ces cas d’utilisation se fera lors des itérations suivantes.
 * Continuer la rédaction du rapport final (Gestion : Rédaction) 
+
 ###Durée###
 1 semaine
 ###Date de début###
@@ -83,17 +90,22 @@ mardi 17 mai
 ###Date de fin
 ###lundi 23 mai
 ###Partage du travail, les heures sont indiquées par semaine###
+
 ####Antoine####
 * Ajouter les fonctionnalités de recherche et de gestion de contact au protocole de communication. 3h
 * Implémenter la recherche et de gestion de contact au niveau du client. 2h
+
 ####Bastien####
 * Implémenter la recherche et de gestion de contact au niveau du serveur
+
 ####Guillaume####
 * Implémenter la gestion des comptes et de connexion au niveau du client o Implémenter la recherche et la gestion de contact au niveau du client
 * Ajout de l’interface de recherche de contact
+
 ####Amel####
 * Ajout de l’interface de gestion de contact
 * Ajout de l’interface de recherche de contact
+
 ###Temp consacré###
 environ 20 heures (5 heures par personne)
 
@@ -107,6 +119,7 @@ Mise en place des discussions privées
 * Cas d’utilisation réalisés partiellement : Créer un groupe de discussion public
 * Une discussion publique est une extension d’une discussion privée, donc certaines fonctionnalités seront identiques. La réalisation complète de ce cas d’utilisation se fera lors des itérations suivantes.
 * Continuer la rédaction du rapport final (Gestion : Rédaction) 
+
 ###Durée###
 1 semaine
 ###Date de début###
@@ -114,18 +127,23 @@ mardi 24 mai
 ###Date de fin###
 lundi 30 mai 
 ###Partage du travail, les heures sont indiquées par semaine###
+
 ####Antoine####
 * Ajouter les fonctionnalités de création de discussion privée, d’envoi de
 messages et d’historique au protocole de communication. 2h
 * Implémenter la gestion de l’historique de discussion au niveau du serveur. 3h
+
 ####Bastien####
 * Implémenter la création / suppression de discussion, l’envoi de messages au
 niveau du serveur
+
 ####Guillaume####
 * Implémenter la création / suppression de discussion, l’envoi de messages et l’affichage de l’historique au niveau du client
 * Continuer la rédaction du rapport
+
 ####Amel####
 * Ajout de l’interface de création et d’affichage de discussion.
+
 ###Temp consacré###
 environ 20 heures (5 heures par personne)
 
@@ -137,6 +155,7 @@ Création de discussion publique (discussion de groupe)
 * Implémenter toutes les fonctionnalités relatives aux discussions publiques au niveau du serveur et du client, ainsi que les interfaces utilisateur correspondantes (Développement des fonctionnalités)
 * Cas d’utilisation réalisés complètement : Rejoindre une discussion publique, Créer un groupe de discussion public, Supprimer un utilisateur d’un groupe de discussion public, Quitter un groupe, Ajouter un utilisateur dans un groupe
 * Continuer la rédaction du rapport final (Gestion : Rédaction) 
+
 ###Durée###
 1 semaines
 ###Date de début###
@@ -144,16 +163,20 @@ mardi 31 mai
 ###Date de fin###
 lundi 6 juin 
 ###Partage du travail, les heures sont indiquées par semaine###
+
 ####Antoine####
 * Ajouter toutes les fonctionnalités relatives aux discussions publiques au
 protocole de communication. 3h
 * Aider Bastien et Guillaume pour implémenter les fonctionnalités au niveau serveur ou client. 2h
+
 ####Bastien####
 * Implémenter toutes les fonctionnalités relatives aux discussions publiques au
 niveau du serveur
+
 ####Guillaume####
 * Implémenter toutes les fonctionnalités relatives aux discussions publiques au niveau du client
 * Extension de l’interface d’affichage de discussion privée pour gérer les discussions publiques
+
 ####Amel####
 * Ajout de l’interface de gestion de groupes
 ###Temp consacré### : environ 20 heures (5 heures par personne)
@@ -166,6 +189,7 @@ Signalement et blocage
 * Implémenter toutes les fonctionnalités relatives au signalement de message et de blocage d’utilisateur au niveau du serveur et du client, ainsi que les interfaces utilisateur correspondantes (Développement des fonctionnalités)
 * Cas d’utilisation réalisés complètement : Consulter les signalements d’un groupe public, Consulter les reports d’un groupe privé, Reporter un autre utilisateur
 * Terminer la première version du rapport final (Gestion : Rédaction) Durée : 1 semaine
+
 ###Durée###
 1 semaines
 ###Date de début###
@@ -173,15 +197,19 @@ mardi 7 juin
 ###Date de fin###
 lundi 13 juin
 ###Partage du travail, les heures sont indiquées par semaine###
+
 ####Antoine####
 * Ajouter les fonctionnalités de signalement de message et de blocage d’utilisateur au protocole de communication. 3h
 * Terminer la première version du rapport final. 2h
+
 ####Bastien####
 * Implémenter toutes les fonctionnalités relatives au signalement de message et de blocage d’utilisateur au niveau du serveur
 * Finaliser l’application serveur
+
 ####Guillaume####
 * Implémenter toutes les fonctionnalités relatives au signalement de message et de blocage d’utilisateur au niveau du client
 * Finaliser l’application cliente et les différentes interfaces
+
 ####Amel####
 * Ajouter les options de signalement et de blocage aux différentes interfaces utilisateur
 * Finaliser les différentes interfaces
