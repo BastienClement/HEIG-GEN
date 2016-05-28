@@ -18,3 +18,5 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-mocha" % "1.1.0")
 addSbtPlugin("org.irundaia.sbt" % "sbt-sassify" % "1.4.2")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.9")
+
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.1.1")
