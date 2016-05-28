@@ -1,7 +1,9 @@
 package ch.heigvd.gen.utilities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 
 import org.json.JSONException;
@@ -18,6 +20,18 @@ public final class Utils {
         SharedPreferences prefs = a.getSharedPreferences("Authentication", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("Token", token);
+        editor.commit();
+    }
+
+    public static int getId(final Activity a) {
+        SharedPreferences prefs = a.getSharedPreferences("Authentication", Context.MODE_PRIVATE);
+        return prefs.getInt("Id", 0);
+    }
+
+    public static void setId(final Activity a, final int id) {
+        SharedPreferences prefs = a.getSharedPreferences("Authentication", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("Id", id);
         editor.commit();
     }
 
@@ -48,5 +62,18 @@ public final class Utils {
             throw e;
         }
         return result;
+    }
+
+    public static void showAlert(Context context, String message){
+        new AlertDialog.Builder(context)
+                .setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

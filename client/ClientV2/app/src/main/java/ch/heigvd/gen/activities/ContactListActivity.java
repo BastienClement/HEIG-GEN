@@ -5,11 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,25 +29,20 @@ import ch.heigvd.gen.utilities.Utils;
 
 public class ContactListActivity extends AppCompatActivity implements IRequests{
 
-    private final static String TAG = ContactListActivity.class.getSimpleName();
+    ArrayAdapter adapter = null;
 
-    // simple test contacts
-    private User[] contactsArray = { new User(1, "Amel"), new User(2, "Antoine"), new User(3, "Bastien"), new User(4, "Guillaume")};
+    private final static String TAG = ContactListActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_list);
 
-        // enable back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Create adapter
+        adapter = new ArrayAdapter<User>(this, R.layout.contacts_list_item);
 
-        // todo : load contacts (local storage)
-        loadContacts();
-
-        // create adapter
-        // TODO : Order by last message
-        ArrayAdapter adapter = new ArrayAdapter<User>(this, R.layout.contacts_list_item, contactsArray);
+        // Load self pref
+        loadSelfPref();
 
         // fill listview
         final ListView listView = (ListView) findViewById(R.id.contact_list);
@@ -92,16 +92,85 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
             new RequestGET(new ICallback<String>() {
                 @Override
                 public void success(String result) {
+                    JSONArray jsonArray = null;
+                    try {
+                        jsonArray = new JSONArray(result);
+                        adapter.clear();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonUser = jsonArray.getJSONObject(i);
+                            adapter.add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin")));
+                        }
+
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    // TODO : Order by last message
+
                     Log.i(TAG, "Success : " + result);
                 }
 
                 @Override
                 public void failure(Exception ex) {
+                    try {
+                        Utils.showAlert(ContactListActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
                     Log.e(TAG, ex.getMessage());
                 }
             }, Utils.getToken(this), BASE_URL + GET_CONTACTS).execute();
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }
+    }
+
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        //Refresh your stuff here
+        loadContacts();
+    }
+
+    public void addContact(final View view){
+        // start contact search activity
+        Intent intent = new Intent(ContactListActivity.this, ContactSearchActivity.class);
+        startActivity(intent);
+    }
+
+    private void loadSelfPref(){
+        try {
+            new RequestGET(new ICallback<String>() {
+                @Override
+                public void success(String result) {
+                    try{
+                        JSONObject json = new JSONObject(result);
+                        Utils.setId(ContactListActivity.this, json.getInt("id"));
+                        Log.i(TAG, "Id : " + json.getString("id"));
+                    } catch (Exception ex){
+                        Log.e(TAG, ex.getMessage());
+                    }
+                    Log.i(TAG, "Success : " + result);
+                }
+
+                @Override
+                public void failure(Exception ex) {
+                    try {
+                        Utils.showAlert(ContactListActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                    Log.e(TAG, ex.getMessage());
+                }
+            }, Utils.getToken(this), BASE_URL + GET_SELF).execute();
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Do nothing
     }
 }

@@ -38,6 +38,9 @@
         <activity
             android:name=".activities.ContactViewActivity"
             android:label="View contact"/>
+        <activity
+            android:name=".activities.ContactSearchActivity"
+            android:label="Search contact"/>
     </application>
 
 

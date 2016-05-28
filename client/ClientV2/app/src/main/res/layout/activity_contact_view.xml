@@ -7,13 +7,16 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ch.heigvd.gen.activities.ContactViewActivity">
+    tools:context="ch.heigvd.gen.activities.ContactViewActivity"
+    android:gravity="center_vertical|center_horizontal">
 
     <LinearLayout
         android:id="@+id/email_login_form"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/write_message"
+        android:gravity="clip_vertical|center_horizontal"
         android:orientation="vertical">
 
         <TextView
@@ -22,14 +25,25 @@
             android:id="@+id/contact_name"
             android:textSize="32dp"
             android:padding="10dp"
-            android:onClick="onClick"
-            android:clickable="true" />
+            android:clickable="false"
+            android:nestedScrollingEnabled="false"
+            android:gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="editContact" />
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="189dp"
             android:id="@+id/message_list" />
 
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/write_message"
+        android:layout_width="match_parent"
+        android:hint="write your message..."
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

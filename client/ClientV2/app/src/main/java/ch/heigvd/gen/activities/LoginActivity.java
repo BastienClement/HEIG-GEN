@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import ch.heigvd.gen.R;
@@ -78,6 +79,11 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
 
                     @Override
                     public void failure(Exception ex) {
+                        try {
+                            Utils.showAlert(LoginActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                        } catch (JSONException e) {
+                            Log.e(TAG, e.getMessage());
+                        }
                         Log.e(TAG, ex.getMessage());
                     }
                 }, Utils.getToken(this), BASE_URL + LOGIN, content).execute();

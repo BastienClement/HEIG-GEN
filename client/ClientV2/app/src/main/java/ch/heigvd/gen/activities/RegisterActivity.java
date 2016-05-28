@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import ch.heigvd.gen.R;
@@ -29,6 +31,9 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         init();
+
+        // enable back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void createAccount(final View view) {
@@ -62,6 +67,11 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
 
                     @Override
                     public void failure(Exception ex) {
+                        try {
+                            Utils.showAlert(RegisterActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                        } catch (JSONException e) {
+                            Log.e(TAG, e.getMessage());
+                        }
                         Log.e(TAG, ex.getMessage());
                     }
                 }, Utils.getToken(this), BASE_URL + REGISTER, content).execute();
@@ -75,5 +85,15 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
         login = (EditText)findViewById(R.id.login);
         passwordBox = (EditText)findViewById(R.id.password);
         passwordConfirmationBox = (EditText)findViewById(R.id.passwordConfirmation);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

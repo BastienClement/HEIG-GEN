@@ -12,8 +12,8 @@
     <LinearLayout
         android:id="@+id/email_login_form"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
+        android:layout_height="match_parent"
+        android:gravity="clip_vertical|center_horizontal"
         android:orientation="vertical">
 
         <TextView
@@ -23,7 +23,8 @@
             android:textSize="32dp"
             android:padding="10dp"
             android:clickable="false"
-            android:nestedScrollingEnabled="false" />
+            android:nestedScrollingEnabled="false"
+            android:gravity="center_horizontal" />
 
         <Button
             android:id="@+id/remove_button"
@@ -36,7 +37,8 @@
             android:text="Remove"
             android:width="120dp"
             android:textStyle="bold"
-            android:clickable="true" />
+            android:clickable="true"
+            android:onClick="removeContact" />
 
     </LinearLayout>
 
