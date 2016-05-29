@@ -13,16 +13,15 @@ GET           /api/users/self                     controllers.api.UsersControlle
 DELETE        /api/users/self                     controllers.api.UsersController.delete
 GET           /api/users/:id                      controllers.api.UsersController.user(id: Int)
 
-GET           /api/chats                          controllers.api.DummyController.nyi0
-POST          /api/chats                          controllers.api.DummyController.nyi0
-GET           /api/chats/:id                      controllers.api.DummyController.nyi1(id)
-DELETE        /api/chats/:id                      controllers.api.DummyController.nyi1(id)
-GET           /api/chats/:id/messages             controllers.api.DummyController.nyi1(id)
-POST          /api/chats/:id/messages             controllers.api.DummyController.nyi1(id)
-DELETE        /api/chats/:id/messages/:msg        controllers.api.DummyController.nyi2(id, msg)
-GET           /api/chats/:id/members              controllers.api.DummyController.nyi1(id)
-POST          /api/chats/:id/members              controllers.api.DummyController.nyi1(id)
-DELETE        /api/chats/:id/members/:user        controllers.api.DummyController.nyi2(id, user)
+GET           /api/chats                          controllers.api.ChatController.list
+POST          /api/chats                          controllers.api.ChatController.create
+GET           /api/chats/:id                      controllers.api.ChatController.info(id: Int)
+DELETE        /api/chats/:id                      controllers.api.ChatController.delete(id: Int)
+GET           /api/chats/:id/messages             controllers.api.ChatController.messages(id: Int)
+POST          /api/chats/:id/messages             controllers.api.ChatController.post(id: Int)
+GET           /api/chats/:id/members              controllers.api.ChatController.members(id: Int)
+PUT           /api/chats/:id/members/:user        controllers.api.ChatController.invite(id: Int, user: Int)
+DELETE        /api/chats/:id/members/:user        controllers.api.ChatController.kick(id: Int, user: Int)
 
 GET           /api/contacts                       controllers.api.ContactsController.list
 GET           /api/contacts/:id                   controllers.api.ContactsController.get(id: Int)

@@ -7,12 +7,12 @@ case class Message(id: Int, conversation: Int, user: Int, date: DateTime, body: 
 
 class Messages(tag: Tag) extends Table[Message](tag, "messages") {
 	def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
-	def conversation = column[Int]("fk_conversation")
+	def chat = column[Int]("fk_conversation")
 	def user = column[Int]("fk_user")
 	def date = column[DateTime]("date")
 	def body = column[String]("body")
 
-	def * = (id, conversation, user, date, body) <> (Message.tupled, Message.unapply)
+	def * = (id, chat, user, date, body) <> (Message.tupled, Message.unapply)
 }
 
 object Messages extends TableQuery(new Messages(_)) {
