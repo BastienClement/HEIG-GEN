@@ -1,5 +1,13 @@
 #Bilan des Itérations#
 ##Bilan itération 1##
+
+###Durée###
+2 semaines
+###Date de début###
+vendredi 22 avril
+###Date de fin###
+lundi 9 mai
+
 ###Objectif###
 Création de la base de données et mise en place d’une première communication simple entre client-serveur.
 ###Avancement###
@@ -39,6 +47,14 @@ Début de l’apprentissage d’Android. Création du projet client avec une p
 	* Première version de l’activité Login, avec le placement de boutons, de champs textes et de boutons radio. Pas mal de recherche pour trouver les attributs nécessaires pour placer correctement les éléments (alignements, espaces entre les éléments, etc.).
 
 ##Bilan itération 2##
+
+###Durée###
+1 semaine
+###Date de début###
+mardi 10 mai 
+###Date de fin###
+lundi 16 mai 
+
 ###Objectif###
 Mise en place des fonctionnalités de création / suppression de compte et de connexion.
 ###Avancement###
@@ -77,6 +93,12 @@ Mise en place des fonctionnalités de création / suppression de compte et de 
 
 
 ##Bilan itération 3##
+###Durée###
+1 semaine
+###Date de début###
+mardi 17 mai
+###Date de fin###
+lundi 23 mai
 ###Objectif###
 Mise en place des fonctionnalités de recherche et de gestion de contacts
 ###Avancement###
@@ -134,25 +156,43 @@ Par la suite, il sera possible de se baser sur le status administrateur du clien
 	* Pour l'instant l'interface contient seulement un bouton pour supprimer le contact (fonctionnel)
 
 ##Bilan itération 4##
+###Durée###
+1 semaine
+###Date de début###
+mardi 24 mai 
+###Date de fin###
+lundi 30 mai 
 ###Objectif###
-TODO
+Mise en place des discussions privées
 ###Avancement###
-TODO
+Création d'une discussion privée coté client.
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (4H/5H)####
+####Antoine (7H/5H)####
 
-J'ai pu rattraper le retard de l'itération précédente. J'ai fait fonctionner la recherche et l'ajout de contacts, l'affichage de la liste des contacts et la suppression d'un contact.
+J'ai pu rattraper le retard de l'itération précédente. J'ai fait fonctionner la recherche et l'ajout de contacts, l'affichage de la liste des contacts, la suppression d'un contact et les boutons de retour en arrière.
+
 J'ai également ajouté l'affichage des erreurs dans le client.
 
-####Bastien (TODO/TODO)####
+J'ai commencé à mettre en place la vue de discussion 1 à 1 avec Guillaume, et nous avons préparé l'adapteur qui sera utilisé pour l'affichage de la conversation.
+
+*	Ajouter les fonctionnalités de création de discussion privée, d’envoi de messages et d’historique au protocole de communication. 
+*	Implémenter la gestion de l’historique de discussion au niveau du serveur. 
+
+
+####Bastien (5H/5h)####
 
 * TODO
 
-####Guillaume (TODO/TODO)####
+####Guillaume (5H/5H)####
 
-* TODO
+* Implémenter la création / suppression de discussion, l’envoi de messages et l’affichage de l’historique au niveau du client
+	* Modification de ContactViewActivity, qui permet de modéliser une discussion contenant la liste de messages passé
+	* La suppression de discussion correspond à la suppression du contact
+	* En attente de l'implémentation des messages cotés serveur
+* Continuer la rédaction du rapport
+	*  Ajout d'un fichier planification_iterations.md sur le git, avec la planif mise en forme. Mise à jour de bilan_iteration.md avec les dates.
 
 ####Amel (TODO/TODO)####
 
@@ -160,6 +200,14 @@ J'ai également ajouté l'affichage des erreurs dans le client.
 
 
 ##Bilan itération 5##
+###Durée###
+1 semaines
+###Date de début###
+mardi 31 mai 
+###Date de fin###
+lundi 6 juin 
+
+###Partage du travail, les heures sont indiquées par semaine###
 ###Objectif###
 TODO
 ###Avancement###
@@ -185,6 +233,13 @@ TODO
 
 
 ##Bilan itération 6##
+###Durée###
+1 semaines
+###Date de début###
+mardi 7 juin
+###Date de fin###
+lundi 13 juin
+
 ###Objectif###
 TODO
 ###Avancement###

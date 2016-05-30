@@ -8,8 +8,6 @@ public class User implements Comparable<User> {
     private final String username;
     private final boolean admin;
 
-    private static List<User> users;
-
     public User(final int id, final String username, final boolean admin) {
         this.id = id;
         this.username = username;

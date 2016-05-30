@@ -84,7 +84,7 @@ trait ApiActionBuilder {
 			request.headers.get("X-Auth-Token").flatMap(Crypto.check).filter(checkExpires).map(build[A] _)
 
 		/** Failure to authenticate */
-		def failure = Future.successful(Unauthorized(JsNull))
+		def failure = Future.successful(Unauthorized('UNAUTHORIZED))
 
 		/** Invoke the action's block */
 		override def invokeBlock[A](request: Request[A], block: ApiRequest[A] => Future[Result]) =

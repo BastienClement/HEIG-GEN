@@ -24,7 +24,7 @@ class AuthController @Inject()(implicit val ec: ExecutionContext, val conf: Conf
 	  *
 	  * @param user the user authenticated by the token
 	  */
-	def genToken(implicit user: User): String = {
+	private def genToken(implicit user: User): String = {
 		val token = Json.obj("user" -> user.id, "admin" -> user.admin, "expires" -> (DateTime.now + 1.year))
 		Crypto.sign(token)
 	}

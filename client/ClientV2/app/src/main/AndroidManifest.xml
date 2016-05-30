@@ -36,7 +36,7 @@
             android:name=".activities.ContactEditActivity"
             android:label="Edit contact"/>
         <activity
-            android:name=".activities.ContactViewActivity"
+            android:name=".activities.ContactDiscussionActivity"
             android:label="View contact"/>
         <activity
             android:name=".activities.ContactSearchActivity"
