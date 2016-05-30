@@ -64,4 +64,8 @@ public final class Utils {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+
+    public static void getUser(int id){
+
+    }
 }
