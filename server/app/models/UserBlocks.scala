@@ -5,7 +5,7 @@ import util.DateTime
 
 case class UserBlock(user: Int, blocked: Int, date: DateTime)
 
-class UserBlocks(tag: Tag) extends Table[UserBlock](tag, "messages") {
+class UserBlocks(tag: Tag) extends Table[UserBlock](tag, "user_block") {
 	def user = column[Int]("user")
 	def blocked = column[Int]("blockedUser")
 	def date = column[DateTime]("date")

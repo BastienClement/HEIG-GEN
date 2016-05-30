@@ -61,7 +61,8 @@ object DateTime {
 			case str: JsString => JsSuccess(DateTime.parse(str.as[String]))
 			case _ => JsError()
 		}
-		def writes(dt: DateTime) = Json.obj("$date" -> dt.toISOString)
+		//def writes(dt: DateTime) = Json.obj("$date" -> dt.toISOString)
+		def writes(dt: DateTime) = JsString(dt.toISOString)
 	}
 
 	implicit def toJsValueWrapper(dt: DateTime): JsValueWrapper = implicitly[Format[DateTime]].writes(dt)
@@ -134,7 +135,7 @@ class DateTime private (val instant: Instant) {
 
 	// String format
 	override def toString = s"DateTime($toISOString)"
-	def toISOString = date.format(DateTime.isoFormat)
+	lazy val toISOString = date.format(DateTime.isoFormat)
 
 	// SQL Timestamp
 	private lazy val toTimestamp = {
@@ -143,4 +144,11 @@ class DateTime private (val instant: Instant) {
 		cal.set(Calendar.MILLISECOND, 0)
 		new Timestamp(cal.getTimeInMillis)
 	}
+
+	override def equals(o: Any): Boolean = o match {
+		case dt: DateTime => toISOString == dt.toISOString
+		case _ => false
+	}
+
+	override def hashCode: Int = toISOString.hashCode
 }
