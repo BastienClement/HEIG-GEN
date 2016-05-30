@@ -169,13 +169,17 @@ Création d'une discussion privée coté client.
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (7H/5H)####
+####Antoine (9H/5H)####
 
 J'ai pu rattraper le retard de l'itération précédente. J'ai fait fonctionner la recherche et l'ajout de contacts, l'affichage de la liste des contacts, la suppression d'un contact et les boutons de retour en arrière.
 
 J'ai également ajouté l'affichage des erreurs dans le client.
 
 J'ai commencé à mettre en place la vue de discussion 1 à 1 avec Guillaume, et nous avons préparé l'adapteur qui sera utilisé pour l'affichage de la conversation.
+
+J'ai implémenté la réception des messages depuis le serveur et leur affichage dans la fenêtre de discussion que j'ai renommé en ContactDiscussionActivity.
+
+J'ai implémenté le bouton d'envoi pour que les messages soient bien envoyés sur le serveur.
 
 *	Ajouter les fonctionnalités de création de discussion privée, d’envoi de messages et d’historique au protocole de communication. 
 *	Implémenter la gestion de l’historique de discussion au niveau du serveur. 
