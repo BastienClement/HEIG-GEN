@@ -13,7 +13,9 @@ import util.Implicits.futureWrapper
 @Singleton
 class ContactsController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration)
 		extends Controller with ApiActionBuilder {
-
+	/**
+	  * Fetches the contacts list.
+	  */
 	def list = UserAction.async { req =>
 		val request = for {
 			contact <- Contacts.filter(_.owner === req.user)
@@ -25,6 +27,9 @@ class ContactsController @Inject()(implicit val ec: ExecutionContext, val conf: 
 		}
 	}
 
+	/**
+	  * Adds a new user as contact.
+	  */
 	def add(user: Int) = UserAction.async { req =>
 		if (user == req.user) {
 			BadRequest('CONTACTS_ADD_SELF)
@@ -39,6 +44,9 @@ class ContactsController @Inject()(implicit val ec: ExecutionContext, val conf: 
 		}
 	}
 
+	/**
+	  * Deletes an user from contacts.
+	  */
 	def delete(user: Int) = UserAction.async { req =>
 		Contacts.filter(c => c.owner === req.user && c.user === user).delete.run.map { count =>
 			if (count > 0) NoContent
@@ -46,6 +54,9 @@ class ContactsController @Inject()(implicit val ec: ExecutionContext, val conf: 
 		}
 	}
 
+	/**
+	  * Fetches information about a contact.
+	  */
 	def get(id: Int) = UserAction.async { req =>
 		val request = for {
 			contact <- Contacts if contact.owner === req.user && contact.user === id

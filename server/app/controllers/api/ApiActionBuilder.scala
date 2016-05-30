@@ -6,7 +6,6 @@ import play.api.Configuration
 import play.api.http.Writeable
 import play.api.libs.json.Json.JsValueWrapper
 import play.api.libs.json._
-import play.api.mvc.Results._
 import play.api.mvc._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
@@ -25,7 +24,7 @@ case class ApiRequest[A](user: Int, admin: Boolean, request: Request[A]) extends
   * Mixin trait for API controllers.
   * The controller must be injected with conf and an execution context.
   */
-trait ApiActionBuilder {
+trait ApiActionBuilder extends Controller {
 	implicit val conf: Configuration
 	implicit val ec: ExecutionContext
 
@@ -61,8 +60,12 @@ trait ApiActionBuilder {
 	private def wrap[R, A](block: R => Future[Result]): R => Future[Result] = {
 		(req: R) => {
 			try {
-				block(req)
+				block(req).recover {
+					case err: ApiException => err.status.apply(writeSymbol(err.sym))
+					case err: Throwable => InternalServerError('UNCAUGHT_EXCEPTION.withCause(err))
+				}
 			} catch {
+				case err: ApiException => err.status.apply(writeSymbol(err.sym))
 				case err: Throwable => InternalServerError('UNCAUGHT_EXCEPTION.withCause(err))
 			}
 		}
@@ -70,7 +73,6 @@ trait ApiActionBuilder {
 
 	/** An authenticated user action */
 	object UserAction extends ActionBuilder[ApiRequest] {
-
 		/** Builds a new ApiRequest from a verified token */
 		def build[A](token: JsObject)(implicit request: Request[A]) =
 			ApiRequest((token \ "user").as[Int], (token \ "admin").as[Boolean], request)
@@ -95,6 +97,9 @@ trait ApiActionBuilder {
 	object UnauthenticatedApiAction extends ActionBuilder[Request] {
 		override def invokeBlock[A](request: Request[A], block: Request[A] => Future[Result]) = wrap(block)(request)
 	}
+
+	/** API exception */
+	case class ApiException(sym: Symbol, status: Status = InternalServerError) extends Exception
 
 	/** A placeholder for not implemented actions */
 	def NotYetImplemented = Action { req => NotImplemented('NOT_YET_IMPLEMENTED) }

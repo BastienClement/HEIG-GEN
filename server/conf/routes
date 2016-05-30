@@ -5,31 +5,41 @@
 # An example controller showing a sample home page
 GET           /                                   controllers.HomeController.index
 
+# Authentication
 POST          /api/auth                           controllers.api.AuthController.token
 POST          /api/register                       controllers.api.AuthController.register
 
+# Users
 GET           /api/users                          controllers.api.UsersController.list
 GET           /api/users/self                     controllers.api.UsersController.self
 DELETE        /api/users/self                     controllers.api.UsersController.delete
 GET           /api/users/:id                      controllers.api.UsersController.user(id: Int)
 
-GET           /api/chats                          controllers.api.ChatController.list
-POST          /api/chats                          controllers.api.ChatController.create
-GET           /api/chats/:id                      controllers.api.ChatController.info(id: Int)
-DELETE        /api/chats/:id                      controllers.api.ChatController.delete(id: Int)
-GET           /api/chats/:id/messages             controllers.api.ChatController.messages(id: Int)
-POST          /api/chats/:id/messages             controllers.api.ChatController.post(id: Int)
-GET           /api/chats/:id/members              controllers.api.ChatController.members(id: Int)
-PUT           /api/chats/:id/members/:user        controllers.api.ChatController.invite(id: Int, user: Int)
-DELETE        /api/chats/:id/members/:user        controllers.api.ChatController.kick(id: Int, user: Int)
+# Groups
+GET           /api/groups                          controllers.api.ChatController.list
+POST          /api/groups                          controllers.api.ChatController.create
+GET           /api/groups/:id                      controllers.api.ChatController.info(id: Int)
+DELETE        /api/groups/:id                      controllers.api.ChatController.delete(id: Int)
+GET           /api/groups/:id/messages             controllers.api.ChatController.messages(id: Int)
+POST          /api/groups/:id/messages             controllers.api.ChatController.post(id: Int)
+GET           /api/groups/:id/members              controllers.api.ChatController.members(id: Int)
+PUT           /api/groups/:id/members/:user        controllers.api.ChatController.invite(id: Int, user: Int)
+DELETE        /api/groups/:id/members/:user        controllers.api.ChatController.kick(id: Int, user: Int)
 
+# Contacts
 GET           /api/contacts                       controllers.api.ContactsController.list
 GET           /api/contacts/:id                   controllers.api.ContactsController.get(id: Int)
 PUT           /api/contacts/:id                   controllers.api.ContactsController.add(id: Int)
 DELETE        /api/contacts/:id                   controllers.api.ContactsController.delete(id: Int)
 
+# Private chat
+GET           /api/contacts/:id/messages          controllers.api.PrivateChatsController.list(id: Int)
+POST          /api/contacts/:id/messages          controllers.api.PrivateChatsController.post(id: Int)
+
+# Test
 GET           /api/test                           controllers.api.AuthController.test
 
+# Catch All
 GET           /api/*path                          controllers.api.DummyController.undefined(path)
 POST          /api/*path                          controllers.api.DummyController.undefined(path)
 PUT           /api/*path                          controllers.api.DummyController.undefined(path)
