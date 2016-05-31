@@ -7,22 +7,22 @@ import java.util.Date;
  */
 public class Message {
     private int id;
-    private User from;
+    private int from;
     private String content;
     private Date date;
 
-    public Message(User from, String content, Date date, int id) {
+    public Message(int from, String content, Date date, int id) {
         this.from = from;
         this.content = content;
         this.date = date;
         this.id = id;
     }
 
-    public User getFrom() {
+    public int getFrom() {
         return from;
     }
 
-    public void setFrom(User from) {
+    public void setFrom(int from) {
         this.from = from;
     }
 

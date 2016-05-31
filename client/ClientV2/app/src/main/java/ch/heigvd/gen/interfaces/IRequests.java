@@ -11,4 +11,6 @@ public interface IRequests {
 
     String GET_CONTACTS = "contacts";
     String GET_CONTACT = "contacts/";
+
+    String GET_MESSAGES = "/messages";
 }

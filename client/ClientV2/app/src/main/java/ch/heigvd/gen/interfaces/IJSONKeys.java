@@ -4,4 +4,5 @@ public interface IJSONKeys {
 
     String KEY_LOGIN = "user";
     String KEY_PASSWORD = "pass";
+    String KEY_MESSAGE = "text";
 }

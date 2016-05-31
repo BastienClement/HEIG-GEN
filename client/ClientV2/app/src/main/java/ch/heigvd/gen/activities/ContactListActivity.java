@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,12 +15,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.communications.RequestGET;
-import ch.heigvd.gen.communications.RequestPOST;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.User;
@@ -57,7 +52,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
                 final User item = (User) parent.getItemAtPosition(position);
 
                 // start contact edit activity
-                Intent intent = new Intent(ContactListActivity.this, ContactViewActivity.class);
+                Intent intent = new Intent(ContactListActivity.this, ContactDiscussionActivity.class);
                 Bundle b = new Bundle();
                 b.putString("contact", item.getUsername());
                 b.putInt("id", item.getId());

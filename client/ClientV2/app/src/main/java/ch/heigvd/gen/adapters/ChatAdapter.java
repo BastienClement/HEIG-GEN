@@ -42,9 +42,8 @@ public class ChatAdapter extends ArrayAdapter<Message>{
         // TODO: check who send the message ?
 
         // if own message :
-        if (message.getId() == Utils.getId(a)) {
+        if (message.getFrom() == Utils.getId(a)) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.own_message_list_item, parent, false);
-
         } else {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.other_message_list_item, parent, false);
 

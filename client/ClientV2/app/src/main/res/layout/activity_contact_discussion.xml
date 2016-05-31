@@ -7,8 +7,10 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ch.heigvd.gen.activities.ContactViewActivity"
-    android:gravity="center_vertical|center_horizontal">
+    tools:context=".activities.ContactDiscussionActivity"
+    android:gravity="center_vertical|center_horizontal"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:id="@+id/email_login_form"
@@ -34,7 +36,7 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="189dp"
+            android:layout_height="match_parent"
             android:id="@+id/message_list" />
 
     </LinearLayout>
@@ -44,6 +46,18 @@
         android:layout_width="match_parent"
         android:hint="write your message..."
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/send_message" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="->"
+        android:id="@+id/send_message"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:onClick="sendMessage" />
 
 </RelativeLayout>
