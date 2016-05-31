@@ -198,9 +198,14 @@ J'ai implémenté le bouton d'envoi pour que les messages soient bien envoyés s
 * Continuer la rédaction du rapport
 	*  Ajout d'un fichier planification_iterations.md sur le git, avec la planif mise en forme. Mise à jour de bilan_iteration.md avec les dates.
 
-####Amel (TODO/TODO)####
+####Amel (5h/5h)####
 
-* TODO
+* Ajout de l’interface de création et d’affichage de discussion
+	* Modifications de l'activité ContactViewActivity
+	* Ajout d'un bouton "Envoyer message" dans l'interface de gestion de contact
+* Ajout de l’interface de saisie de message
+	* Intégrée à l'interface de saisie de message
+* Correction de bugs dans l'interface de recherche de contacts
 
 
 ##Bilan itération 5##
