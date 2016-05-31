@@ -4,8 +4,10 @@ import com.google.inject.Inject
 import play.api.Configuration
 import play.api.mvc.{Action, Controller}
 import scala.concurrent.ExecutionContext
+import scala.util.Try
+import services.PushService
 
-class DummyController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration)
+class DummyController @Inject()(push: PushService)(implicit val ec: ExecutionContext, val conf: Configuration)
 		extends Controller with ApiActionBuilder {
 
 	def nyi0() = NotYetImplemented
@@ -14,5 +16,10 @@ class DummyController @Inject()(implicit val ec: ExecutionContext, val conf: Con
 
 	def undefined(path: String) = Action { req =>
 		NotFound('UNDEFINED_ACTION)
+	}
+
+	def events = UserAction.async { req =>
+		val from = req.getQueryString("from").flatMap(v => Try(Integer.parseInt(v)).toOption)
+		push.register(req.user, from).map(Ok(_))
 	}
 }

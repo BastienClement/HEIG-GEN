@@ -7,10 +7,12 @@ import play.api.Configuration
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc.Controller
 import scala.concurrent.ExecutionContext
+import scala.util.Success
+import services.PushService
 import util.DateTime
 
 @Singleton
-class PrivateChatsController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration)
+class PrivateChatsController @Inject()(push: PushService)(implicit val ec: ExecutionContext, val conf: Configuration)
 		extends Controller with ApiActionBuilder {
 
 	// TODO: check that user is a contact
@@ -34,6 +36,8 @@ class PrivateChatsController @Inject()(implicit val ec: ExecutionContext, val co
 	def post(user: Int) = UserAction.async(parse.json) { req =>
 		val text = (req.body \ "text").as[String]
 		val query = PrivateMessages insert PrivateMessage(0, req.user, user, DateTime.now, text)
-		query.run.map(m => Created(Json.obj("id" -> m.id)))
+		query.run.map(m => Created(Json.obj("id" -> m.id))).andThen {
+			case Success(msg) => push.send(user, Json.obj("type" -> "private_chat", "from" -> req.user))
+		}
 	}
 }
