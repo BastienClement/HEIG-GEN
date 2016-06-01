@@ -21,4 +21,11 @@ package object models {
 	implicit class DBIOActionExecutor[R](val q: DBIOAction[R, NoStream, Nothing]) extends AnyVal {
 		@inline def run = DB.run(q)
 	}
+
+	implicit class QueryTransformer[A, B, C, D](val query: Query[A, B, C]) extends AnyVal {
+		def optMap(opt: Option[D])(fn: (Query[A, B, C], D) => Query[A, B, C]) = opt match {
+			case Some(value) => fn(query, value)
+			case None => query
+		}
+	}
 }

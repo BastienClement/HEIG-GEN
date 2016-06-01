@@ -7,7 +7,7 @@ import play.api.Configuration
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc.Controller
 import scala.concurrent.ExecutionContext
-import scala.util.Success
+import scala.util.{Success, Try}
 import services.PushService
 import util.DateTime
 
@@ -23,7 +23,11 @@ class PrivateChatsController @Inject()(push: PushService)(implicit val ec: Execu
 	def list(user: Int) = UserAction.async { req =>
 		val query = PrivateMessages.filter { m =>
 			(m.from === req.user && m.to === user) || (m.from === user && m.to === req.user)
-		}.sortBy(m => m.date.desc)
+		}.sortBy(m => m.date.desc).optMap(req.getQueryStringAsInt("from")) { (q, from) =>
+			q.filter(_.id > from)
+		}.optMap(req.getQueryStringAsInt("limit")) { (q, limit) =>
+			q.take(limit)
+		}
 
 		query.run.map { list =>
 			Ok(JsArray(list.map(_.toJson)))
