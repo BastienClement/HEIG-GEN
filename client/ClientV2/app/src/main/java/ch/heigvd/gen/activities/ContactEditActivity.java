@@ -17,6 +17,7 @@ import ch.heigvd.gen.communications.RequestDELETE;
 import ch.heigvd.gen.communications.RequestPOST;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.IRequests;
+import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
 public class ContactEditActivity extends AppCompatActivity implements IRequests {
@@ -30,21 +31,15 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_edit);
 
-        // get contact
+        // get bundle
         b = getIntent().getExtras();
-        String contact = null;
-        int id;
-        if(b != null) {
-            contact = b.getString("contact");
-            id = b.getInt("id");
-        }
 
         // enable back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // set contact name
         TextView title = (TextView) findViewById(R.id.contact_name);
-        title.setText(contact);
+        title.setText(b.getString("user_name"));
     }
 
     public void removeContact(final View view) {
@@ -52,8 +47,9 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
             new RequestDELETE(new ICallback<String>() {
                 @Override
                 public void success(String result) {
-                    finish();
+                    User.deleteById(b.getInt("user_id"));
                     Log.i(TAG, "Success : " + result);
+                    finish();
                 }
 
                 @Override
@@ -65,7 +61,7 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
                     }
                     Log.e(TAG, ex.getMessage());
                 }
-            }, Utils.getToken(ContactEditActivity.this), BASE_URL + GET_CONTACT + b.getInt("id")).execute();
+            }, Utils.getToken(ContactEditActivity.this), BASE_URL + GET_CONTACT + b.getInt("user_id")).execute();
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }

@@ -15,7 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
@@ -29,17 +29,22 @@ import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.IJSONKeys;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.Message;
+import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
 
 public class ContactDiscussionActivity extends AppCompatActivity implements IRequests, IJSONKeys {
 
-    private List<Message> list = new LinkedList<>();
     private ChatAdapter adapter;
     private Bundle b = null;
 
     private final static String TAG = ContactDiscussionActivity.class.getSimpleName();
 
+    /**
+     * TODO
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,21 +52,12 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
 
         // get contact
         b = getIntent().getExtras();
-        String contact = null;
-        int id;
-        if(b != null) {
-            contact = b.getString("contact");
-            id = b.getInt("id");
-        }
 
         // enable back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Get the list of messages
-        loadMessages();
-
         // Create the ChatAdapter
-        adapter = new ChatAdapter(this, R.layout.other_message_list_item, list);
+        adapter = new ChatAdapter(this, R.layout.other_message_list_item, User.findById(b.getInt("user_id")).getMessages());
 
         // fill listview
         final ListView listView = (ListView) findViewById(R.id.message_list);
@@ -72,49 +68,15 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
 
         // set contact name
         TextView title = (TextView) findViewById(R.id.contact_name);
-        title.setText(contact);
+        title.setText(b.getString("user_name"));
 
     }
 
-    private void loadMessages(){
-        // fill listview
-        final ListView listView = (ListView) findViewById(R.id.message_list);
-        new RequestGET(new ICallback<String>() {
-            @Override
-            public void success(String result) {
-                JSONArray jsonArray = null;
-                try {
-                    jsonArray = new JSONArray(result);
-                    adapter.clear();
-                    for (int i = jsonArray.length() - 1; i >= 0; i--) {
-                        JSONObject jsonMessage = jsonArray.getJSONObject(i);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                        adapter.add(new Message(jsonMessage.getInt("from"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
-                    }
-                    adapter.notifyDataSetChanged();
-                    listView.setSelection(adapter.getCount() - 1);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                // TODO : Order by last message
-
-                Log.i(TAG, "Success : " + result);
-            }
-
-            @Override
-            public void failure(Exception ex) {
-                try {
-                    Utils.showAlert(ContactDiscussionActivity.this, new JSONObject(ex.getMessage()).getString("err"));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                }
-                Log.e(TAG, ex.getMessage());
-            }
-        }, Utils.getToken(this), BASE_URL + GET_CONTACT + b.getInt("id") + GET_MESSAGES).execute();
-    }
-
+    /**
+     * TODO
+     *
+     * @param view
+     */
     public void editContact(final View view){
         // start contact search activity
         Intent intent = new Intent(ContactDiscussionActivity.this, ContactEditActivity.class);
@@ -122,6 +84,11 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
         startActivity(intent);
     }
 
+    /**
+     * TODO
+     *
+     * @param view
+     */
     public void sendMessage(final View view){
         final EditText text = (EditText) findViewById(R.id.write_message);
         if(TextUtils.isEmpty(text.getText())) {
@@ -135,8 +102,20 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
             new RequestPOST(new ICallback<String>() {
                 @Override
                 public void success(String result) {
-                    loadMessages();
+
+                    // Retrieve message to store it
+                    JSONObject json = null;
+                    try {
+                        json = new JSONObject(result);
+                        User.findById(b.getInt("user_id")).addMessage(new Message(Utils.getId(ContactDiscussionActivity.this), text.getText().toString(), new Date(), json.getInt("id")));
+                        adapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Empty editText
                     text.setText("");
+
                     Log.i(TAG, "Success : " + result);
                 }
 
@@ -149,40 +128,47 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
                     }
                     Log.e(TAG, ex.getMessage());
                 }
-            }, Utils.getToken(this), BASE_URL + GET_CONTACT + b.getInt("id") + GET_MESSAGES, content).execute();
+            }, Utils.getToken(this), BASE_URL + GET_CONTACT + b.getInt("user_id") + GET_MESSAGES, content).execute();
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }
     }
 
     /**
+     * After a pause OR at startup
+     *
      * TODO : BACK BUTTON MUST WORK WITH THE MANIFEST (SETPARENT)
      */
     @Override
     public void onResume()
-    {  // After a pause OR at startup
+    {
         super.onResume();
         try {
             Log.i(TAG, "Token : " + Utils.getToken(this));
             new RequestGET(new ICallback<String>() {
                 @Override
                 public void success(String result) {
-
                     Log.i(TAG, "Success : " + result);
                 }
 
                 @Override
                 public void failure(Exception ex) {
-                    finish();
                     Log.e(TAG, ex.getMessage());
+                    finish();
                 }
-            }, Utils.getToken(this), BASE_URL + GET_CONTACT + b.getInt("id")).execute();
+            }, Utils.getToken(this), BASE_URL + GET_CONTACT + b.getInt("user_id")).execute();
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }
 
     }
 
+    /**
+     * TODO
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
