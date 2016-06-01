@@ -33,17 +33,14 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme"/>
         <activity
-            android:name=".activities.ContactEditActivity"
-            android:label="Edit contact"
-            android:parentActivityName="ch.heigvd.gen.activities.ContactDiscussionActivity"/>
-        <activity
             android:name=".activities.ContactDiscussionActivity"
-            android:label="View contact"
-            android:parentActivityName="ch.heigvd.gen.activities.ContactListActivity"/>
+            android:label="View contact" />
         <activity
             android:name=".activities.ContactSearchActivity"
-            android:label="Search contact"
-            android:parentActivityName="ch.heigvd.gen.activities.ContactListActivity"/>
+            android:label="Search contact" />
+        <activity
+            android:name=".activities.ContactEditActivity"
+            android:label="Edit contact" />
     </application>
 
 

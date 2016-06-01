@@ -31,7 +31,6 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
 
     /**
      * TODO
-     *
      * @param savedInstanceState
      */
     @Override

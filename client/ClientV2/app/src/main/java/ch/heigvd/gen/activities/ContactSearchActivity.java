@@ -72,8 +72,8 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
                         @Override
                         public void success(String result) {
                             User.users.add(user);
-                            finish();
                             Log.i(TAG, "Success : " + result);
+                            finish();
                         }
 
                         @Override
@@ -152,6 +152,22 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
             }, Utils.getToken(this), BASE_URL + GET_ALL_USERS).execute();
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
+        }
+    }
+
+    /**
+     * TODO
+     *
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

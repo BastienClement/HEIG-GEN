@@ -124,7 +124,6 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
                         User.users.get(pos).addMessage(new Message(jsonMessage.getInt("from"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
                     }
-                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (ParseException e) {
@@ -195,6 +194,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
     {  // After a pause OR at startup
         super.onResume();
         // Refresh contacts
+        //adapter.clear();
         adapter.notifyDataSetChanged();
     }
 
