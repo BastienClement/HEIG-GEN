@@ -11,31 +11,28 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.LinkedList;
-import java.util.List;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.adapters.ChatAdapter;
 import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.communications.RequestPOST;
 import ch.heigvd.gen.interfaces.ICallback;
+import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IJSONKeys;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.Message;
 import ch.heigvd.gen.models.User;
+import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
  * TODO
  */
-public class ContactDiscussionActivity extends AppCompatActivity implements IRequests, IJSONKeys {
+public class ContactDiscussionActivity extends AppCompatActivity implements IRequests, IJSONKeys, ICustomCallback {
 
     private ChatAdapter adapter;
     private Bundle b = null;
@@ -54,6 +51,10 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
 
         // get contact
         b = getIntent().getExtras();
+
+        // Start event handler service
+        EventService.getInstance().setActivity(this, this);
+        EventService.getInstance().start();
 
         // enable back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -145,24 +146,10 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     public void onResume()
     {
         super.onResume();
-        try {
-            Log.i(TAG, "Token : " + Utils.getToken(this));
-            new RequestGET(new ICallback<String>() {
-                @Override
-                public void success(String result) {
-                    Log.i(TAG, "Success : " + result);
-                }
-
-                @Override
-                public void failure(Exception ex) {
-                    Log.e(TAG, ex.getMessage());
-                    finish();
-                }
-            }, Utils.getToken(this), BASE_URL + GET_CONTACT + b.getInt("user_id")).execute();
-        } catch (Exception ex) {
-            Log.e(TAG, ex.getMessage());
+        EventService.getInstance().setActivity(this, this);
+        if(User.findById(b.getInt("user_id")) == null){
+            finish();
         }
-
     }
 
     /**
@@ -179,5 +166,29 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * TODO
+     */
+    @Override
+    public void update() {
+        this.runOnUiThread(new Runnable(){
+            public void run(){
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        EventService.getInstance().removeActivity();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        EventService.getInstance().removeActivity();
     }
 }

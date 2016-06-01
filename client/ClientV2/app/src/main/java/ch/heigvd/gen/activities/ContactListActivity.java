@@ -1,9 +1,6 @@
 package ch.heigvd.gen.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,17 +17,15 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.interfaces.ICallback;
+import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.Message;
 import ch.heigvd.gen.models.User;
+import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
@@ -42,13 +37,11 @@ import ch.heigvd.gen.utilities.Utils;
  * TODO : Dans la recherche de contact, n'afficher que les contacts qui peuvent être ajouté (pas soit-même, ni ceux qu'on a déjà ajouté)
 
  */
-public class ContactListActivity extends AppCompatActivity implements IRequests{
+public class ContactListActivity extends AppCompatActivity implements IRequests, ICustomCallback{
 
     ArrayAdapter adapter = null;
 
     private final static String TAG = ContactListActivity.class.getSimpleName();
-
-    private boolean isActive = true;
 
     /**
      * TODO
@@ -60,15 +53,15 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_list);
 
-
+        // Start event handler service
+        EventService.getInstance().setActivity(this, this);
+        EventService.getInstance().start();
 
         // Load self pref
         loadSelfPref();
 
         // Load contacts
         loadContacts();
-
-        runEventHandler();
 
         // Create adapter
         adapter = new ArrayAdapter<User>(this, R.layout.contacts_list_item, User.users);
@@ -91,7 +84,6 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
                 b.putString("user_name", item.getUsername());
                 b.putInt("user_id", item.getId());
                 intent.putExtras(b);
-                isActive = false;
                 startActivity(intent);
             }
         });
@@ -114,30 +106,6 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
                 return true;
             }
         });
-    }
-
-    private void runEventHandler() {
-        new Thread() {
-            public void run() {
-                while (true) {
-                    try {
-                        runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                if(isActive) {
-                                    User.users.add(new User(10, "a", false));
-                                    adapter.notifyDataSetChanged();
-                                }
-                            }
-                        });
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
     }
 
     /**
@@ -221,26 +189,12 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
 
     /**
      * TODO
-     */
-    @Override
-    public void onResume()
-    {  // After a pause OR at startup
-        super.onResume();
-        // Refresh contacts
-        //adapter.clear();
-        isActive = true;
-        adapter.notifyDataSetChanged();
-    }
-
-    /**
-     * TODO
      *
      * @param view
      */
     public void addContact(final View view){
         // start contact search activity
         Intent intent = new Intent(ContactListActivity.this, ContactSearchActivity.class);
-        isActive = false;
         startActivity(intent);
     }
 
@@ -283,5 +237,45 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
     @Override
     public void onBackPressed() {
         // Do nothing
+    }
+
+    /**
+     * TODO
+     */
+    @Override
+    public void update() {
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /**
+     * TODO
+     */
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        // Refresh contacts
+        EventService.getInstance().setActivity(this, this);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        EventService.getInstance().removeActivity();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        /**
+         * TODO : Stop on application exit or log off
+         */
+        //EventService.getInstance().stop();
+        EventService.getInstance().removeActivity();
     }
 }
