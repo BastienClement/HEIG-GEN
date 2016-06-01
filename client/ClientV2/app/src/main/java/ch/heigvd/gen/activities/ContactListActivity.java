@@ -243,7 +243,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
     }
 
     /**
-     * TODO
+     * Do nothing so the user can't go back to the login activity with the back button after the login
      */
     @Override
     public void onBackPressed() {

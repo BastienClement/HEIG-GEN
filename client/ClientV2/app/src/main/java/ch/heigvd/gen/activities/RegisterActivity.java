@@ -102,20 +102,4 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
         passwordBox = (EditText)findViewById(R.id.password);
         passwordConfirmationBox = (EditText)findViewById(R.id.passwordConfirmation);
     }
-
-    /**
-     * TODO
-     *
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }

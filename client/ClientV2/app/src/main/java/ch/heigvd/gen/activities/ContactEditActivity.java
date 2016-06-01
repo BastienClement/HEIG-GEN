@@ -79,20 +79,4 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
             Log.e(TAG, ex.getMessage());
         }
     }
-
-    /**
-     * TODO
-     *
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }

@@ -137,9 +137,9 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     }
 
     /**
-     * After a pause OR at startup
+     * After a pause OR at startup check if the user is still a contact, if not finish the activity
+     * TODO : Faire le check sur la liste des users et pas faire une requête au serveur
      *
-     * TODO : BACK BUTTON MUST WORK WITH THE MANIFEST (SETPARENT)
      */
     @Override
     public void onResume()
@@ -164,21 +164,4 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
         }
 
     }
-
-    /**
-     * TODO
-     *
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
 }
