@@ -20,6 +20,9 @@ import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
+/**
+ * TODO
+ */
 public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequests {
 
     private final static String TAG = LoginActivity.class.getSimpleName();
@@ -29,6 +32,11 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
     private EditText passwordBox;
     private TextInputLayout server;
 
+    /**
+     * TODO
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +60,11 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
         });
     }
 
+    /**
+     * TODO
+     *
+     * @param view
+     */
     public void login(final View view) {
         if (login.getText().toString().isEmpty()) {
             login.setError(getString(R.string.error_required));
@@ -93,6 +106,11 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
         }
     }
 
+    /**
+     * TODO
+     *
+     * @param view
+     */
     public void register(final View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);

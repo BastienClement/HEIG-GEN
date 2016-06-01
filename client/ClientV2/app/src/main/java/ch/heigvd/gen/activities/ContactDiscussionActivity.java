@@ -32,7 +32,9 @@ import ch.heigvd.gen.models.Message;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
-
+/**
+ * TODO
+ */
 public class ContactDiscussionActivity extends AppCompatActivity implements IRequests, IJSONKeys {
 
     private ChatAdapter adapter;

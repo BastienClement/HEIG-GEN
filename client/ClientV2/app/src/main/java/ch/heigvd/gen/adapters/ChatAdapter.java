@@ -20,17 +20,35 @@ public class ChatAdapter extends ArrayAdapter<Message>{
 
     private Activity a;
 
+    /**
+     * TODO
+     *
+     * @param a
+     * @param res
+     * @param messages
+     */
     public ChatAdapter(final Activity a, final int res, final List<Message> messages) {
         super(a, res, messages);
         this.messages = messages;
         this.a = a;
     }
 
+    /**
+     * TODO
+     *
+     * @return
+     */
     @Override
     public int getCount() {
         return messages.size();
     }
 
+    /**
+     * TODO
+     *
+     * @param position
+     * @return
+     */
     @Override
     public Message getItem(int position) {
         return messages.get(position);

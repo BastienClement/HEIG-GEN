@@ -18,6 +18,9 @@ import ch.heigvd.gen.interfaces.IJSONKeys;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.utilities.Utils;
 
+/**
+ * TODO
+ */
 public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IRequests {
 
     private final static String TAG = RegisterActivity.class.getSimpleName();
@@ -26,6 +29,11 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
     private EditText passwordBox;
     private EditText passwordConfirmationBox;
 
+    /**
+     * TODO
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +44,11 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * TODO
+     *
+     * @param view
+     */
     public void createAccount(final View view) {
         if (login.getText().toString().isEmpty()) {
             login.setError(getString(R.string.error_required));
@@ -81,12 +94,21 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
         }
     }
 
+    /**
+     * TODO
+     */
     private void init() {
         login = (EditText)findViewById(R.id.login);
         passwordBox = (EditText)findViewById(R.id.password);
         passwordConfirmationBox = (EditText)findViewById(R.id.passwordConfirmation);
     }
 
+    /**
+     * TODO
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

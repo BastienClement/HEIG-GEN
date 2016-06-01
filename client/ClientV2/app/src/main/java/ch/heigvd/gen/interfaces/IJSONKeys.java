@@ -1,5 +1,8 @@
 package ch.heigvd.gen.interfaces;
 
+/**
+ * TODO
+ */
 public interface IJSONKeys {
 
     String KEY_LOGIN = "user";

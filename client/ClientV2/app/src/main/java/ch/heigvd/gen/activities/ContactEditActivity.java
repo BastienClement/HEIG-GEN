@@ -20,12 +20,20 @@ import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
+/**
+ * TODO
+ */
 public class ContactEditActivity extends AppCompatActivity implements IRequests {
 
     private final static String TAG = ContactEditActivity.class.getSimpleName();
 
     Bundle b = null;
 
+    /**
+     * TODO
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +50,11 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
         title.setText(b.getString("user_name"));
     }
 
+    /**
+     * TODO
+     *
+     * @param view
+     */
     public void removeContact(final View view) {
         try {
             new RequestDELETE(new ICallback<String>() {
@@ -67,6 +80,12 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
         }
     }
 
+    /**
+     * TODO
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

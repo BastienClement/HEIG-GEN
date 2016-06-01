@@ -28,12 +28,20 @@ import ch.heigvd.gen.models.Message;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
+/**
+ * TODO
+ */
 public class ContactListActivity extends AppCompatActivity implements IRequests{
 
     ArrayAdapter adapter = null;
 
     private final static String TAG = ContactListActivity.class.getSimpleName();
 
+    /**
+     * TODO
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,9 +101,17 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         });
     }
 
+    /**
+     * TODO
+     */
     private void loadEvents() {
     }
 
+    /**
+     * TODO
+     *
+     * @param pos
+     */
     private void loadMessages(final int pos){
         new RequestGET(new ICallback<String>() {
             @Override
@@ -129,6 +145,9 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         }, Utils.getToken(this), BASE_URL + GET_CONTACT + User.users.get(pos).getId() + GET_MESSAGES).execute();
     }
 
+    /**
+     * TODO
+     */
     private void loadContacts(){
         try {
             Log.i(TAG, "Token : " + Utils.getToken(this));
@@ -168,6 +187,9 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         }
     }
 
+    /**
+     * TODO
+     */
     @Override
     public void onResume()
     {  // After a pause OR at startup
@@ -176,12 +198,20 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * TODO
+     *
+     * @param view
+     */
     public void addContact(final View view){
         // start contact search activity
         Intent intent = new Intent(ContactListActivity.this, ContactSearchActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * TODO
+     */
     private void loadSelfPref(){
         try {
             new RequestGET(new ICallback<String>() {
@@ -212,6 +242,9 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         }
     }
 
+    /**
+     * TODO
+     */
     @Override
     public void onBackPressed() {
         // Do nothing

@@ -28,12 +28,20 @@ import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
+/**
+ * TODO
+ */
 public class ContactSearchActivity extends AppCompatActivity implements IRequests{
 
     private final static String TAG = ContactSearchActivity.class.getSimpleName();
 
     ArrayAdapter adapter = null;
 
+    /**
+     * TODO
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +112,9 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
         });
     }
 
+    /**
+     * TODO
+     */
     private void loadUsers(){
         try {
             Log.i(TAG, "Token : " + Utils.getToken(this));
@@ -144,6 +155,12 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
         }
     }
 
+    /**
+     * TODO
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
