@@ -224,13 +224,13 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (3H/5H)####
+####Antoine (7H/5H)####
 
 J'ai dû refactoré le code car on n'enregistrait pas la liste des utilisateurs et des messages et pour des questions de performance, il fallait la stocker dans l'application. J'ai également généré toute la javadoc des classes du client. 3h
 
 J'ai mis la fonctionnalité du bouton de retour dans le fichier manifest comme l'assistant m'avait dit de faire mais ça change le comportement et du coup j'ai du rollback. 1h
 
-J'ai commencé à réfléchir et regarder comment faire le système de notification depuis Android. (Faire une classe qui permette de mettre à jour les adapter des différentes vues en aller chercher les events sur le serveur).
+J'ai commencé à chercher comment faire le système de notification depuis Android. (Faire une classe qui permette de mettre à jour les adapteurs des différentes vues en allant chercher les events sur le serveur). J'ai trouvé une façon pas très propre et je cherche mieux. 3h
 
 * Ajouter toutes les fonctionnalités relatives aux discussions publiques au protocole de communication. 3h
 * Aider Bastien et Guillaume pour implémenter les fonctionnalités au niveau serveur ou client. 2h
