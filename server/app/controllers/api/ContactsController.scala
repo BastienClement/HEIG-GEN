@@ -34,8 +34,10 @@ class ContactsController @Inject()(implicit val ec: ExecutionContext, val conf: 
 		if (user == req.user) {
 			BadRequest('CONTACTS_ADD_SELF)
 		} else {
-			val query = Contacts += Contact(req.user, user)
-			query.run.map { _ =>
+			DBIO.seq(
+				Contacts += Contact(req.user, user),
+				Contacts += Contact(user, req.user)
+			).transactionally.run.map { _ =>
 				NoContent
 			}.recover {
 				case e: SQLException if e.getErrorCode == 1452 => UnprocessableEntity('CONTACTS_ADD_NONEXISTANT)

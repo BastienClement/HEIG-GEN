@@ -101,6 +101,12 @@ trait ApiActionBuilder extends Controller {
 	/** API exception */
 	case class ApiException(sym: Symbol, status: Status = InternalServerError) extends Exception
 
+	/** Accessor for queryString parameters */
+	implicit class QueryStringReader(val req: ApiRequest[_]) {
+		private def map[T](key: String)(mapper: String => Option[T]): Option[T] = req.getQueryString(key).flatMap(mapper)
+		def getQueryStringAsInt(key: String): Option[Int] = map(key) { s => Try(Integer.parseInt(s)).toOption }
+	}
+
 	/** A placeholder for not implemented actions */
 	def NotYetImplemented = Action { req => NotImplemented('NOT_YET_IMPLEMENTED) }
 }
