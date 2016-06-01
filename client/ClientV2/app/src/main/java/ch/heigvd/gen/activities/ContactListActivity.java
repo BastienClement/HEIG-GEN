@@ -1,6 +1,9 @@
 package ch.heigvd.gen.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,6 +22,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.communications.RequestGET;
@@ -30,12 +35,20 @@ import ch.heigvd.gen.utilities.Utils;
 
 /**
  * TODO
+ * TODO : Mettre toutes les String dans les fichiers de ressources fait pour
+ * TODO : Commenter/indenter/Trier imports
+ * TODO : Trier les utilisateurs par liste de derniers message
+ * TODO : Faire un bouton de déconnexion
+ * TODO : Dans la recherche de contact, n'afficher que les contacts qui peuvent être ajouté (pas soit-même, ni ceux qu'on a déjà ajouté)
+
  */
 public class ContactListActivity extends AppCompatActivity implements IRequests{
 
     ArrayAdapter adapter = null;
 
     private final static String TAG = ContactListActivity.class.getSimpleName();
+
+    private boolean isActive = true;
 
     /**
      * TODO
@@ -47,8 +60,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_list);
 
-        // Create adapter
-        adapter = new ArrayAdapter<User>(this, R.layout.contacts_list_item, User.users);
+
 
         // Load self pref
         loadSelfPref();
@@ -56,8 +68,10 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         // Load contacts
         loadContacts();
 
-        // Update message from users every 5 seconds
-        loadEvents();
+        runEventHandler();
+
+        // Create adapter
+        adapter = new ArrayAdapter<User>(this, R.layout.contacts_list_item, User.users);
 
         // fill listview
         final ListView listView = (ListView) findViewById(R.id.contact_list);
@@ -77,6 +91,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
                 b.putString("user_name", item.getUsername());
                 b.putInt("user_id", item.getId());
                 intent.putExtras(b);
+                isActive = false;
                 startActivity(intent);
             }
         });
@@ -101,10 +116,28 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         });
     }
 
-    /**
-     * TODO
-     */
-    private void loadEvents() {
+    private void runEventHandler() {
+        new Thread() {
+            public void run() {
+                while (true) {
+                    try {
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                if(isActive) {
+                                    User.users.add(new User(10, "a", false));
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }
+                        });
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
     }
 
     /**
@@ -195,6 +228,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
         super.onResume();
         // Refresh contacts
         //adapter.clear();
+        isActive = true;
         adapter.notifyDataSetChanged();
     }
 
@@ -206,6 +240,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests{
     public void addContact(final View view){
         // start contact search activity
         Intent intent = new Intent(ContactListActivity.this, ContactSearchActivity.class);
+        isActive = false;
         startActivity(intent);
     }
 
