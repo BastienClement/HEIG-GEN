@@ -224,9 +224,12 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (TODO/TODO)####
+####Antoine (3H/5H)####
 
-* TODO
+J'ai dû refactoré le code car on n'enregistrait pas la liste des utilisateurs et des messages et pour des questions de performance, il fallait la stocker dans l'application. J'ai également généré toute la javadoc des classes du client. 3h
+
+* Ajouter toutes les fonctionnalités relatives aux discussions publiques au protocole de communication. 3h
+* Aider Bastien et Guillaume pour implémenter les fonctionnalités au niveau serveur ou client. 2h
 
 ####Bastien (TODO/TODO)####
 
