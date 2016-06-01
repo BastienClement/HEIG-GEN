@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.ExecutionException;
 
 import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.interfaces.ICallback;
@@ -53,74 +54,80 @@ public class EventService implements IRequests, IJSONKeys {
                     Log.i(TAG, "Trying to retrieve events !");
                     try {
                         if(currentActivity != null) {
+                            Log.i(TAG, "Activity is set !");
                             /**
-                             * Gestion des
+                             * Gestion des events
                              */
-                                new RequestGET(new ICallback<String>() {
-                                    @Override
-                                    public void success(String result) {
-                                        try{
-                                            JSONObject json = new JSONObject(result);
-                                            JSONObject jsonEvent = json.getJSONObject("events");
-                                            String type = jsonEvent.getString("type");
-                                            final int id = jsonEvent.getInt("from");
-                                            switch(type){
-                                                case "private_chat" :
-                                                    new RequestGET(new ICallback<String>() {
-                                                        @Override
-                                                        public void success(String result) {
-                                                            try{
-                                                                // Load new messages
-                                                                JSONArray jsonArray = null;
-                                                                try {
-                                                                    jsonArray = new JSONArray(result);
-                                                                    for (int i = jsonArray.length() - 1; i >= 0; i--) {
-                                                                        JSONObject jsonMessage = jsonArray.getJSONObject(i);
-                                                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                                                                        User.findById(id).addMessage(new Message(jsonMessage.getInt("from"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
-                                                                    }
-                                                                } catch (JSONException e) {
-                                                                    e.printStackTrace();
-                                                                } catch (ParseException e) {
-                                                                    e.printStackTrace();
+                            RequestGET get = new RequestGET(new ICallback<String>() {
+                                @Override
+                                public void success(String result) {
+                                    Log.i(TAG, "Success : " + result);
+                                    try{
+                                        JSONObject json = new JSONObject(result);
+                                        JSONObject jsonEvent = json.getJSONObject("events");
+                                        String type = jsonEvent.getString("type");
+                                        final int id = jsonEvent.getInt("from");
+                                        switch(type){
+                                            case "private_chat" :
+                                                new RequestGET(new ICallback<String>() {
+                                                    @Override
+                                                    public void success(String result) {
+                                                        try{
+                                                            // Load new messages
+                                                            JSONArray jsonArray = null;
+                                                            try {
+                                                                jsonArray = new JSONArray(result);
+                                                                for (int i = jsonArray.length() - 1; i >= 0; i--) {
+                                                                    JSONObject jsonMessage = jsonArray.getJSONObject(i);
+                                                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                                                                    User.findById(id).addMessage(new Message(jsonMessage.getInt("from"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
                                                                 }
-                                                                currentCallbackActivity.update();
-                                                            } catch (Exception ex){
-                                                                Log.e(TAG, ex.getMessage());
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            } catch (ParseException e) {
+                                                                e.printStackTrace();
                                                             }
-                                                            Log.i(TAG, "Success : " + result);
-                                                        }
-
-                                                        @Override
-                                                        public void failure(Exception ex) {
+                                                            currentCallbackActivity.update();
+                                                        } catch (Exception ex){
                                                             Log.e(TAG, ex.getMessage());
                                                         }
-                                                    }, Utils.getToken(currentActivity), BASE_URL + id + GET_MESSAGES +
-                                                            (User.findById(id).getMessages().size() > 0 ? "?from=" + User.findById(id).getMessages().get(User.findById(id).getMessages().size() - 1) : "")).execute();
-                                                    break;
-                                            }
-                                            /**
-                                             * TODO : Gérer si next vaut quelque chose
-                                             */
-                                            currentCallbackActivity.update();
-                                            Log.i(TAG, "Success : " + result);
-                                        } catch (Exception ex){
-                                            Log.e(TAG, ex.getMessage());
-                                        }
-                                        Log.i(TAG, "Success : " + result);
-                                    }
+                                                        Log.i(TAG, "Success : " + result);
+                                                    }
 
-                                    @Override
-                                    public void failure(Exception ex) {
+                                                    @Override
+                                                    public void failure(Exception ex) {
+                                                        Log.e(TAG, ex.getMessage());
+                                                    }
+                                                }, Utils.getToken(currentActivity), BASE_URL + id + GET_MESSAGES +
+                                                        (User.findById(id).getMessages().size() > 0 ? "?from=" + User.findById(id).getMessages().get(User.findById(id).getMessages().size() - 1) : "")).execute();
+                                                break;
+                                            default :
+                                                Log.i(TAG, "No event ! : " + result);
+                                                break;
+                                        }
+                                        /**
+                                         * TODO : Gérer si next vaut quelque chose
+                                         */
+                                        currentCallbackActivity.update();
+                                        Log.i(TAG, "Success : " + result);
+                                    } catch (Exception ex){
                                         Log.e(TAG, ex.getMessage());
                                     }
-                                }, Utils.getToken(currentActivity), BASE_URL + GET_EVENTS).execute();
-                            Thread.sleep(5000);
+                                }
+
+                                @Override
+                                public void failure(Exception ex) {
+                                    Log.e(TAG, ex.getMessage());
+                                }
+                            }, Utils.getToken(currentActivity), BASE_URL + GET_EVENTS);
+
+                            get.execute();
+                            get.get();
                         }
-                        else{
-                            Log.e(TAG, "currentActivity is set to null");
-                        }
+                        Thread.sleep(5000);
                     } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
                 }
