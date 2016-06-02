@@ -14,8 +14,13 @@ class Contacts(tag: Tag) extends Table[Contact](tag, "contacts") {
 
 object Contacts extends TableQuery(new Contacts(_)) {
 	/** Returns the list of contacts for a user */
-	def ofUser(user: Int) = {
+	def ofUser(user: Int): Query[Contacts, Contact, Seq] = {
 		Contacts.filter(c => c.a === user || c.b === user)
+	}
+
+	/** Returns the list of contacts for a user */
+	def ofUserById(user: Int): Query[Rep[Int], Int, Seq] = {
+		Contacts.filter(c => c.a === user || c.b === user).map(c => Case.If(c.a === user).Then(c.b).Else(c.a))
 	}
 
 	/** Binds two users together as contact */
