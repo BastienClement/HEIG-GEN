@@ -126,7 +126,7 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
                         adapter.clear();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonUser = jsonArray.getJSONObject(i);
-                            adapter.add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin")));
+                            adapter.add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), false));
                         }
 
                         adapter.notifyDataSetChanged();

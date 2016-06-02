@@ -76,6 +76,12 @@ public class EventService implements IRequests, IJSONKeys {
                                         JSONObject jsonEvent = jsonEvents.getJSONObject(i);
                                         String type = jsonEvent.getString("type");
                                         switch (type) {
+                                            case "PRIVATE_MESSAGES_UNREAD":
+                                                User.findById(jsonEvent.getInt("contact")).setUnread(true);
+                                                break;
+                                            case "PRIVATE_MESSAGES_READ":
+                                                User.findById(jsonEvent.getInt("contact")).setUnread(false);
+                                                break;
                                             case "CONTACT_ADDED":
                                                 // Add contact
                                                 addContact(jsonEvent);
@@ -142,7 +148,7 @@ public class EventService implements IRequests, IJSONKeys {
                     JSONObject jsonUser = null;
                     try {
                         jsonUser = new JSONObject(result);
-                        User user = new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"));
+                        User user = new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), jsonUser.getBoolean("unread"));
                         User.users.add(user);
                         updateCallbackActivity();
                     } catch (JSONException e) {

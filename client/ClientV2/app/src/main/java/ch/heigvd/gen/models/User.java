@@ -13,6 +13,7 @@ public class User implements Comparable<User> {
     private final boolean admin;
     private List<Message> messages;
     private int unreadMessages;
+    private boolean unread;
 
     /**
      * TODO
@@ -25,12 +26,22 @@ public class User implements Comparable<User> {
      * @param id
      * @param username
      * @param admin
+     * @param unread
      */
-    public User(final int id, final String username, final boolean admin) {
+    public User(int id, String username, boolean admin, boolean unread) {
         this.id = id;
         this.username = username;
         this.admin = admin;
+        this.unread = unread;
         messages = new ArrayList<>();
+    }
+
+    public boolean isUnread() {
+        return unread;
+    }
+
+    public void setUnread(boolean unread) {
+        this.unread = unread;
     }
 
     /**

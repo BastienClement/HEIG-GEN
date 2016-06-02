@@ -226,7 +226,7 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (12H/5H)####
+####Antoine (15H30/5H)####
 
 J'ai dû refactoré le code car on n'enregistrait pas la liste des utilisateurs et des messages et pour des questions de performance, il fallait la stocker dans l'application. J'ai également généré toute la javadoc des classes du client. 3h
 
@@ -240,7 +240,9 @@ J'ai du résoudre le problème que RequestGET est un task et pas un thread et bl
 
 J'ai fait marcher les events et la récupération du JSON. J'ai fait que la recherche n'affiche pas les utilisateurs déjà en contact et sois-même. 1h
 
-J'ai fait marcher les events d'ajout et suppression de contact. 
+J'ai fait marcher les events d'ajout et suppression de contact. Et les events de nouveaux messages. 2h
+
+J'ai fait marcher le système de notification pour afficher une notification dans la liste des contacts quand un nouveau message a été reçu. 1h30
 
 * Ajouter toutes les fonctionnalités relatives aux discussions publiques au protocole de communication. 3h
 * Aider Bastien et Guillaume pour implémenter les fonctionnalités au niveau serveur ou client. 2h
