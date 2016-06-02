@@ -52,10 +52,6 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
         // get contact
         b = getIntent().getExtras();
 
-        // Start event handler service
-        EventService.getInstance().setActivity(this, this);
-        EventService.getInstance().start();
-
         // enable back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -110,7 +106,10 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
                     JSONObject json = null;
                     try {
                         json = new JSONObject(result);
-                        User.findById(b.getInt("user_id")).addMessage(new Message(Utils.getId(ContactDiscussionActivity.this), text.getText().toString(), new Date(), json.getInt("id")));
+                        /**
+                         * Managed in EventService
+                         */
+                        //User.findById(b.getInt("user_id")).addMessage(new Message(Utils.getId(ContactDiscussionActivity.this), text.getText().toString(), new Date(), json.getInt("id")));
                         adapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
