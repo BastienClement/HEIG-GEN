@@ -71,7 +71,6 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
                     new RequestPUT(new ICallback<String>() {
                         @Override
                         public void success(String result) {
-                            User.users.add(user);
                             Log.i(TAG, "Success : " + result);
                             finish();
                         }

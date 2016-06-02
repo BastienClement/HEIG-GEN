@@ -7,6 +7,7 @@ GET           /                                    controllers.HomeController.in
 
 # Push
 GET           /api/events                          controllers.api.DummyController.events
+GET           /api/events/debug                    controllers.api.DummyController.eventsDebug
 
 # Authentication
 POST          /api/auth                            controllers.api.AuthController.token
@@ -39,6 +40,7 @@ DELETE        /api/contacts/:id                    controllers.api.ContactsContr
 # Private chat
 GET           /api/contacts/:id/messages           controllers.api.PrivateChatsController.list(id: Int)
 POST          /api/contacts/:id/messages           controllers.api.PrivateChatsController.post(id: Int)
+PUT           /api/contacts/:id/read               controllers.api.PrivateChatsController.read(id: Int)
 
 # Test
 GET           /api/test                            controllers.api.AuthController.test

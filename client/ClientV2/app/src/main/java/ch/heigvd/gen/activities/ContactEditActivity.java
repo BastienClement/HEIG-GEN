@@ -59,7 +59,6 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
             new RequestDELETE(new ICallback<String>() {
                 @Override
                 public void success(String result) {
-                    User.deleteById(b.getInt("user_id"));
                     Log.i(TAG, "Success : " + result);
                     finish();
                 }

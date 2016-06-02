@@ -35,9 +35,11 @@ import ch.heigvd.gen.utilities.Utils;
  * TODO : Trier les utilisateurs par liste de derniers message
  * TODO : Faire un bouton de déconnexion
  * TODO : Faire les report/blocage d'utilisateur et report de message dans groupe
- * TODO : Faire que les dialogues dans une discussion soient joli
+ * TODO : Faire que les dialogues dans une discussion soient joli + afficher l'heure du message et le jour et le nom de l'utilisateur qui a envoyé pour les discussions de groupe
+ * TODO : Afficher le nombre de messages non lu sur contactlist
  * TODO : Faire les discussion de groupe
  * TODO : Mettre tous les éléments json et les requêtes dans IJSONKEYS et IREQUESTS
+ * TODO : ARRETER EventService quand on quitte l'application ou qu'on se déconnecte
  */
 public class ContactListActivity extends AppCompatActivity implements IRequests, ICustomCallback{
 
@@ -268,7 +270,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
     @Override
     public void onPause(){
         super.onPause();
-        EventService.getInstance().removeActivity();
+        //EventService.getInstance().removeActivity();
     }
 
     @Override
@@ -278,6 +280,6 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
          * TODO : Stop on application exit or log off
          */
         //EventService.getInstance().stop();
-        EventService.getInstance().removeActivity();
+        //EventService.getInstance().removeActivity();
     }
 }

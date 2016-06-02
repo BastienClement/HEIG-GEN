@@ -13,7 +13,7 @@ import util.DateTime
 import util.Implicits.futureWrapper
 
 @Singleton
-class PrivateChatsController @Inject()(push: PushService)(implicit val ec: ExecutionContext, val conf: Configuration)
+class PrivateChatsController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration, push: PushService)
 		extends Controller with ApiActionBuilder {
 
 	// TODO: check that user is a contact
@@ -49,8 +49,14 @@ class PrivateChatsController @Inject()(push: PushService)(implicit val ec: Execu
 					case Success(_) =>
 						push.send(user, 'PRIVATE_MESSAGES_UPDATED, "contact" -> req.user)
 						push.send(req.user, 'PRIVATE_MESSAGES_UPDATED, "contact" -> user)
+						UnreadFlags.setContactUnread(user, req.user)
 				}
 			}
 		}
+	}
+
+	def read(user: Int) = UserAction { req =>
+		UnreadFlags.setContactRead(req.user, user)
+		NoContent
 	}
 }
