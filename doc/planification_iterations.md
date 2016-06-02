@@ -80,8 +80,8 @@ Mise en place des fonctionnalités de recherche et de gestion de contacts
 * Ajouter les fonctionnalités de recherche et de gestion de contacts au protocole de communication (Gestion : Conception)
 * Implémenter la recherche et de gestion de contact au niveau du serveur et du client, ainsi que les interfaces utilisateur correspondantes (Développement des fonctionnalités)
 * Cas d’utilisation réalisés complètement : Gérer les contacts
-* Cas d’utilisation réalisés partiellement : Créer une discussion privée, Ajouter
-un utilisateur dans un groupe public
+* Cas d’utilisation réalisés partiellement : Démarrer une discussion privée, Ajouter
+un utilisateur dans un groupe 
 * La fonctionnalité de recherche est utilisée dans plusieurs cas d’utilisation. La réalisation complète de ces cas d’utilisation se fera lors des itérations suivantes.
 * Continuer la rédaction du rapport final (Gestion : Rédaction).
 
@@ -118,9 +118,9 @@ Mise en place des discussions privées
 ###Objectifs détaillés###
 * Ajouter les fonctionnalités de création de discussion privée, d’envoi de messages et d’historique au protocole de communication (Gestion : Conception)
 * Implémenter la création / suppression de discussion, l’envoi de messages et l’affichage de l’historique au niveau du serveur et du client, ainsi que les interfaces utilisateur correspondantes (Développement des fonctionnalités)
-* Cas d’utilisation réalisés complètement : Créer une discussion privée, Envoyer un message, Consulter les messages, Charger les messages de l’historique
-* Cas d’utilisation réalisés partiellement : Créer un groupe de discussion public
-* Une discussion publique est une extension d’une discussion privée, donc certaines fonctionnalités seront identiques. La réalisation complète de ce cas d’utilisation se fera lors des itérations suivantes.
+* Cas d’utilisation réalisés complètement : Démarrer une discussion privée, Envoyer un message, Consulter les messages, Charger les messages de l’historique
+* Cas d’utilisation réalisés partiellement : Démarrer une discussion de groupe
+* Une discussion pde groupe est une extension d’une discussion privée, donc certaines fonctionnalités seront identiques. La réalisation complète de ce cas d’utilisation se fera lors des itérations suivantes.
 * Continuer la rédaction du rapport final (Gestion : Rédaction).
 
 ###Durée###
@@ -156,7 +156,7 @@ Création de discussion publique (discussion de groupe)
 ###Objectifs détaillés###
 * Ajouter les fonctionnalités de discussion publique (créer, supprimer, rejoindre), et de gestion des membres (ajouter, supprimer, promouvoir administrateur de groupe) d’une discussion publique au protocole de communication (Gestion : Conception)
 * Implémenter toutes les fonctionnalités relatives aux discussions publiques au niveau du serveur et du client, ainsi que les interfaces utilisateur correspondantes (Développement des fonctionnalités)
-* Cas d’utilisation réalisés complètement : Rejoindre une discussion publique, Créer un groupe de discussion public, Supprimer un utilisateur d’un groupe de discussion public, Quitter un groupe, Ajouter un utilisateur dans un groupe
+* Cas d’utilisation réalisés complètement : Rejoindre une discussion de groupe, Démarrer une discussion de groupe, Bannir un utilisateur d’un groupe de discussion public, Quitter un groupe, Ajouter un utilisateur dans un groupe
 * Continuer la rédaction du rapport final (Gestion : Rédaction).
 
 ###Durée###
@@ -192,7 +192,7 @@ Signalement et blocage
 ###Objectifs détaillés###
 * Ajouter les fonctionnalités de signalement de message et de blocage d’utilisateur au protocole de communication (Gestion : Conception)
 * Implémenter toutes les fonctionnalités relatives au signalement de message et de blocage d’utilisateur au niveau du serveur et du client, ainsi que les interfaces utilisateur correspondantes (Développement des fonctionnalités)
-* Cas d’utilisation réalisés complètement : Consulter les signalements d’un groupe public, Consulter les reports d’un groupe privé, Reporter un autre utilisateur
+* Cas d’utilisation réalisés complètement : Consulter les signalements d’un groupe public, Consulter les signalements d’une discussion priveé, Signale un utilisateur
 * Terminer la première version du rapport final (Gestion : Rédaction).
 
 ###Durée###

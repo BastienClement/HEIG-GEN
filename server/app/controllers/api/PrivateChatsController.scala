@@ -7,9 +7,10 @@ import play.api.Configuration
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc.Controller
 import scala.concurrent.ExecutionContext
-import scala.util.{Success, Try}
+import scala.util.Success
 import services.PushService
 import util.DateTime
+import util.Implicits.futureWrapper
 
 @Singleton
 class PrivateChatsController @Inject()(push: PushService)(implicit val ec: ExecutionContext, val conf: Configuration)
@@ -21,15 +22,13 @@ class PrivateChatsController @Inject()(push: PushService)(implicit val ec: Execu
 	  * Lists message between two users.
 	  */
 	def list(user: Int) = UserAction.async { req =>
-		val query = PrivateMessages.filter { m =>
-			(m.from === req.user && m.to === user) || (m.from === user && m.to === req.user)
-		}.sortBy(m => m.date.desc).optMap(req.getQueryStringAsInt("from")) { (q, from) =>
+		PrivateMessages.between(user, req.user).sortBy { m =>
+			m.date.desc
+		}.optMap(req.getQueryStringAsInt("from")) { (q, from) =>
 			q.filter(_.id > from)
 		}.optMap(req.getQueryStringAsInt("limit")) { (q, limit) =>
 			q.take(limit)
-		}
-
-		query.run.map { list =>
+		}.run.map { list =>
 			Ok(JsArray(list.map(_.toJson)))
 		}
 	}
@@ -38,10 +37,18 @@ class PrivateChatsController @Inject()(push: PushService)(implicit val ec: Execu
 	  * Sends a message to the user.
 	  */
 	def post(user: Int) = UserAction.async(parse.json) { req =>
-		val text = (req.body \ "text").as[String]
-		val query = PrivateMessages insert PrivateMessage(0, req.user, user, DateTime.now, text)
-		query.run.map(m => Created(Json.obj("id" -> m.id))).andThen {
-			case Success(msg) => push.send(user, Json.obj("type" -> "private_chat", "from" -> req.user))
+		Contacts.bound(user, req.user).flatMap { bound =>
+			if (!bound) {
+				Forbidden('PRIVATE_CHATS_POST_NOT_A_CONTACT)
+			} else {
+				val text = (req.body \ "text").as[String]
+				val msg = PrivateMessage(0, req.user, user, DateTime.now, text)
+				PrivateMessages.insert(msg).run.map { m =>
+					Created(Json.obj("id" -> m.id))
+				}.andThen {
+					case Success(_) => push.send(user, 'PRIVATE_MESSAGE_RECEIVED, "from" -> req.user)
+				}
+			}
 		}
 	}
 }

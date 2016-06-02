@@ -122,7 +122,7 @@ public class EventService implements IRequests, IJSONKeys {
                 }
             }
         };
-        thread.start();
+        //thread.start();
     }
 
     private void removeContact(JSONObject jsonEvent) throws JSONException {

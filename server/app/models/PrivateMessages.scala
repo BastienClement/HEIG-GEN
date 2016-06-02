@@ -1,11 +1,11 @@
 package models
 
 import models.mysql._
-import play.api.libs.json.Json
+import play.api.libs.json.{JsObject, Json}
 import util.DateTime
 
 case class PrivateMessage(id: Int, from: Int, to: Int, date: DateTime, text: String) {
-	def toJson = Json.obj(
+	def toJson: JsObject = Json.obj(
 		"id" -> id,
 		"from" -> from,
 		"to" -> to,
@@ -25,6 +25,11 @@ class PrivateMessages(tag: Tag) extends Table[PrivateMessage](tag, "private_mess
 }
 
 object PrivateMessages extends TableQuery(new PrivateMessages(_)) {
-	def insert(msg: PrivateMessage) =
+	def insert(msg: PrivateMessage) = {
 		PrivateMessages returning PrivateMessages.map(_.id) into ((msg, id) => msg.copy(id = id)) += msg
+	}
+
+	def between(a: Int, b: Int) = {
+		PrivateMessages.filter(m => (m.from === a && m.to === b) || (m.from === b && m.to === a))
+	}
 }
