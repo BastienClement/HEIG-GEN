@@ -5,7 +5,7 @@ import java.sql.SQLException
 import models._
 import models.mysql._
 import play.api.Configuration
-import play.api.libs.json.JsArray
+import play.api.libs.json.{JsArray, JsBoolean}
 import play.api.mvc.Controller
 import scala.concurrent.ExecutionContext
 import scala.util.Success
@@ -22,8 +22,12 @@ class ContactsController @Inject()(push: PushService)(implicit val ec: Execution
 		Contacts.ofUser(req.user).flatMap { c =>
 			val other = Case.If(c.a === req.user).Then(c.b).Else(c.a)
 			Users.filter(_.id === other)
+		}.map { user =>
+			(user, UnreadFlags.contactUnread(req.user, user.id))
 		}.run.map { users =>
-			Ok(JsArray(users.map(_.toJson)))
+			Ok(JsArray(users.map { case (user, unread) =>
+				user.toJson + ("unread" -> JsBoolean(unread))
+			}))
 		}
 	}
 
