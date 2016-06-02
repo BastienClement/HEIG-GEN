@@ -46,7 +46,7 @@ class PrivateChatsController @Inject()(push: PushService)(implicit val ec: Execu
 				PrivateMessages.insert(msg).run.map { m =>
 					Created(Json.obj("id" -> m.id))
 				}.andThen {
-					case Success(_) => push.send(user, 'PRIVATE_MESSAGE_RECEVIED, "from" -> req.user)
+					case Success(_) => push.send(user, 'PRIVATE_MESSAGE_RECEIVED, "from" -> req.user)
 				}
 			}
 		}
