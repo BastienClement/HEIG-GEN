@@ -26,7 +26,7 @@ object Contacts extends TableQuery(new Contacts(_)) {
 
 	/** Unbinds two users */
 	def unbind(a: Int, b: Int): Future[Int] = {
-		if (a > b) bind(b, a)
+		if (a > b) unbind(b, a)
 		else Contacts.filter(c => c.a === a && c.b === b).delete.run
 	}
 
