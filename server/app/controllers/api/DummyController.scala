@@ -2,6 +2,7 @@ package controllers.api
 
 import com.google.inject.Inject
 import play.api.Configuration
+import play.api.libs.json.{JsArray, JsObject, Json}
 import play.api.mvc.{Action, Controller}
 import scala.concurrent.ExecutionContext
 import scala.util.Try
@@ -21,5 +22,13 @@ class DummyController @Inject()(push: PushService)(implicit val ec: ExecutionCon
 	def events = UserAction.async { req =>
 		val from = req.getQueryString("from").flatMap(v => Try(Integer.parseInt(v)).toOption)
 		push.register(req.user, from).map(Ok(_))
+	}
+
+	def eventsDebug = Action {
+		Ok(JsObject(push.debug.map { case (user, buffer) =>
+			user.toString -> JsArray(buffer.map { case event =>
+				Json.obj("id" -> event.id, "time" -> event.time.toISOString, "data" -> event.data)
+			})
+		}))
 	}
 }
