@@ -31,7 +31,9 @@
             android:text="Create group"
             android:id="@+id/create_group"
             android:layout_gravity="top"
-            android:layout_weight="0.51" />
+            android:layout_weight="0.51"
+            android:onClick="createGroup" />
+
     </LinearLayout>
 
     <SearchView

@@ -41,6 +41,11 @@
         <activity
             android:name=".activities.ContactEditActivity"
             android:label="Edit contact" />
+        <activity
+            android:name=".activities.CreateGroupActivity"
+            android:label="Create Group"
+            android:parentActivityName=".activities.ContactListActivity" >
+        </activity>
     </application>
 
 

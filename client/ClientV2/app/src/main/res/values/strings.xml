@@ -16,6 +16,7 @@
     <string name="hint_register_username">Enter a username</string>
     <string name="hint_register_password">Enter a password</string>
     <string name="hint_register_confirm_password">Confirm the password</string>
+    <string name="hint_group_name">Enter the group name</string>
     <string name="button_send_register">Register</string>
     <string name="error_passwords_dont_match">Passwords don\'t match</string>
 

@@ -206,6 +206,17 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
 
     /**
      * TODO
+     *
+     * @param view
+     */
+    public void createGroup(final View view){
+        // start contact create group activity
+        Intent intent = new Intent(ContactListActivity.this, CreateGroupActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * TODO
      */
     private void loadSelfPref(){
         try {
