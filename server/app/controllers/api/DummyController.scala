@@ -24,11 +24,15 @@ class DummyController @Inject()(push: PushService)(implicit val ec: ExecutionCon
 		push.register(req.user, from).map(Ok(_))
 	}
 
-	def eventsDebug = Action {
-		Ok(JsObject(push.debug.map { case (user, buffer) =>
-			user.toString -> JsArray(buffer.map { case event =>
-				Json.obj("id" -> event.id, "time" -> event.time.toISOString, "data" -> event.data)
-			})
-		}))
+	def eventsDebug = UserAction { req =>
+		if (!req.admin) {
+			Forbidden('EVENTS_DEBUG_FORBIDDEN)
+		} else {
+			Ok(JsObject(push.debug.map { case (user, buffer) =>
+				user.toString -> JsArray(buffer.map { case event =>
+					Json.obj("id" -> event.id, "time" -> event.time.toISOString, "data" -> event.data)
+				})
+			}))
+		}
 	}
 }
