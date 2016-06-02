@@ -102,19 +102,6 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
                 @Override
                 public void success(String result) {
 
-                    // Retrieve message to store it
-                    JSONObject json = null;
-                    try {
-                        json = new JSONObject(result);
-                        /**
-                         * Managed in EventService
-                         */
-                        //User.findById(b.getInt("user_id")).addMessage(new Message(Utils.getId(ContactDiscussionActivity.this), text.getText().toString(), new Date(), json.getInt("id")));
-                        adapter.notifyDataSetChanged();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
                     // Empty editText
                     text.setText("");
 
@@ -136,20 +123,7 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
         }
     }
 
-    /**
-     * After a pause OR at startup check if the user is still a contact, if not finish the activity
-     * TODO : Faire le check sur la liste des users et pas faire une requête au serveur
-     *
-     */
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        EventService.getInstance().setActivity(this, this);
-        if(User.findById(b.getInt("user_id")) == null){
-            finish();
-        }
-    }
+
 
     /**
      * TODO
@@ -179,15 +153,36 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
         });
     }
 
+    /**
+     * After a pause OR at startup check if the user is still a contact, if not finish the activity
+     * TODO : Faire le check sur la liste des users et pas faire une requête au serveur
+     *
+     */
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        EventService.getInstance().setActivity(this, this);
+        if(User.findById(b.getInt("user_id")) == null){
+            finish();
+        }
+    }
+
+    /**
+     * ¨TODO
+     */
     @Override
     public void onPause(){
         super.onPause();
-        EventService.getInstance().removeActivity();
+        //EventService.getInstance().removeActivity();
     }
 
+    /**
+     * TODO
+     */
     @Override
     public void onStop(){
         super.onStop();
-        EventService.getInstance().removeActivity();
+        //EventService.getInstance().removeActivity();
     }
 }

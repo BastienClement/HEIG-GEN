@@ -51,20 +51,20 @@ public class EventService implements IRequests, IJSONKeys {
     }
 
     public void removeActivity(){
+        Log.i(TAG, "Activity removed");
         currentActivity = null;
         currentCallbackActivity = null;
     }
 
     public void start(){
+        Log.i(TAG, "Starting event service thread !");
         thread = new Thread() {
             public void run() {
                 while (true) {
                     Log.i(TAG, "Trying to retrieve events !");
                     try {
                         Log.i(TAG, "Activity is set !");
-                        /**
-                         * Gestion des events
-                         */
+                        // Event management
                         RequestGET get = new RequestGET(new ICallback<String>() {
                             @Override
                             public void success(String result) {
@@ -77,13 +77,14 @@ public class EventService implements IRequests, IJSONKeys {
                                         String type = jsonEvent.getString("type");
                                         switch (type) {
                                             case "CONTACT_ADDED":
-                                                // Update contacts
+                                                // Add contact
                                                 addContact(jsonEvent);
+                                                break;
                                             case "CONTACT_REMOVED":
                                                 // Update contacts
                                                 removeContact(jsonEvent);
                                                 break;
-                                            case "PRIVATE_MESSAGE_RECEIVED":
+                                            case "PRIVATE_MESSAGES_UPDATED":
                                                 // Load new messages
                                                 loadNewMessages(jsonEvent);
                                                 break;
@@ -109,20 +110,22 @@ public class EventService implements IRequests, IJSONKeys {
 
                         get.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         get.get();
+
+
+                        try {
+                            sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }catch(InterruptedException e){
                         e.printStackTrace();
                     }catch(ExecutionException e){
                         e.printStackTrace();
                     }
-                    try {
-                        sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         };
-        //thread.start();
+        thread.start();
     }
 
     private void removeContact(JSONObject jsonEvent) throws JSONException {
@@ -160,7 +163,7 @@ public class EventService implements IRequests, IJSONKeys {
     }
 
     private void loadNewMessages(JSONObject jsonEvent) throws JSONException {
-        final int id = jsonEvent.getInt("from");
+        final int id = jsonEvent.getInt("contact");
         new RequestGET(new ICallback<String>() {
             @Override
             public void success(String result) {
@@ -179,11 +182,10 @@ public class EventService implements IRequests, IJSONKeys {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-
-                    updateCallbackActivity();
                 } catch (Exception ex) {
                     Log.e(TAG, ex.getMessage());
                 }
+                updateCallbackActivity();
                 Log.i(TAG, "Success : " + result);
             }
 
@@ -191,8 +193,8 @@ public class EventService implements IRequests, IJSONKeys {
             public void failure(Exception ex) {
                 Log.e(TAG, ex.getMessage());
             }
-        }, token, BASE_URL + id + GET_MESSAGES +
-                (User.findById(id).getMessages().size() > 0 ? "?from=" + User.findById(id).getMessages().get(User.findById(id).getMessages().size() - 1) : "")).execute();
+        }, token, BASE_URL + GET_CONTACT + id + GET_MESSAGES +
+                (User.findById(id).getMessages().size() > 0 ? ("?from=" + User.findById(id).getMessages().get(0)) : "")).execute();
     }
 
     private void updateCallbackActivity() {

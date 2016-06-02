@@ -171,18 +171,20 @@ TODO
 
 ####Antoine (9H/5H)####
 
-J'ai pu rattraper le retard de l'itération précédente. J'ai fait fonctionner la recherche et l'ajout de contacts, l'affichage de la liste des contacts, la suppression d'un contact et les boutons de retour en arrière.
+J'ai pu rattraper le retard de l'itération précédente. J'ai fait fonctionner la recherche et l'ajout de contacts, l'affichage de la liste des contacts, la suppression d'un contact et les boutons de retour en arrière. 4h
 
-J'ai également ajouté l'affichage des erreurs dans le client.
+J'ai également ajouté l'affichage des erreurs dans le client. 30min
 
-J'ai commencé à mettre en place la vue de discussion 1 à 1 avec Guillaume, et nous avons préparé l'adapteur qui sera utilisé pour l'affichage de la conversation.
+J'ai commencé à mettre en place la vue de discussion 1 à 1 avec Guillaume, et nous avons préparé l'adapteur qui sera utilisé pour l'affichage de la conversation. 3h
 
-J'ai implémenté la réception des messages depuis le serveur et leur affichage dans la fenêtre de discussion que j'ai renommé en ContactDiscussionActivity.
+J'ai implémenté la réception des messages depuis le serveur et leur affichage dans la fenêtre de discussion que j'ai renommé en ContactDiscussionActivity. 1h
 
-J'ai implémenté le bouton d'envoi pour que les messages soient bien envoyés sur le serveur.
+J'ai implémenté le bouton d'envoi pour que les messages soient bien envoyés sur le serveur. 30min
 
 *	Ajouter les fonctionnalités de création de discussion privée, d’envoi de messages et d’historique au protocole de communication. 
+	*	Les messages fonctionnent mais il reste les notifications à faire
 *	Implémenter la gestion de l’historique de discussion au niveau du serveur. 
+	*	Bastien s'en est occupé.
 
 
 ####Bastien (5H/5h)####
@@ -238,7 +240,7 @@ J'ai du résoudre le problème que RequestGET est un task et pas un thread et bl
 
 J'ai fait marcher les events et la récupération du JSON. J'ai fait que la recherche n'affiche pas les utilisateurs déjà en contact et sois-même. 1h
 
-J'ai fait marcher les events d'ajout et suppression de contact.
+J'ai fait marcher les events d'ajout et suppression de contact. 
 
 * Ajouter toutes les fonctionnalités relatives aux discussions publiques au protocole de communication. 3h
 * Aider Bastien et Guillaume pour implémenter les fonctionnalités au niveau serveur ou client. 2h
