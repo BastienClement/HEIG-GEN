@@ -187,9 +187,14 @@ J'ai implémenté le bouton d'envoi pour que les messages soient bien envoyés s
 	*	Bastien s'en est occupé.
 
 
-####Bastien (5H/5h)####
+####Bastien (7h/5h)####
 
-* TODO
+* Quelques mises à jour des API de l'itération 3
+* Changement de la gestion des contacts côté serveur, au lieu d'avoir une paire d'entrée dans un table, il n'y a plus qu'une entrée avec un ordre précis des contacts
+* Mise en place du système de push d'événement en utilisant la technique du long-polling HTTP
+* Mise en place de l'API pour la gestion des discussions privées et des événements associés
+* Mise en place de la gestion des messages lus / non-lus et des événements associés
+* Amélioration du processus de mise à jour du serveur en utilisant Docker
 
 ####Guillaume (5H/5H)####
 
