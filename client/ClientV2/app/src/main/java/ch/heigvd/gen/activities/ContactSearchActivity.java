@@ -28,12 +28,20 @@ import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
+/**
+ * TODO
+ */
 public class ContactSearchActivity extends AppCompatActivity implements IRequests{
 
     private final static String TAG = ContactSearchActivity.class.getSimpleName();
 
     ArrayAdapter adapter = null;
 
+    /**
+     * TODO
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +71,9 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
                     new RequestPUT(new ICallback<String>() {
                         @Override
                         public void success(String result) {
-                            finish();
+                            User.users.add(user);
                             Log.i(TAG, "Success : " + result);
+                            finish();
                         }
 
                         @Override
@@ -103,6 +112,9 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
         });
     }
 
+    /**
+     * TODO
+     */
     private void loadUsers(){
         try {
             Log.i(TAG, "Token : " + Utils.getToken(this));
@@ -115,7 +127,6 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
                         adapter.clear();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonUser = jsonArray.getJSONObject(i);
-                            System.out.println(jsonUser.getInt("id"));
                             adapter.add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin")));
                         }
 
@@ -143,6 +154,12 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
         }
     }
 
+    /**
+     * TODO
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

@@ -1,7 +1,8 @@
 package services
 
 import com.google.inject.Singleton
-import play.api.libs.json.{JsArray, JsObject, JsValue, Json}
+import play.api.libs.json.Json.JsValueWrapper
+import play.api.libs.json._
 import scala.collection.mutable
 import scala.concurrent.{Future, Promise}
 
@@ -52,17 +53,17 @@ class PushService {
 
 	/**
 	  * Sends an event to a user.
-	  * @param user the receiver user
-	  * @param data the event data
 	  */
-	def send(user: Int, data: JsValue): Unit = this.synchronized {
-		val ru = replay(user) :+ (next_id, data)
+	def send(user: Int, tpe: Symbol, data: (String, JsValueWrapper)*): Unit = this.synchronized {
+		val effective_data = Json.obj(data: _*) + ("type" -> JsString(tpe.name))
+
+		val ru = replay(user) :+ (next_id, effective_data)
 		replay(user) = if (ru.size > REPLAY_SIZE) ru.drop(ru.size - REPLAY_SIZE) else ru
 		next_id += 1
 
 		open(user).foreach { p =>
 			p.success(Json.obj(
-				"events" -> JsArray(Seq(data)),
+				"events" -> JsArray(Seq(effective_data)),
 				"next" -> next_id
 			))
 		}

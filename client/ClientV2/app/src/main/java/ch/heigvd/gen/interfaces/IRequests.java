@@ -1,5 +1,8 @@
 package ch.heigvd.gen.interfaces;
 
+/**
+ * TODO
+ */
 public interface IRequests {
 
     String BASE_URL = "http://loki.cpfk.net:9999/api/";
@@ -13,4 +16,6 @@ public interface IRequests {
     String GET_CONTACT = "contacts/";
 
     String GET_MESSAGES = "/messages";
+
+    String GET_EVENTS = "events";
 }

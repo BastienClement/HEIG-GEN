@@ -1,5 +1,6 @@
 import com.google.inject.Inject
 import play.api.db.slick.DatabaseConfigProvider
+import scala.language.higherKinds
 import slick.dbio.{DBIOAction, NoStream}
 import slick.driver.JdbcProfile
 import slick.lifted.Query
@@ -22,7 +23,7 @@ package object models {
 		@inline def run = DB.run(q)
 	}
 
-	implicit class QueryTransformer[A, B, C, D](val query: Query[A, B, C]) extends AnyVal {
+	implicit class QueryTransformer[A, B, C[_], D](val query: Query[A, B, C]) extends AnyVal {
 		def optMap(opt: Option[D])(fn: (Query[A, B, C], D) => Query[A, B, C]) = opt match {
 			case Some(value) => fn(query, value)
 			case None => query

@@ -11,6 +11,9 @@ import java.net.URL;
 
 import ch.heigvd.gen.interfaces.ICallback;
 
+/**
+ * TODO
+ */
 public class RequestGET extends Communication<String> {
 
     private String token;
@@ -18,12 +21,24 @@ public class RequestGET extends Communication<String> {
 
     private final static String TAG = RequestGET.class.getSimpleName();
 
+    /**
+     * TODO
+     *
+     * @param callback
+     * @param token
+     * @param url
+     */
     public RequestGET(ICallback<String> callback, String token, String url) {
         setCallback(callback);
         this.token = token;
         this.url = url;
     }
 
+    /**
+     * TODO
+     *
+     * @return
+     */
     @Override
     protected String communication() {
         String body = null;

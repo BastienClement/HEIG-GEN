@@ -36,7 +36,9 @@ class AuthController @Inject()(implicit val ec: ExecutionContext, val conf: Conf
 		val user = (req.body \ "user").as[String]
 		val pass = (req.body \ "pass").as[String]
 
-		Users.findByUsername(user).run.filter(u => Crypto.check(pass, u.pass)).map { u =>
+		Users.findByUsername(user).run.filter { u =>
+			Crypto.check(pass, u.pass)
+		}.map { u =>
 			Ok(Json.obj("token" -> genToken(u)))
 		}.recover { case e =>
 			Unauthorized('TOKEN_BAD_CREDENTIALS)

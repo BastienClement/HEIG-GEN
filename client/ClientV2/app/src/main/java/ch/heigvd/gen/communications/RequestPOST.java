@@ -13,6 +13,9 @@ import java.net.URL;
 
 import ch.heigvd.gen.interfaces.ICallback;
 
+/**
+ * TODO
+ */
 public class RequestPOST extends Communication<String> {
 
     private String token;
@@ -21,6 +24,14 @@ public class RequestPOST extends Communication<String> {
 
     private final static String TAG = RequestPOST.class.getSimpleName();
 
+    /**
+     * TODO
+     *
+     * @param callback
+     * @param token
+     * @param url
+     * @param content
+     */
     public RequestPOST(ICallback<String> callback, String token, String url, String content) {
         setCallback(callback);
         this.token = token;
@@ -28,6 +39,11 @@ public class RequestPOST extends Communication<String> {
         this.content = content;
     }
 
+    /**
+     * TODO
+     *
+     * @return
+     */
     @Override
     protected String communication() {
         String body = null;
