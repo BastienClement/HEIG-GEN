@@ -92,6 +92,7 @@ public class EventService implements IRequests, IJSONKeys {
                                                 break;
                                             case "PRIVATE_MESSAGES_UPDATED":
                                                 // Load new messages
+                                                User.findById(jsonEvent.getInt("contact")).setUnread(true);
                                                 loadNewMessages(jsonEvent);
                                                 break;
                                             default:
