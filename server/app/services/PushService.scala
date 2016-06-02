@@ -36,7 +36,7 @@ class PushService {
 	def register(user: Int, from_id: Option[Int]): Future[JsObject] = this.synchronized {
 		val missed =
 			from_id.map { from =>
-				replay(user).collect { case (id, value) if id <= from => value }
+				replay(user).collect { case (id, value) if id > from => value }
 			}.getOrElse(Vector.empty)
 
 		if (missed.nonEmpty) {
