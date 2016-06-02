@@ -81,9 +81,13 @@ trait ApiActionBuilder extends Controller {
 		def checkExpires(token: JsObject): Boolean =
 			(token \ "expires").asOpt[DateTime].exists(_ > DateTime.now)
 
+		/** Returns the token from the X-Auth-Token header or query parameter */
+		def token[A](implicit request: Request[A]) =
+			request.headers.get("X-Auth-Token").orElse(request.getQueryString("token"))
+
 		/** Transforms a basic Request to ApiRequest */
 		def transform[A](implicit request: Request[A]) =
-			request.headers.get("X-Auth-Token").flatMap(Crypto.check).filter(checkExpires).map(build[A] _)
+			token.flatMap(Crypto.check).filter(checkExpires).map(build[A] _)
 
 		/** Failure to authenticate */
 		def failure = Future.successful(Unauthorized('UNAUTHORIZED))
