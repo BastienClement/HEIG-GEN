@@ -27,5 +27,15 @@ class UsersController @Inject()(implicit val ec: ExecutionContext, val conf: Con
 	def user(id: Int) = UserAction.async(fetchUser(id))
 	def self = UserAction.async(req => fetchUser(req.user))
 
+	def unknowns = UserAction.async { req =>
+		Users.sortBy { u =>
+			u.name.asc
+		}.filter { u =>
+			!(u.id in Contacts.ofUserById(req.user)) && (u.id =!= req.user)
+		}.run.map { users =>
+			Ok(JsArray(users.map(_.toJson)))
+		}
+	}
+
 	def delete = NotYetImplemented
 }

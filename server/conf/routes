@@ -14,6 +14,7 @@ POST          /api/register                        controllers.api.AuthControlle
 
 # Users
 GET           /api/users                           controllers.api.UsersController.list
+GET           /api/users/unknowns                  controllers.api.UsersController.git
 GET           /api/users/self                      controllers.api.UsersController.self
 DELETE        /api/users/self                      controllers.api.UsersController.delete
 GET           /api/users/:id                       controllers.api.UsersController.user(id: Int)
