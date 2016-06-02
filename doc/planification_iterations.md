@@ -80,8 +80,8 @@ Mise en place des fonctionnalités de recherche et de gestion de contacts
 * Ajouter les fonctionnalités de recherche et de gestion de contacts au protocole de communication (Gestion : Conception)
 * Implémenter la recherche et de gestion de contact au niveau du serveur et du client, ainsi que les interfaces utilisateur correspondantes (Développement des fonctionnalités)
 * Cas d’utilisation réalisés complètement : Gérer les contacts
-* Cas d’utilisation réalisés partiellement : Créer une discussion privée, Ajouter
-un utilisateur dans un groupe public
+* Cas d’utilisation réalisés partiellement : Démarrer une discussion privée, Ajouter
+un utilisateur dans un groupe 
 * La fonctionnalité de recherche est utilisée dans plusieurs cas d’utilisation. La réalisation complète de ces cas d’utilisation se fera lors des itérations suivantes.
 * Continuer la rédaction du rapport final (Gestion : Rédaction).
 
