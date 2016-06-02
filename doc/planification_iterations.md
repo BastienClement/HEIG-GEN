@@ -118,7 +118,7 @@ Mise en place des discussions privées
 ###Objectifs détaillés###
 * Ajouter les fonctionnalités de création de discussion privée, d’envoi de messages et d’historique au protocole de communication (Gestion : Conception)
 * Implémenter la création / suppression de discussion, l’envoi de messages et l’affichage de l’historique au niveau du serveur et du client, ainsi que les interfaces utilisateur correspondantes (Développement des fonctionnalités)
-* Cas d’utilisation réalisés complètement : Créer une discussion privée, Envoyer un message, Consulter les messages, Charger les messages de l’historique
+* Cas d’utilisation réalisés complètement : Démarrer une discussion privée, Envoyer un message, Consulter les messages, Charger les messages de l’historique
 * Cas d’utilisation réalisés partiellement : Démarrer une discussion de groupe
 * Une discussion pde groupe est une extension d’une discussion privée, donc certaines fonctionnalités seront identiques. La réalisation complète de ce cas d’utilisation se fera lors des itérations suivantes.
 * Continuer la rédaction du rapport final (Gestion : Rédaction).
@@ -192,7 +192,7 @@ Signalement et blocage
 ###Objectifs détaillés###
 * Ajouter les fonctionnalités de signalement de message et de blocage d’utilisateur au protocole de communication (Gestion : Conception)
 * Implémenter toutes les fonctionnalités relatives au signalement de message et de blocage d’utilisateur au niveau du serveur et du client, ainsi que les interfaces utilisateur correspondantes (Développement des fonctionnalités)
-* Cas d’utilisation réalisés complètement : Consulter les signalements d’un groupe public, Consulter les reports d’une discussion priveé, Signale un utilisateur
+* Cas d’utilisation réalisés complètement : Consulter les signalements d’un groupe public, Consulter les signalements d’une discussion priveé, Signale un utilisateur
 * Terminer la première version du rapport final (Gestion : Rédaction).
 
 ###Durée###
