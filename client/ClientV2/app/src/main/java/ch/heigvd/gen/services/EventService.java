@@ -133,7 +133,7 @@ public class EventService implements IRequests, IJSONKeys {
                 }
             }
         };
-        thread.start();
+        //thread.start();
     }
     public void stop(){
         thread.interrupt();
