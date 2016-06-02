@@ -148,7 +148,7 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
                     }
                     Log.e(TAG, ex.getMessage());
                 }
-            }, Utils.getToken(this), BASE_URL + GET_ALL_USERS).execute();
+            }, Utils.getToken(this), BASE_URL + GET_ALL_UNKNOWN_USERS).execute();
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }

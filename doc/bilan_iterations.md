@@ -224,7 +224,7 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (9H/5H)####
+####Antoine (12H/5H)####
 
 J'ai dû refactoré le code car on n'enregistrait pas la liste des utilisateurs et des messages et pour des questions de performance, il fallait la stocker dans l'application. J'ai également généré toute la javadoc des classes du client. 3h
 
@@ -233,6 +233,12 @@ J'ai mis la fonctionnalité du bouton de retour dans le fichier manifest comme l
 J'ai commencé à chercher comment faire le système de notification depuis Android. (Faire une classe qui permette de mettre à jour les adapteurs des différentes vues en allant chercher les events sur le serveur). J'ai trouvé une façon pas très propre et je cherche mieux. 3h
 
 J'ai changer la façon de faire la gestion des events en mettant en place un service comme vu avec Jonathan. 2h
+
+J'ai du résoudre le problème que RequestGET est un task et pas un thread et bloque l'exécution des autres requêtes quand on veut récupérer les events. 2h
+
+J'ai fait marcher les events et la récupération du JSON. J'ai fait que la recherche n'affiche pas les utilisateurs déjà en contact et sois-même. 1h
+
+J'ai fait marcher les events d'ajout et suppression de contact.
 
 * Ajouter toutes les fonctionnalités relatives aux discussions publiques au protocole de communication. 3h
 * Aider Bastien et Guillaume pour implémenter les fonctionnalités au niveau serveur ou client. 2h

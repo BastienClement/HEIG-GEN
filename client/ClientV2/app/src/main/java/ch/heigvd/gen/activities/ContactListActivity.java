@@ -31,11 +31,13 @@ import ch.heigvd.gen.utilities.Utils;
 /**
  * TODO
  * TODO : Mettre toutes les String dans les fichiers de ressources fait pour
- * TODO : Commenter/indenter/Trier imports
+ * TODO : Commenter/indenter/Trier imports, compléter la javadoc
  * TODO : Trier les utilisateurs par liste de derniers message
  * TODO : Faire un bouton de déconnexion
- * TODO : Dans la recherche de contact, n'afficher que les contacts qui peuvent être ajouté (pas soit-même, ni ceux qu'on a déjà ajouté)
-
+ * TODO : Faire les report/blocage d'utilisateur et report de message dans groupe
+ * TODO : Faire que les dialogues dans une discussion soient joli
+ * TODO : Faire les discussion de groupe
+ * TODO : Mettre tous les éléments json et les requêtes dans IJSONKEYS et IREQUESTS
  */
 public class ContactListActivity extends AppCompatActivity implements IRequests, ICustomCallback{
 
