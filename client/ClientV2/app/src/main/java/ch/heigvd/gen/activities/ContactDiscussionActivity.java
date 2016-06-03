@@ -186,7 +186,7 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     {
         super.onResume();
         setReadMessages();
-        EventService.getInstance().setActivity(this);
+        EventService.getInstance().setActivity(this,this);
         if(User.findById(b.getInt("user_id")) == null){
             finish();
         }

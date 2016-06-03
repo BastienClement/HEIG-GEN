@@ -46,9 +46,9 @@ public class EventService implements IRequests, IJSONKeys {
         return mInstance;
     }
 
-    public void setActivity(ICustomCallback callbackActivity){
+    public void setActivity(ICustomCallback callbackActivity, Activity activity){
         currentCallbackActivity = callbackActivity;
-        currentActivity = (Activity)callbackActivity;
+        currentActivity = activity;
         token = Utils.getToken(currentActivity);
     }
 

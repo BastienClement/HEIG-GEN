@@ -1,6 +1,8 @@
 package ch.heigvd.gen.activities;
 
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,6 +23,7 @@ import java.text.SimpleDateFormat;
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.adapters.ContactDiscussionAdapter;
 import ch.heigvd.gen.adapters.ContactListAdapter;
+import ch.heigvd.gen.adapters.ViewPagerAdapter;
 import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.ICustomCallback;
@@ -47,7 +50,7 @@ import ch.heigvd.gen.utilities.Utils;
  * TODO : fix arrêt de asynctask quand on quitte
  * todo : Gérer le next dans les events
  */
-public class ContactListActivity extends AppCompatActivity implements IRequests, ICustomCallback{
+public class ContactListActivity extends AppCompatActivity implements IRequests{
 
     ArrayAdapter adapter = null;
 
@@ -63,139 +66,45 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_list);
 
-        // Start event handler service
-        EventService.getInstance().setActivity(this);
-        EventService.getInstance().start();
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.fragment_contact)));
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.fragment_group)));
 
-        // Load self pref
-        loadSelfPref();
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        // Load contacts
-        loadContacts();
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
 
-        // Create adapter
-        adapter = new ContactListAdapter(this, R.layout.contacts_list_item, User.users);
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        // fill listview
-        final ListView listView = (ListView) findViewById(R.id.contact_list);
-        listView.setAdapter(adapter);
-        listView.setTextFilterEnabled(true);
-
-        // handle click on contact
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                // get contact
-                final User item = (User) parent.getItemAtPosition(position);
+            public void onTabSelected(TabLayout.Tab tab) {
+                EventService.getInstance().setActivity((ICustomCallback) pagerAdapter.getItem(tab.getPosition()), ContactListActivity.this);
+                viewPager.setCurrentItem(tab.getPosition());
+            }
 
-                // start contact edit activity
-                Intent intent = new Intent(ContactListActivity.this, ContactDiscussionActivity.class);
-                Bundle b = new Bundle();
-                b.putString("user_name", item.getUsername());
-                b.putInt("user_id", item.getId());
-                intent.putExtras(b);
-                startActivity(intent);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                //Do nothing here
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                //Do nothing here
             }
         });
 
-        // search view
-        SearchView search = (SearchView) findViewById(R.id.search);
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (TextUtils.isEmpty(newText)) {
-                    listView.clearTextFilter();
-                } else {
-                    listView.setFilterText(newText.toString());
-                }
-                return true;
-            }
-        });
+
+
+
+
     }
 
-    /**
-     * TODO
-     *
-     */
-    private void loadMessages(){
-        for(final User user : User.users) {
-            new RequestGET(new ICallback<String>() {
-                @Override
-                public void success(String result) {
-                    JSONArray jsonArray = null;
-                    try {
-                        jsonArray = new JSONArray(result);
-                        for (int i = jsonArray.length() - 1; i >= 0; i--) {
-                            JSONObject jsonMessage = jsonArray.getJSONObject(i);
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                            user.addMessage(new Message(jsonMessage.getInt("from"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    Log.i(TAG, "Success : " + result);
-                }
 
-                @Override
-                public void failure(Exception ex) {
-                    try {
-                        Utils.showAlert(ContactListActivity.this, new JSONObject(ex.getMessage()).getString("err"));
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
-                    }
-                    Log.e(TAG, ex.getMessage());
-                }
-            }, Utils.getToken(this), BASE_URL + GET_CONTACT + user.getId() + GET_MESSAGES).execute();
-        }
-    }
 
-    /**
-     * TODO
-     */
-    private void loadContacts(){
-        try {
-            Log.i(TAG, "Token : " + Utils.getToken(this));
-            new RequestGET(new ICallback<String>() {
-                @Override
-                public void success(String result) {
-                    JSONArray jsonArray = null;
-                    try {
-                        jsonArray = new JSONArray(result);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonUser = jsonArray.getJSONObject(i);
-                            User user = new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), jsonUser.getBoolean("unread"));
-                            User.users.add(user);
-                        }
-                        adapter.notifyDataSetChanged();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    // TODO : Order by last message
-                    loadMessages();
-                    Log.i(TAG, "Success : " + result);
-                }
-
-                @Override
-                public void failure(Exception ex) {
-                    try {
-                        Utils.showAlert(ContactListActivity.this, new JSONObject(ex.getMessage()).getString("err"));
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
-                    }
-                    Log.e(TAG, ex.getMessage());
-                }
-            }, Utils.getToken(this), BASE_URL + GET_CONTACTS).execute();
-        } catch (Exception ex) {
-            Log.e(TAG, ex.getMessage());
-        }
-    }
 
     /**
      * TODO
@@ -219,38 +128,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
         startActivity(intent);
     }
 
-    /**
-     * TODO
-     */
-    private void loadSelfPref(){
-        try {
-            new RequestGET(new ICallback<String>() {
-                @Override
-                public void success(String result) {
-                    try{
-                        JSONObject json = new JSONObject(result);
-                        Utils.setId(ContactListActivity.this, json.getInt("id"));
-                        Log.i(TAG, "Id : " + json.getString("id"));
-                    } catch (Exception ex){
-                        Log.e(TAG, ex.getMessage());
-                    }
-                    Log.i(TAG, "Success : " + result);
-                }
 
-                @Override
-                public void failure(Exception ex) {
-                    try {
-                        Utils.showAlert(ContactListActivity.this, new JSONObject(ex.getMessage()).getString("err"));
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
-                    }
-                    Log.e(TAG, ex.getMessage());
-                }
-            }, Utils.getToken(this), BASE_URL + GET_SELF).execute();
-        } catch (Exception ex) {
-            Log.e(TAG, ex.getMessage());
-        }
-    }
 
     /**
      * Do nothing so the user can't go back to the login activity with the back button after the login
@@ -260,56 +138,12 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
         // Do nothing
     }
 
-    /**
-     * TODO
-     */
-    @Override
-    public void update() {
-        this.runOnUiThread(new Runnable() {
-            public void run() {
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    /**
-     * TODO
-     */
-    @Override
-    public void onResume()
-    {  // After a pause OR at startup
-        super.onResume();
-        // Refresh contacts
-        EventService.getInstance().setActivity(this);
-        //adapter.clear();
-        //adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        //EventService.getInstance().removeActivity();
-    }
-
-    @Override
-    public void onStop(){
-        super.onStop();
-        /**
-         * TODO : Stop on application exit or log off
-         */
-        //EventService.getInstance().stop();
-        //EventService.getInstance().removeActivity();
-    }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
         EventService.getInstance().stop();
+        EventService.getInstance().removeActivity();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
 }

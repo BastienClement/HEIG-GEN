@@ -19,8 +19,15 @@
     <string name="hint_group_name">Enter the group name</string>
     <string name="button_send_register">Register</string>
     <string name="error_passwords_dont_match">Passwords don\'t match</string>
+    <string name="button_add_contact">Add Contact</string>
 
     <!-- ContactListActivity -->
     <string name="hint_filter">Filter: username</string>
     <string name="placeholder_none_found">No users found&#8230;</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_contact">Contacts</string>
+    <string name="fragment_group">Groupes</string>
+
 </resources>
