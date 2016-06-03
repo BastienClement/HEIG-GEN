@@ -1,6 +1,9 @@
 package controllers.api
 
+import _root_.util.DateTime
+import _root_.util.Implicits.futureWrapper
 import com.google.inject.{Inject, Singleton}
+import java.sql.SQLException
 import models._
 import models.mysql._
 import play.api.Configuration
@@ -9,9 +12,6 @@ import play.api.mvc.{Controller, Result}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Success
 import services.PushService
-import _root_.util.DateTime
-import _root_.util.Implicits.futureWrapper
-import java.sql.SQLException
 
 @Singleton
 class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration, val push: PushService)
@@ -125,6 +125,32 @@ class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Con
 			Members.kick(user, id).map {
 				case updated if updated > 0 => NoContent
 				case _ => UnprocessableEntity('GROUPS_KICK_UNPROCESSABLE)
+			}
+		}
+	}
+
+	/**
+	  * Promotes a user to group admin.
+	  */
+	def promote(id: Int, user: Int) = UserAction.async { req =>
+		ensureGroupMember(req.user, id, admin = true) {
+			def member_admin_flag(member: Int) = {
+				Members.filter { m =>
+					m.user === member && m.group === id
+				}.map { m =>
+					m.admin
+				}
+			}
+
+			member_admin_flag(user).update(true).run.map {
+				case updated if updated > 0 =>
+					member_admin_flag(req.user).update(false).run.andThen {
+						case Success(_) =>
+							push.broadcast(id, 'GROUP_ADMIN_CHANGED, "old" -> req.user, "new" -> user)
+					}
+					NoContent
+
+				case _ => UnprocessableEntity('GROUPS_PROMOTE_UNPROCESSABLE)
 			}
 		}
 	}
