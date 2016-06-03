@@ -15,11 +15,8 @@ import util.Implicits.futureWrapper
 @Singleton
 class PrivateChatsController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration, push: PushService)
 		extends Controller with ApiActionBuilder {
-
-	// TODO: check that user is a contact
-
 	/**
-	  * Lists message between two users.
+	  * Lists messages between two users.
 	  */
 	def list(user: Int) = UserAction.async { req =>
 		PrivateMessages.between(user, req.user).sortBy { m =>
