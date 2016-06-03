@@ -7,7 +7,7 @@ import models.mysql._
 import play.api.libs.json.Json.JsValueWrapper
 import play.api.libs.json._
 import scala.collection.mutable
-import scala.concurrent.{Future, Promise}
+import scala.concurrent.{ExecutionContext, Future, Promise}
 
 /**
   * Handle HTTP long-polling notifications
@@ -89,14 +89,16 @@ class PushService {
 	/**
 	  * Broadcast an event to every members of a group.
 	  */
-	def broadcast(group: Int, tpe: Symbol, data: (String, JsValueWrapper)*): Unit = {
+	def broadcast(group: Int, tpe: Symbol, data: (String, JsValueWrapper)*)
+			(implicit ec: ExecutionContext): Unit = {
 		broadcastFilter(group, user => true, tpe, data: _*)
 	}
 
 	/**
 	  * Broadcast an event to every members of a group with a filter.
 	  */
-	def broadcastFilter(group: Int, filter: BroadcastFilter, tpe: Symbol, data: (String, JsValueWrapper)*): Unit = {
+	def broadcastFilter(group: Int, filter: BroadcastFilter, tpe: Symbol, data: (String, JsValueWrapper)*)
+			(implicit ec: ExecutionContext): Unit = {
 		for {
 			users <- Members.forGroup(group).map(g => g.user).filter(filter).run
 			user <- users

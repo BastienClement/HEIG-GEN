@@ -3,8 +3,7 @@ package models
 import models.mysql._
 import scala.util.Success
 import services.PushService
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 case class UnreadFlag(user: Int, contact: Option[Int], group: Option[Int])
 
@@ -21,13 +20,13 @@ object UnreadFlags extends TableQuery(new UnreadFlags(_)) {
 		UnreadFlags.filter(uf => uf.user === user && uf.contact === contact).exists
 	}
 
-	def setContactUnread(user: Int, contact: Int)(implicit push: PushService): Future[Int] = {
+	def setContactUnread(user: Int, contact: Int)(implicit push: PushService, ec: ExecutionContext): Future[Int] = {
 		(UnreadFlags += UnreadFlag(user, Some(contact), None)).run.andThen {
 			case Success(_) => push.send(user, 'PRIVATE_MESSAGES_UNREAD, "contact" -> contact)
 		}
 	}
 
-	def setContactRead(user: Int, contact: Int)(implicit push: PushService): Future[Int] = {
+	def setContactRead(user: Int, contact: Int)(implicit push: PushService, ec: ExecutionContext): Future[Int] = {
 		UnreadFlags.filter(uf => uf.user === user && uf.contact === contact).delete.run.andThen {
 			case Success(deleted) if deleted > 0 => push.send(user, 'PRIVATE_MESSAGES_READ, "contact" -> contact)
 		}
@@ -37,7 +36,7 @@ object UnreadFlags extends TableQuery(new UnreadFlags(_)) {
 		UnreadFlags.filter(uf => uf.user === user && uf.group === group).exists
 	}
 
-	def setGroupUnread(sender: Int, group: Int)(implicit push: PushService): Future[Unit] = {
+	def setGroupUnread(sender: Int, group: Int)(implicit push: PushService, ec: ExecutionContext): Future[Unit] = {
 		Members.forGroup(group).filter(g => g.user =!= sender).map(g => g.user).run.map { users =>
 			for (user <- users) {
 				(UnreadFlags += UnreadFlag(user, None, Some(group))).run.andThen {
@@ -47,7 +46,7 @@ object UnreadFlags extends TableQuery(new UnreadFlags(_)) {
 		}
 	}
 
-	def setGroupRead(user: Int, group: Int)(implicit push: PushService): Future[Int] = {
+	def setGroupRead(user: Int, group: Int)(implicit push: PushService, ec: ExecutionContext): Future[Int] = {
 		UnreadFlags.filter(uf => uf.user === user && uf.contact === group).delete.run.andThen {
 			case Success(deleted) if deleted > 0 => push.send(user, 'GROUP_READ, "group" -> group)
 		}

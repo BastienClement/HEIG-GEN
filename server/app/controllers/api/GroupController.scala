@@ -8,10 +8,11 @@ import play.api.libs.json.{JsArray, JsBoolean, Json}
 import play.api.mvc.Controller
 import scala.concurrent.ExecutionContext
 import scala.util.Success
+import services.PushService
 import util.DateTime
 
 @Singleton
-class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration)
+class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration, val push: PushService)
 		extends Controller with ApiActionBuilder {
 	/**
 	  * Lists groups accessible by the user.
