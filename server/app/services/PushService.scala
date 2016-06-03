@@ -13,7 +13,7 @@ import _root_.util.DateTime
 @Singleton
 class PushService {
 	/** Maximum size of the replay vectors */
-	private final val REPLAY_SIZE = 10
+	private final val REPLAY_SIZE = 20
 
 	/** Pending promises */
 	private val open = mutable.Map.empty[Int, List[Promise[JsObject]]].withDefaultValue(List.empty)
