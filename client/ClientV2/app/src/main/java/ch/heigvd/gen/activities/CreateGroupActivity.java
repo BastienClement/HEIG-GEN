@@ -33,7 +33,7 @@ public class CreateGroupActivity extends AppCompatActivity implements ICustomCal
         setContentView(R.layout.activity_create_group);
 
         // Start event handler service
-        /*EventService.getInstance().setActivity(this, this);
+       /* EventService.getInstance().setActivity(this, this);
         EventService.getInstance().start();*/
 
         // Load self pref
@@ -52,7 +52,6 @@ public class CreateGroupActivity extends AppCompatActivity implements ICustomCal
 
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setItemsCanFocus(false);
-
 
 
     }
@@ -88,8 +87,9 @@ public class CreateGroupActivity extends AppCompatActivity implements ICustomCal
     }
 
     /**
-     * TODO
-     */
+     *
+
+
     @Override
     public void onResume()
     {  // After a pause OR at startup
@@ -98,6 +98,8 @@ public class CreateGroupActivity extends AppCompatActivity implements ICustomCal
         //EventService.getInstance().setActivity(this, this);
         adapter.notifyDataSetChanged();
     }
+     */
+
 
     @Override
     public void onPause(){
