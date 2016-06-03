@@ -276,9 +276,9 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
     {  // After a pause OR at startup
         super.onResume();
         // Refresh contacts
-        EventService.getInstance().setActivity(this, this);
-        adapter.clear();
-        adapter.notifyDataSetChanged();
+        EventService.getInstance().setActivity(this);
+        //adapter.clear();
+        //adapter.notifyDataSetChanged();
     }
 
     @Override

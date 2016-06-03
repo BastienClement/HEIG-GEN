@@ -123,7 +123,8 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
                     JSONArray jsonArray = null;
                     try {
                         jsonArray = new JSONArray(result);
-                        adapter.clear();
+                        Log.e(TAG, "-" + result);
+                       // adapter.clear();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonUser = jsonArray.getJSONObject(i);
                             adapter.add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), false));

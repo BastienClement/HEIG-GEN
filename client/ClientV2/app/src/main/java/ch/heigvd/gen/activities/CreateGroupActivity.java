@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,7 +22,7 @@ import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
 
-public class CreateGroupActivity extends AppCompatActivity implements ICustomCallback {
+public class CreateGroupActivity extends AppCompatActivity  {
 
     ArrayAdapter adapter = null;
 
@@ -32,15 +33,10 @@ public class CreateGroupActivity extends AppCompatActivity implements ICustomCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
 
-        // Start event handler service
-       /* EventService.getInstance().setActivity(this, this);
-        EventService.getInstance().start();*/
 
-        // Load self pref
-        //loadSelfPref();
 
-        // Load contacts
-        //loadContacts();
+        // enable back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Create adapter
         adapter = new ArrayAdapter<User>(this, R.layout.group_contacts_list_item, User.users);
@@ -74,17 +70,6 @@ public class CreateGroupActivity extends AppCompatActivity implements ICustomCal
     }
 
 
-    /**
-     * TODO
-     */
-    @Override
-    public void update() {
-        this.runOnUiThread(new Runnable() {
-            public void run() {
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
 
     /**
      *
@@ -100,20 +85,20 @@ public class CreateGroupActivity extends AppCompatActivity implements ICustomCal
     }
      */
 
-
+    /**
+     * TODO
+     *
+     * @param item
+     * @return
+     */
     @Override
-    public void onPause(){
-        super.onPause();
-        EventService.getInstance().removeActivity();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
-    @Override
-    public void onStop(){
-        super.onStop();
-        /**
-         * TODO : Stop on application exit or log off
-         */
-        //EventService.getInstance().stop();
-        //EventService.getInstance().removeActivity();
-    }
 }
