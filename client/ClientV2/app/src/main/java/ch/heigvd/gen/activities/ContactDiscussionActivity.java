@@ -141,6 +141,7 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     private void setReadMessages(){
         try {
             Log.i(TAG, "Token : " + Utils.getToken(ContactDiscussionActivity.this));
+            System.out.println("MESSAGE REEAWDADDADDDAD");
             new RequestPUT(new ICallback<String>() {
                 @Override
                 public void success(String result) {
@@ -167,6 +168,7 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
      */
     @Override
     public void update() {
+        setReadMessages();
         this.runOnUiThread(new Runnable(){
             public void run(){
                 adapter.notifyDataSetChanged();

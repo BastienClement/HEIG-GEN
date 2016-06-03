@@ -42,6 +42,10 @@ import ch.heigvd.gen.utilities.Utils;
  * TODO : Faire les discussion de groupe
  * TODO : Mettre tous les éléments json et les requêtes dans IJSONKEYS et IREQUESTS
  * TODO : ARRETER EventService quand on quitte l'application ou qu'on se déconnecte
+ * TODO : fix notification
+ * TODO : fix création thread dans le service
+ * TODO : fix arrêt de asynctask quand on quitte
+ * todo : Gérer le next dans les events
  */
 public class ContactListActivity extends AppCompatActivity implements IRequests, ICustomCallback{
 
