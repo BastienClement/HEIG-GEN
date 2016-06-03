@@ -277,6 +277,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
         super.onResume();
         // Refresh contacts
         EventService.getInstance().setActivity(this, this);
+        adapter.clear();
         adapter.notifyDataSetChanged();
     }
 
@@ -300,5 +301,11 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
     public void onDestroy(){
         super.onDestroy();
         EventService.getInstance().stop();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 }
