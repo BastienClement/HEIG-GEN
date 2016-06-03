@@ -1,17 +1,17 @@
 package controllers.api
 
-import _root_.util.DateTime
-import _root_.util.Implicits.futureWrapper
 import com.google.inject.{Inject, Singleton}
 import java.sql.SQLException
 import models._
 import models.mysql._
 import play.api.Configuration
-import play.api.libs.json._
+import play.api.libs.json.{JsArray, JsBoolean, JsObject, Json}
 import play.api.mvc.{Controller, Result}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Success
 import services.PushService
+import util.DateTime
+import util.Implicits.futureWrapper
 
 @Singleton
 class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration, val push: PushService)
@@ -20,7 +20,9 @@ class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Con
 	  * Lists groups with a filter
 	  */
 	private def groupsWithReadFlag(user: Int) = {
-		Groups.accessibleBy(user).map { group =>
+		Groups.accessibleBy(user).sortBy { group =>
+			group.last_message.desc
+		}.map { group =>
 			(group, UnreadFlags.groupUnread(user, group.id))
 		}
 	}
@@ -35,10 +37,10 @@ class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Con
 	/**
 	  * Checks whether a given user is admin of the group or not.
 	  */
-	private def isGroupMember(user: Int, group: Int, admin: Boolean = false): Future[Boolean] = {
+	private def isGroupMember(user: Int, group: Int, admin: Boolean = false): Future[Option[Member]] = {
 		Members.filter { m =>
 			m.user === user && m.group === group && (m.admin === true || !admin)
-		}.exists.result.run
+		}.headOption
 	}
 
 	/**
@@ -47,8 +49,8 @@ class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Con
 	private def ensureGroupMember(user: Int, group: Int, admin: Boolean = false, failure: Symbol = 'GROUPS_ACTION_FORBIDDEN)
 			(action: => Future[Result]): Future[Result] = {
 		isGroupMember(user, group, admin).flatMap {
-			case true => action
-			case false => Forbidden(failure)
+			case Some(option) => action
+			case None => Forbidden(failure)
 		}
 	}
 
@@ -99,8 +101,46 @@ class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Con
 		}
 	}
 
-	def messages(id: Int) = NotYetImplemented
-	def post(id: Int) = NotYetImplemented
+	/**
+	  * List of group messages.
+	  */
+	def messages(id: Int) = UserAction.async { req =>
+		isGroupMember(req.user, id).flatMap {
+			case Some(member) =>
+				Messages.filter { m =>
+					m.group === id && m.date >= member.date
+				}.sortBy { m =>
+					m.date.desc
+				}.run.map { messages =>
+					Ok(JsArray(messages.map(_.toJson)))
+				}
+
+			case None =>
+				Forbidden('GROUPS_MESSAGES_FORBIDDEN)
+		}
+	}
+
+	/**
+	  * Posts a new message.
+	  */
+	def post(id: Int) = UserAction.async(parse.json) { req =>
+		ensureGroupMember(req.user, id) {
+			val text = (req.body \ "text").as[String]
+			val now = DateTime.now
+			(Messages += Message(0, id, req.user, now, text)).run.map(_ => NoContent).andThen {
+				case Success(_) =>
+					Groups.filter { g =>
+						g.id === id && g.last_message < now
+					}.map { g =>
+						g.last_message
+					}.update(now).run.andThen {
+						case Success(_) =>
+							push.broadcast(id, 'GROUP_MESSAGES_UPDATED, "group" -> id)
+							UnreadFlags.setGroupUnread(req.user, id)
+					}
+			}
+		}
+	}
 
 	/**
 	  * List groups members.
