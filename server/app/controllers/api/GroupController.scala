@@ -86,7 +86,19 @@ class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Con
 		}
 	}
 
-	def delete(id: Int) = NotYetImplemented
+	/**
+	  * Deletes the group.
+	  */
+	def delete(id: Int) = UserAction.async { req =>
+		ensureGroupMember(req.user, id, admin = true) {
+			Members.forGroup(id).run.flatMap { members =>
+				Groups.filter(g => g.id === id).delete.run.map(_ => NoContent).andThen {
+					case Success(_) => for (member <- members) push.send(member.user, 'GROUP_DELETED, "group" -> id)
+				}
+			}
+		}
+	}
+
 	def messages(id: Int) = NotYetImplemented
 	def post(id: Int) = NotYetImplemented
 
