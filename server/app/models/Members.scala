@@ -25,7 +25,11 @@ object Members extends TableQuery(new Members(_)) {
 	def invite(user: Int, group: Int, admin: Boolean = false)(implicit push: PushService, ec: ExecutionContext): Future[Int] = {
 		val member = Member(user, group, DateTime.now, admin)
 		(Members += member).run.andThen {
-			case Success(_) => push.broadcast(group, 'GROUP_USER_INVITED, "user" -> member.user, "admin" -> member.admin)
+			case Success(_) => push.broadcast(group, 'GROUP_USER_INVITED,
+				"group" -> group,
+				"user" -> user,
+				"admin" -> admin
+			)
 		}
 	}
 
@@ -33,7 +37,10 @@ object Members extends TableQuery(new Members(_)) {
 		Members.filter { m =>
 			m.user === user && m.group === group && m.admin === false
 		}.delete.run.andThen {
-			case Success(count) if count > 0 => push.broadcast(group, 'GROUP_USER_KICKED, "user" -> user)
+			case Success(count) if count > 0 => push.broadcast(group, 'GROUP_USER_KICKED,
+				"group" -> group,
+				"user" -> user
+			)
 		}
 	}
 }
