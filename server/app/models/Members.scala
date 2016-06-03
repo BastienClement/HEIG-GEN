@@ -37,10 +37,9 @@ object Members extends TableQuery(new Members(_)) {
 		Members.filter { m =>
 			m.user === user && m.group === group && m.admin === false
 		}.delete.run.andThen {
-			case Success(count) if count > 0 => push.broadcast(group, 'GROUP_USER_KICKED,
-				"group" -> group,
-				"user" -> user
-			)
+			case Success(count) if count > 0 =>
+				push.broadcast(group, 'GROUP_USER_KICKED, "group" -> group, "user" -> user)
+				push.send(user, 'GROUP_USER_KICKED, "group" -> group, "user" -> user)
 		}
 	}
 }
