@@ -14,7 +14,7 @@ import ch.heigvd.gen.R;
 import ch.heigvd.gen.models.Message;
 import ch.heigvd.gen.utilities.Utils;
 
-public class ChatAdapter extends ArrayAdapter<Message>{
+public class ContactDiscussionAdapter extends ArrayAdapter<Message>{
 
     private final List<Message> messages;
 
@@ -27,7 +27,7 @@ public class ChatAdapter extends ArrayAdapter<Message>{
      * @param res
      * @param messages
      */
-    public ChatAdapter(final Activity a, final int res, final List<Message> messages) {
+    public ContactDiscussionAdapter(final Activity a, final int res, final List<Message> messages) {
         super(a, res, messages);
         this.messages = messages;
         this.a = a;

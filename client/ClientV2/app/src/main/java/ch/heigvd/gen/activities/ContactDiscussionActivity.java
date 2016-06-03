@@ -14,17 +14,14 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
-
 import ch.heigvd.gen.R;
-import ch.heigvd.gen.adapters.ChatAdapter;
-import ch.heigvd.gen.communications.RequestGET;
+import ch.heigvd.gen.adapters.ContactDiscussionAdapter;
 import ch.heigvd.gen.communications.RequestPOST;
+import ch.heigvd.gen.communications.RequestPUT;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IJSONKeys;
 import ch.heigvd.gen.interfaces.IRequests;
-import ch.heigvd.gen.models.Message;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
@@ -34,7 +31,7 @@ import ch.heigvd.gen.utilities.Utils;
  */
 public class ContactDiscussionActivity extends AppCompatActivity implements IRequests, IJSONKeys, ICustomCallback {
 
-    private ChatAdapter adapter;
+    private ContactDiscussionAdapter adapter;
     private Bundle b = null;
 
     private final static String TAG = ContactDiscussionActivity.class.getSimpleName();
@@ -55,8 +52,8 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
         // enable back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Create the ChatAdapter
-        adapter = new ChatAdapter(this, R.layout.other_message_list_item, User.findById(b.getInt("user_id")).getMessages());
+        // Create the ContactDiscussionAdapter
+        adapter = new ContactDiscussionAdapter(this, R.layout.other_message_list_item, User.findById(b.getInt("user_id")).getMessages());
 
         // fill listview
         final ListView listView = (ListView) findViewById(R.id.message_list);
@@ -141,6 +138,30 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
         }
     }
 
+    private void setReadMessages(){
+        try {
+            Log.i(TAG, "Token : " + Utils.getToken(ContactDiscussionActivity.this));
+            new RequestPUT(new ICallback<String>() {
+                @Override
+                public void success(String result) {
+                    Log.i(TAG, "Success : " + result);
+                }
+
+                @Override
+                public void failure(Exception ex) {
+                    try {
+                        Utils.showAlert(ContactDiscussionActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                    Log.e(TAG, ex.getMessage());
+                }
+            }, Utils.getToken(ContactDiscussionActivity.this), BASE_URL + GET_CONTACT + User.findById(b.getInt("user_id")).getId() + SET_MESSAGES_READ).execute();
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
+        }
+    }
+
     /**
      * TODO
      */
@@ -162,7 +183,8 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     public void onResume()
     {
         super.onResume();
-        EventService.getInstance().setActivity(this, this);
+        setReadMessages();
+        EventService.getInstance().setActivity(this);
         if(User.findById(b.getInt("user_id")) == null){
             finish();
         }

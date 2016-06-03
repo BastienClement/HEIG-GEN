@@ -19,6 +19,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import ch.heigvd.gen.R;
+import ch.heigvd.gen.adapters.ContactDiscussionAdapter;
+import ch.heigvd.gen.adapters.ContactListAdapter;
 import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.ICustomCallback;
@@ -58,7 +60,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
         setContentView(R.layout.activity_contacts_list);
 
         // Start event handler service
-        EventService.getInstance().setActivity(this, this);
+        EventService.getInstance().setActivity(this);
         EventService.getInstance().start();
 
         // Load self pref
@@ -68,7 +70,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
         loadContacts();
 
         // Create adapter
-        adapter = new ArrayAdapter<User>(this, R.layout.contacts_list_item, User.users);
+        adapter = new ContactListAdapter(this, R.layout.contacts_list_item, User.users);
 
         // fill listview
         final ListView listView = (ListView) findViewById(R.id.contact_list);
@@ -115,38 +117,39 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
     /**
      * TODO
      *
-     * @param pos
      */
-    private void loadMessages(final int pos){
-        new RequestGET(new ICallback<String>() {
-            @Override
-            public void success(String result) {
-                JSONArray jsonArray = null;
-                try {
-                    jsonArray = new JSONArray(result);
-                    for (int i = jsonArray.length() - 1; i >= 0; i--) {
-                        JSONObject jsonMessage = jsonArray.getJSONObject(i);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                        User.users.get(pos).addMessage(new Message(jsonMessage.getInt("from"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
+    private void loadMessages(){
+        for(final User user : User.users) {
+            new RequestGET(new ICallback<String>() {
+                @Override
+                public void success(String result) {
+                    JSONArray jsonArray = null;
+                    try {
+                        jsonArray = new JSONArray(result);
+                        for (int i = jsonArray.length() - 1; i >= 0; i--) {
+                            JSONObject jsonMessage = jsonArray.getJSONObject(i);
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            user.addMessage(new Message(jsonMessage.getInt("from"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                    Log.i(TAG, "Success : " + result);
                 }
-                Log.i(TAG, "Success : " + result);
-            }
 
-            @Override
-            public void failure(Exception ex) {
-                try {
-                    Utils.showAlert(ContactListActivity.this, new JSONObject(ex.getMessage()).getString("err"));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
+                @Override
+                public void failure(Exception ex) {
+                    try {
+                        Utils.showAlert(ContactListActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                    Log.e(TAG, ex.getMessage());
                 }
-                Log.e(TAG, ex.getMessage());
-            }
-        }, Utils.getToken(this), BASE_URL + GET_CONTACT + User.users.get(pos).getId() + GET_MESSAGES).execute();
+            }, Utils.getToken(this), BASE_URL + GET_CONTACT + user.getId() + GET_MESSAGES).execute();
+        }
     }
 
     /**
@@ -163,16 +166,15 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
                         jsonArray = new JSONArray(result);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonUser = jsonArray.getJSONObject(i);
-                            User user = new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"));
+                            User user = new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), jsonUser.getBoolean("unread"));
                             User.users.add(user);
-                            loadMessages(User.users.indexOf(user));
                         }
                         adapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     // TODO : Order by last message
-
+                    loadMessages();
                     Log.i(TAG, "Success : " + result);
                 }
 
@@ -199,6 +201,17 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
     public void addContact(final View view){
         // start contact search activity
         Intent intent = new Intent(ContactListActivity.this, ContactSearchActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * TODO
+     *
+     * @param view
+     */
+    public void createGroup(final View view){
+        // start contact create group activity
+        Intent intent = new Intent(ContactListActivity.this, CreateGroupActivity.class);
         startActivity(intent);
     }
 
@@ -263,8 +276,9 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
     {  // After a pause OR at startup
         super.onResume();
         // Refresh contacts
-        EventService.getInstance().setActivity(this, this);
-        adapter.notifyDataSetChanged();
+        EventService.getInstance().setActivity(this);
+        //adapter.clear();
+        //adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -281,5 +295,17 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
          */
         //EventService.getInstance().stop();
         //EventService.getInstance().removeActivity();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        EventService.getInstance().stop();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 }

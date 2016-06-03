@@ -187,9 +187,14 @@ J'ai implémenté le bouton d'envoi pour que les messages soient bien envoyés s
 	*	Bastien s'en est occupé.
 
 
-####Bastien (5H/5h)####
+####Bastien (7h/5h)####
 
-* TODO
+* Quelques mises à jour des API de l'itération 3
+* Changement de la gestion des contacts côté serveur, au lieu d'avoir une paire d'entrée dans un table, il n'y a plus qu'une entrée avec un ordre précis des contacts
+* Mise en place du système de push d'événement en utilisant la technique du long-polling HTTP
+* Mise en place de l'API pour la gestion des discussions privées et des événements associés
+* Mise en place de la gestion des messages lus / non-lus et des événements associés
+* Amélioration du processus de mise à jour du serveur en utilisant Docker
 
 ####Guillaume (5H/5H)####
 
@@ -226,7 +231,7 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (12H/5H)####
+####Antoine (15H30/5H)####
 
 J'ai dû refactoré le code car on n'enregistrait pas la liste des utilisateurs et des messages et pour des questions de performance, il fallait la stocker dans l'application. J'ai également généré toute la javadoc des classes du client. 3h
 
@@ -240,7 +245,9 @@ J'ai du résoudre le problème que RequestGET est un task et pas un thread et bl
 
 J'ai fait marcher les events et la récupération du JSON. J'ai fait que la recherche n'affiche pas les utilisateurs déjà en contact et sois-même. 1h
 
-J'ai fait marcher les events d'ajout et suppression de contact. 
+J'ai fait marcher les events d'ajout et suppression de contact. Et les events de nouveaux messages. 2h
+
+J'ai fait marcher le système de notification pour afficher une notification dans la liste des contacts quand un nouveau message a été reçu. 1h30
 
 * Ajouter toutes les fonctionnalités relatives aux discussions publiques au protocole de communication. 3h
 * Aider Bastien et Guillaume pour implémenter les fonctionnalités au niveau serveur ou client. 2h

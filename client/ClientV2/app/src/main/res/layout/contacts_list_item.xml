@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="15dp"
-    android:textSize="24dp"
-/>
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textSize="24sp"
+        android:id="@+id/contact_name" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:id="@+id/unread_flag"
+        android:textColor="#e81919" />
+
+
+</LinearLayout>
