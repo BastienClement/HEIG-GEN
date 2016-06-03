@@ -5,15 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import ch.heigvd.gen.R;
-import ch.heigvd.gen.models.Message;
 import ch.heigvd.gen.models.User;
-import ch.heigvd.gen.utilities.Utils;
 
 public class ContactListAdapter extends ArrayAdapter<User>{
 
@@ -65,10 +62,10 @@ public class ContactListAdapter extends ArrayAdapter<User>{
         TextView contactName = (TextView)convertView.findViewById(R.id.contact_name);
         contactName.setText(user.getUsername());
         if (user.isUnread()) {
-            TextView textView = (TextView)convertView.findViewById(R.id.unread_flag);
+            TextView textView = (TextView)convertView.findViewById(R.id.unread_flag_contact_list);
             textView.setText("New messages");
         } else {
-            TextView textView = (TextView)convertView.findViewById(R.id.unread_flag);
+            TextView textView = (TextView)convertView.findViewById(R.id.unread_flag_contact_list);
             textView.setText("");
         }
 

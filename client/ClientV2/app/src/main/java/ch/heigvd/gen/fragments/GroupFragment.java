@@ -99,7 +99,7 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                         jsonArray = new JSONArray(result);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonGroup = jsonArray.getJSONObject(i);
-                            Group group = new Group(jsonGroup.getInt("id"), jsonGroup.getString("title"), jsonGroup.getBoolean("unread"));
+                            Group group = new Group(jsonGroup.getInt("id"), jsonGroup.getString("title"), jsonGroup.getString("last_massage"), jsonGroup.getBoolean("unread"));
                             Group.groups.add(group);
                         }
                         adapter.notifyDataSetChanged();

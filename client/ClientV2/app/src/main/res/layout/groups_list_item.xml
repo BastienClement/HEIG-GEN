@@ -10,12 +10,12 @@ android:orientation="horizontal" >
     android:layout_height="wrap_content"
     android:padding="15dp"
     android:textSize="24sp"
-    android:id="@+id/group_name" />
+    android:id="@+id/group_item_name" />
 
 <TextView
     android:layout_width="match_parent"
     android:layout_height="32dp"
-    android:id="@+id/unread_flag"
+    android:id="@+id/unread_flag_group_list"
     android:textColor="#e81919" />
 
 

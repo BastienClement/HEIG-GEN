@@ -11,7 +11,6 @@ import java.util.List;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.models.Group;
-import ch.heigvd.gen.models.User;
 
 /**
  * Created by guillaume on 03.06.16.
@@ -60,17 +59,16 @@ public class GroupListAdapter  extends ArrayAdapter<Group> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final Group group = getItem(position);
-        // TODO: check who send the message ?
 
         convertView = LayoutInflater.from(getContext()).inflate(R.layout.groups_list_item, parent, false);
 
-        TextView groupName = (TextView)convertView.findViewById(R.id.contact_name);
+        TextView groupName = (TextView)convertView.findViewById(R.id.group_item_name);
         groupName.setText(group.getGroupname());
         if (group.isUnread()) {
-            TextView textView = (TextView)convertView.findViewById(R.id.unread_flag);
+            TextView textView = (TextView)convertView.findViewById(R.id.unread_flag_group_list);
             textView.setText("New messages");
         } else {
-            TextView textView = (TextView)convertView.findViewById(R.id.unread_flag);
+            TextView textView = (TextView)convertView.findViewById(R.id.unread_flag_group_list);
             textView.setText("");
         }
 
