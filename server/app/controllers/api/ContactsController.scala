@@ -41,7 +41,7 @@ class ContactsController @Inject()(implicit val ec: ExecutionContext, val conf: 
 			Contacts.bind(user, req.user).map { _ =>
 				NoContent
 			}.recover {
-				case e: SQLException if e.getErrorCode == 1452 => UnprocessableEntity('CONTACTS_ADD_NOT_FOUND)
+				case e: SQLException if e.getErrorCode == 1452 => NotFound('CONTACTS_ADD_NOT_FOUND)
 				case e: SQLException if e.getErrorCode == 1062 => Conflict('CONTACTS_ADD_DUPLICATE)
 			}.andThen {
 				case Success(_) =>
