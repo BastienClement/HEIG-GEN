@@ -121,7 +121,7 @@ class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Con
 	  * Removes a user from a group.
 	  */
 	def kick(id: Int, user: Int) = UserAction.async { req =>
-		ensureGroupMember(req.user, id, admin = true) {
+		ensureGroupMember(req.user, id, admin = req.user != user) {
 			Members.kick(user, id).map {
 				case updated if updated > 0 => NoContent
 				case _ => UnprocessableEntity('GROUPS_KICK_UNPROCESSABLE)
