@@ -13,7 +13,7 @@ import util.DateTime
 import util.Implicits.futureWrapper
 
 @Singleton
-class PrivateChatsController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration, push: PushService)
+class PrivateChatsController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration, val push: PushService)
 		extends Controller with ApiActionBuilder {
 	/**
 	  * Lists messages between two users.
