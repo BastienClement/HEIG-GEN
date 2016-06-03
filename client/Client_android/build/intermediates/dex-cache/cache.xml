@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
+        <dex dex="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-23.2.1_4d6f1f25151f1e2edddf78651e77f690a16a8b2d\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="673d77a5bbddd766037f088e775df525c46407f0">
+        <dex dex="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-23.2.1_76c3eb268d80b5fb69615571fa4318cd22f9146d\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Antoine\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.2.1_ba7bf7f8258f5adf4d8ad85489522243682e6aa4\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="84f27b013ffe9ad3319b4809b5ea0393cc5927d4">
+        <dex dex="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_f941d4171d3769ceae64c942be8a681959382edc\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
+        <dex dex="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.2.1_a0b8eaf8af1d7dfeb90c26dfc16fc997a49171a3\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Antoine\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.4\695b63d702f505b9b916e02272e3b6381bade7f\gson-2.4.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="0695b63d702f505b9b916e02272e3b6381bade7f">
+        <dex dex="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.4_7a849653eee4c1500d203424fa81cfc91935a644\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
+        <dex dex="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-23.2.1_00cb8dc853b40944f54d21a48fc23e64e99af20d\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\libs\internal_impl-23.2.1.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
+        <dex dex="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.2.1_f2f57d588738a47bc42c293e49f74ade603611b2\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
+        <dex dex="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.2.1_fbd41ec81a7971a57fac5f65fe97af118dea13e2\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="53571c72ca463aa8aed7105f1158485bb93d13f6">
+        <dex dex="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_25d168d58391b9dba55bef5fa25213a41d8f7337\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\exploded-aar\com.android.support\design\23.2.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="C:\Users\Antoine\Desktop\Cours HEIG 2015-2016 S2\GEN\Projet\HEIG-GEN\client\Client_android\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.2.1_a0b07533d3278a00a1f2a5b4c9bcb757f3cd1289\classes.dex" />
+    </item>
+
+</items>

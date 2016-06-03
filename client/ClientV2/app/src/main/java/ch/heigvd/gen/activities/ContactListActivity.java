@@ -60,7 +60,7 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
         setContentView(R.layout.activity_contacts_list);
 
         // Start event handler service
-        EventService.getInstance().setActivity(this, this);
+        EventService.getInstance().setActivity(this);
         EventService.getInstance().start();
 
         // Load self pref
@@ -283,5 +283,11 @@ public class ContactListActivity extends AppCompatActivity implements IRequests,
          */
         //EventService.getInstance().stop();
         //EventService.getInstance().removeActivity();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        EventService.getInstance().stop();
     }
 }
