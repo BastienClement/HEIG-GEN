@@ -2,6 +2,7 @@ package models
 
 import models.mysql._
 import scala.concurrent.Future
+import services.PushService
 
 case class Contact(lower: Int, upper: Int)
 
@@ -30,7 +31,7 @@ object Contacts extends TableQuery(new Contacts(_)) {
 	}
 
 	/** Unbinds two users */
-	def unbind(a: Int, b: Int): Future[Int] = {
+	def unbind(a: Int, b: Int)(implicit push: PushService): Future[Int] = {
 		if (a > b) {
 			unbind(b, a)
 		} else {

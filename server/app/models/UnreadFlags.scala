@@ -32,4 +32,24 @@ object UnreadFlags extends TableQuery(new UnreadFlags(_)) {
 			case Success(deleted) if deleted > 0 => push.send(user, 'PRIVATE_MESSAGES_READ, "contact" -> contact)
 		}
 	}
+
+	def groupUnread(user: Int, group: Rep[Int]): Rep[Boolean] = {
+		UnreadFlags.filter(uf => uf.user === user && uf.group === group).exists
+	}
+
+	def setGroupUnread(sender: Int, group: Int)(implicit push: PushService): Future[Unit] = {
+		Members.forGroup(group).filter(g => g.user =!= sender).map(g => g.user).run.map { users =>
+			for (user <- users) {
+				(UnreadFlags += UnreadFlag(user, None, Some(group))).run.andThen {
+					case Success(_) => push.send(user, 'GROUP_UNREAD, "group" -> group)
+				}
+			}
+		}
+	}
+
+	def setGroupRead(user: Int, group: Int)(implicit push: PushService): Future[Int] = {
+		UnreadFlags.filter(uf => uf.user === user && uf.contact === group).delete.run.andThen {
+			case Success(deleted) if deleted > 0 => push.send(user, 'GROUP_READ, "group" -> group)
+		}
+	}
 }
