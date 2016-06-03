@@ -1,11 +1,13 @@
 package services
 
+import _root_.util.DateTime
 import com.google.inject.Singleton
+import models.{Members, _}
+import models.mysql._
 import play.api.libs.json.Json.JsValueWrapper
 import play.api.libs.json._
 import scala.collection.mutable
-import scala.concurrent.{Future, Promise}
-import _root_.util.DateTime
+import scala.concurrent.{ExecutionContext, Future, Promise}
 
 /**
   * Handle HTTP long-polling notifications
@@ -13,7 +15,7 @@ import _root_.util.DateTime
 @Singleton
 class PushService {
 	/** Maximum size of the replay vectors */
-	private final val REPLAY_SIZE = 10
+	private final val REPLAY_SIZE = 20
 
 	/** Pending promises */
 	private val open = mutable.Map.empty[Int, List[Promise[JsObject]]].withDefaultValue(List.empty)
@@ -77,6 +79,30 @@ class PushService {
 		}
 
 		open.remove(user)
+	}
+
+	/**
+	  * Type of a broadcast target filter
+	  */
+	type BroadcastFilter = Rep[Int] => Rep[Boolean]
+
+	/**
+	  * Broadcast an event to every members of a group.
+	  */
+	def broadcast(group: Int, tpe: Symbol, data: (String, JsValueWrapper)*)
+			(implicit ec: ExecutionContext): Unit = {
+		broadcastFilter(group, user => true, tpe, data: _*)
+	}
+
+	/**
+	  * Broadcast an event to every members of a group with a filter.
+	  */
+	def broadcastFilter(group: Int, filter: BroadcastFilter, tpe: Symbol, data: (String, JsValueWrapper)*)
+			(implicit ec: ExecutionContext): Unit = {
+		for {
+			users <- Members.forGroup(group).map(g => g.user).filter(filter).run
+			user <- users
+		} send(user, tpe, data: _*)
 	}
 
 	/**

@@ -139,8 +139,10 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     }
 
     private void setReadMessages(){
+        User.findById(b.getInt("user_id")).setUnread(false);
         try {
             Log.i(TAG, "Token : " + Utils.getToken(ContactDiscussionActivity.this));
+            System.out.println("MESSAGE REEAWDADDADDDAD");
             new RequestPUT(new ICallback<String>() {
                 @Override
                 public void success(String result) {
@@ -157,6 +159,7 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
                     Log.e(TAG, ex.getMessage());
                 }
             }, Utils.getToken(ContactDiscussionActivity.this), BASE_URL + GET_CONTACT + User.findById(b.getInt("user_id")).getId() + SET_MESSAGES_READ).execute();
+            System.out.println("READ " + BASE_URL + GET_CONTACT + User.findById(b.getInt("user_id")).getId() + SET_MESSAGES_READ);
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }
@@ -167,6 +170,7 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
      */
     @Override
     public void update() {
+        setReadMessages();
         this.runOnUiThread(new Runnable(){
             public void run(){
                 adapter.notifyDataSetChanged();
@@ -184,7 +188,7 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     {
         super.onResume();
         setReadMessages();
-        EventService.getInstance().setActivity(this);
+        EventService.getInstance().setActivity(this,this);
         if(User.findById(b.getInt("user_id")) == null){
             finish();
         }
