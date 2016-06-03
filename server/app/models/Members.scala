@@ -1,20 +1,12 @@
 package models
 
 import models.mysql._
-import play.api.libs.json.{JsObject, Json}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Success
 import services.PushService
 import util.DateTime
 
-case class Member(user: Int, group: Int, date: DateTime, admin: Boolean) {
-	def toJson: JsObject = Json.obj(
-		"user" -> user,
-		"group" -> group,
-		"date" -> date,
-		"admin" -> admin
-	)
-}
+case class Member(user: Int, group: Int, date: DateTime, admin: Boolean)
 
 class Members(tag: Tag) extends Table[Member](tag, "members") {
 	def user = column[Int]("user", O.PrimaryKey)
@@ -33,7 +25,7 @@ object Members extends TableQuery(new Members(_)) {
 	def invite(user: Int, group: Int, admin: Boolean = false)(implicit push: PushService, ec: ExecutionContext): Future[Int] = {
 		val member = Member(user, group, DateTime.now, admin)
 		(Members += member).run.andThen {
-			case Success(_) => push.broadcast(group, 'GROUP_USER_INVITED, "user" -> member.toJson)
+			case Success(_) => push.broadcast(group, 'GROUP_USER_INVITED, "user" -> member.user, "admin" -> member.admin)
 		}
 	}
 
@@ -41,8 +33,7 @@ object Members extends TableQuery(new Members(_)) {
 		Members.filter { m =>
 			m.user === user && m.group === group && m.admin === false
 		}.delete.run.andThen {
-			case Success(count) if count > 0 =>
-				push.broadcast(group, 'GROUP_USER_KICKED, "user" -> user)
+			case Success(count) if count > 0 => push.broadcast(group, 'GROUP_USER_KICKED, "user" -> user)
 		}
 	}
 }
