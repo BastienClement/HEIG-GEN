@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,40 +11,17 @@
     android:orientation="vertical"
     tools:context="ch.heigvd.gen.activities.ContactListActivity">
 
-    <LinearLayout
+   <android.support.design.widget.TabLayout
+       android:id="@+id/tab_layout"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignParentTop="true"
+       />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:weightSum="1">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tab_layout"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add contact"
-            android:id="@+id/add_contact"
-            android:layout_weight="0.49"
-            android:onClick="addContact" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create group"
-            android:id="@+id/create_group"
-            android:layout_gravity="top"
-            android:layout_weight="0.51"
-            android:onClick="createGroup" />
-
-    </LinearLayout>
-
-    <SearchView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/search"
-        android:queryHint="Search"/>
-
-    <ListView
-        android:id="@+id/contact_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</LinearLayout>
+</RelativeLayout>
