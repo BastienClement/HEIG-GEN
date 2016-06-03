@@ -232,7 +232,7 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
     }
 
     /**
-     * To update the message list
+     * To update the contact list
      */
     @Override
     public void update() {
