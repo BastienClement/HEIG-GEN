@@ -13,7 +13,7 @@ import services.PushService
 import util.Implicits.futureWrapper
 
 @Singleton
-class ContactsController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration, push: PushService)
+class ContactsController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration, val push: PushService)
 		extends Controller with ApiActionBuilder {
 	/**
 	  * Fetches the contacts list.

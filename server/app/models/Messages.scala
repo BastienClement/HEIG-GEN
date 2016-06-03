@@ -1,18 +1,27 @@
 package models
 
 import models.mysql._
+import play.api.libs.json.{JsObject, Json}
 import util.DateTime
 
-case class Message(id: Int, conversation: Int, user: Int, date: DateTime, body: String)
+case class Message(id: Int, group: Int, user: Int, date: DateTime, text: String) {
+	def toJson: JsObject = Json.obj(
+		"id" -> id,
+		"group" -> group,
+		"user" -> user,
+		"date" -> date,
+		"text" -> text
+	)
+}
 
 class Messages(tag: Tag) extends Table[Message](tag, "messages") {
 	def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
-	def chat = column[Int]("fk_conversation")
-	def user = column[Int]("fk_user")
+	def group = column[Int]("group")
+	def user = column[Int]("user")
 	def date = column[DateTime]("date")
-	def body = column[String]("body")
+	def text = column[String]("text")
 
-	def * = (id, chat, user, date, body) <> (Message.tupled, Message.unapply)
+	def * = (id, group, user, date, text) <> (Message.tupled, Message.unapply)
 }
 
 object Messages extends TableQuery(new Messages(_)) {
