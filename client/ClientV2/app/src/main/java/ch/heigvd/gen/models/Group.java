@@ -1,6 +1,8 @@
 package ch.heigvd.gen.models;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -183,5 +185,20 @@ public class Group implements Comparable<Group> {
             }
         }
         return null;
+    }
+
+    /**
+     *
+     */
+    public static void sortGroups(){
+        Collections.sort(groups, new Comparator<Group>(){
+            @Override
+            public int compare(Group group1, Group group2) {
+                if(group1.getMessages().size() == 0 || group2.getMessages().size() == 0){
+                    return 0;
+                }
+                return group1.getMessages().get(group1.getMessages().size() - 1).getDate().compareTo(group2.getMessages().get(group2.getMessages().size() - 1).getDate());
+            }
+        });
     }
 }

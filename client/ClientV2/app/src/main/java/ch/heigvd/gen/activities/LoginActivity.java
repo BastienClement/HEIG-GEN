@@ -34,6 +34,8 @@ import ch.heigvd.gen.utilities.Utils;
  *
  * TODO : Faire fonctionner les erreurs quand on perd la connection avec le server
  *
+ * TODO : Faire fonctionner la recherche dans la liste des groupes
+ *
  * TODO : Faire les report/blocage d'utilisateur et report de message dans groupe
  * TODO : Faire les discussion de groupe
  */

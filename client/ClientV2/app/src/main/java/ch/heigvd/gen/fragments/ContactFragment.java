@@ -166,7 +166,6 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
                             User user = new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), jsonUser.getBoolean("unread"));
                             User.users.add(user);
                         }
-                        adapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -212,6 +211,8 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+                    User.sortUsers();
+                    adapter.notifyDataSetChanged();
                     Log.i(TAG, "Success : " + result);
                 }
 

@@ -105,7 +105,6 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                             Group group = new Group(jsonGroup.getInt("id"), jsonGroup.getString("title"), jsonGroup.getBoolean("unread"));
                             Group.groups.add(group);
                         }
-                        adapter.notifyDataSetChanged();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -152,6 +151,8 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+                    Group.sortGroups();
+                    adapter.notifyDataSetChanged();
                     Log.i(TAG, "Success : " + result);
                 }
 
@@ -173,6 +174,7 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
      */
     @Override
     public void update() {
+        Group.sortGroups();
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 adapter.notifyDataSetChanged();
