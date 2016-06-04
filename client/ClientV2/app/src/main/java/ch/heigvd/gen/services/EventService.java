@@ -18,6 +18,7 @@ import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IJSONKeys;
 import ch.heigvd.gen.interfaces.IRequests;
+import ch.heigvd.gen.models.Group;
 import ch.heigvd.gen.models.Message;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
@@ -30,7 +31,6 @@ public class EventService implements IRequests, IJSONKeys {
     private final static String TAG = EventService.class.getSimpleName();
 
     ICustomCallback currentCallbackActivity = null;
-    Activity currentActivity = null;
     Thread thread;
     private static EventService mInstance;
 
@@ -49,12 +49,10 @@ public class EventService implements IRequests, IJSONKeys {
 
     public void setActivity(ICustomCallback callbackActivity){
         currentCallbackActivity = callbackActivity;
-        currentActivity = (Activity) callbackActivity;
     }
 
     public void removeActivity(){
         Log.i(TAG, "Activity removed");
-        currentActivity = null;
         currentCallbackActivity = null;
     }
 
@@ -125,6 +123,10 @@ public class EventService implements IRequests, IJSONKeys {
                 // Add contact
                 addContact(jsonEvent);
                 break;
+            case "GROUP_USER_INVITED":
+                // Add group
+                addGroup(jsonEvent);
+                break;
             case "CONTACT_REMOVED":
                 // Update contacts
                 removeContact(jsonEvent);
@@ -132,12 +134,171 @@ public class EventService implements IRequests, IJSONKeys {
             case "PRIVATE_MESSAGES_UPDATED":
                 // Load new messages
                 User.findById(jsonEvent.getInt("contact")).setUnread(true);
-                loadNewMessages(jsonEvent);
+                loadNewContactMessages(jsonEvent);
+                break;
+            case "GROUP_MESSAGES_UPDATED":
+                Group.findById(jsonEvent.getInt("group")).setUnread(true);
+                loadNewGroupMessages(jsonEvent);
                 break;
             default:
                 Log.e(TAG, "Unhandled event !");
                 break;
         }
+    }
+
+    private void loadNewGroupMessages(JSONObject jsonEvent) throws JSONException {
+        final int id = jsonEvent.getInt("group");
+        final List<Message> messages = Group.findById(id).getMessages();
+        new RequestGET(new ICallback<String>() {
+            @Override
+            public void success(String result) {
+                try {
+                    // Load new messages
+                    JSONArray jsonArray = null;
+                    try {
+                        jsonArray = new JSONArray(result);
+                        for (int i = jsonArray.length() - 1; i >= 0; i--) {
+                            JSONObject jsonMessage = jsonArray.getJSONObject(i);
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            Group.findById(id).addMessage(new Message(jsonMessage.getInt("from"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception ex) {
+                    Log.e(TAG, ex.getMessage());
+                }
+                updateCallbackActivity();
+                Log.i(TAG, "Success : " + result);
+            }
+
+            @Override
+            public void failure(Exception ex) {
+                Log.e(TAG, ex.getMessage());
+            }
+        }, token, BASE_URL + GET_GROUP + id + GET_MESSAGES +
+                (messages.size() > 0 ? ("?from=" + messages.get(messages.size() - 1).getId()) : "")).execute();
+    }
+
+    private void addGroup(JSONObject jsonEvent) {
+        try {
+            Log.i(TAG, "Token : " + token);
+            new RequestGET(new ICallback<String>() {
+                @Override
+                public void success(String result) {
+                    JSONObject jsonGroup = null;
+                    try {
+                        jsonGroup = new JSONObject(result);
+                        final Group group = new Group(jsonGroup.getInt("id"), jsonGroup.getString("title"), jsonGroup.getBoolean("admin"));
+                        Group.groups.add(group);
+                        loadGroupMessages(group);
+
+
+                        new RequestGET(new ICallback<String>() {
+                            @Override
+                            public void success(String result) {
+                                try {
+                                    JSONArray jsonMembers = new JSONArray(result);
+                                    for (int i=0; i<jsonMembers.length(); i++) {
+                                        JSONObject member = jsonMembers.getJSONObject(i);
+
+
+
+                                            new RequestGET(new ICallback<String>() {
+                                                @Override
+                                                public void success(String result) {
+                                                    JSONObject jsonUser = null;
+                                                    try {
+                                                        jsonUser = new JSONObject(result);
+
+                                                        // Récup les users
+                                                        group.getMembers().add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), false));
+
+                                                        updateCallbackActivity();
+                                                    } catch (JSONException e) {
+                                                        Log.e(TAG, e.getMessage());
+                                                    }
+
+                                                    Log.i(TAG, "Success : " + result);
+                                                }
+
+                                                @Override
+                                                public void failure(Exception ex) {
+                                                    Log.e(TAG, ex.getMessage());
+                                                }
+                                            }, token, BASE_URL + GET_USER + member.getInt("user")).execute();
+
+
+
+                                    }
+
+                                    updateCallbackActivity();
+                                } catch (JSONException e) {
+                                    Log.e(TAG, e.getMessage());
+                                }
+
+                                Log.i(TAG, "Success : " + result);
+                            }
+
+                            @Override
+                            public void failure(Exception ex) {
+                                Log.e(TAG, ex.getMessage());
+                            }
+                        }, token, BASE_URL + GET_GROUP + group.getId() + GET_MEMBERS).execute();
+
+
+
+                        updateCallbackActivity();
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+
+                    // GET LES MESSAGES
+
+                    Log.i(TAG, "Success : " + result);
+                }
+
+                @Override
+                public void failure(Exception ex) {
+                    Log.e(TAG, ex.getMessage());
+                }
+            }, token, BASE_URL + GET_GROUP + jsonEvent.getInt("group")).execute();
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
+        }
+    }
+
+    /**
+     * TODO
+     *
+     */
+    private void loadGroupMessages(final Group group){
+        new RequestGET(new ICallback<String>() {
+            @Override
+            public void success(String result) {
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(result);
+                    for (int i = jsonArray.length() - 1; i >= 0; i--) {
+                        JSONObject jsonMessage = jsonArray.getJSONObject(i);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        group.addMessage(new Message(jsonMessage.getInt("from"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Log.i(TAG, "Success : " + result);
+            }
+
+            @Override
+            public void failure(Exception ex) {
+                Log.e(TAG, ex.getMessage());
+            }
+        }, token, BASE_URL + GET_GROUP + group.getId() + GET_MESSAGES).execute();
     }
 
     private void removeContact(JSONObject jsonEvent) throws JSONException {
@@ -174,7 +335,7 @@ public class EventService implements IRequests, IJSONKeys {
         }
     }
 
-    private void loadNewMessages(JSONObject jsonEvent) throws JSONException {
+    private void loadNewContactMessages(JSONObject jsonEvent) throws JSONException {
         final int id = jsonEvent.getInt("contact");
         final List<Message> messages = User.findById(id).getMessages();
         new RequestGET(new ICallback<String>() {

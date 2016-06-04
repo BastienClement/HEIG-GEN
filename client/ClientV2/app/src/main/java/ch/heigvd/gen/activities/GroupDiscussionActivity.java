@@ -158,7 +158,7 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
                     Log.e(TAG, ex.getMessage());
                 }
             }, Utils.getToken(GroupDiscussionActivity.this), BASE_URL + GET_GROUP + Group.findById(b.getInt("group_id")).getId() + SET_MESSAGES_READ).execute();
-            System.out.println("READ " + BASE_URL + GET_GROUP + Group.findById(b.getInt("group_id")).getId() + SET_MESSAGES_READ);
+            System.out.println(BASE_URL + GET_GROUP + Group.findById(b.getInt("group_id")).getId() + SET_MESSAGES_READ);
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }
