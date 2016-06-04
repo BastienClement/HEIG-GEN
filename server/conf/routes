@@ -25,6 +25,7 @@ GET           /api/groups                                  controllers.api.Group
 POST          /api/groups                                  controllers.api.GroupController.create
 GET           /api/groups/:id                              controllers.api.GroupController.info(id: Int)
 DELETE        /api/groups/:id                              controllers.api.GroupController.delete(id: Int)
+GET           /api/groups/:id/read                         controllers.api.GroupController.read(id: Int)
 GET           /api/groups/:id/messages                     controllers.api.GroupController.messages(id: Int)
 POST          /api/groups/:id/messages                     controllers.api.GroupController.post(id: Int)
 GET           /api/groups/:id/members                      controllers.api.GroupController.members(id: Int)
