@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.activities.ContactDiscussionActivity;
 import ch.heigvd.gen.activities.CreateGroupActivity;
+import ch.heigvd.gen.activities.GroupDiscussionActivity;
 import ch.heigvd.gen.adapters.GroupListAdapter;
 import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.interfaces.ICallback;
@@ -77,18 +78,13 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                 // get contact
                 final Group item = (Group) parent.getItemAtPosition(position);
 
-                // start group chat activity
-
-                /**
-                 * TODO When GroupChatActivity is created
-
-                Intent intent = new Intent(getActivity(), GroupChatActivity.class);
+                Intent intent = new Intent(getActivity(), GroupDiscussionActivity.class);
                 Bundle b = new Bundle();
                 b.putString("group_name", item.getGroupname());
                 b.putInt("group_id", item.getId());
                 intent.putExtras(b);
                 startActivity(intent);
-                 */
+
             }
         });
     }
