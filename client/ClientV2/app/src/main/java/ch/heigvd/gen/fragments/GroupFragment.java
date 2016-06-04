@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -41,6 +44,7 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.fragment_group, container, false);
         listView = (ListView) v.findViewById(R.id.groups_list);
 
@@ -136,5 +140,28 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_groups, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.my_activity) {
+
+            return true;
+        }
+
+        if (id == R.id.settings) {
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

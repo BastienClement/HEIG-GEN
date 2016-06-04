@@ -1,9 +1,8 @@
 package models
 
+import _root_.util.DateTime
 import models.mysql._
 import play.api.libs.json._
-import _root_.util.DateTime
-import scala.concurrent.Future
 
 case class Group(id: Int, title: String, last_message: DateTime) {
 	def toJson: JsObject = Json.obj(
@@ -22,9 +21,11 @@ class Groups(tag: Tag) extends Table[Group](tag, "groups") {
 }
 
 object Groups extends TableQuery(new Groups(_)) {
+	def insert(group: Group) = {
+		Groups returning Groups.map(_.id) into ((g, id) => g.copy(id = id)) += group
+	}
+
 	def accessibleBy(user: Int): Query[Groups, Group, Seq] = {
 		Groups.filter(group => Members.filter(m => m.group === group.id && m.user === user).exists)
 	}
-
-	def createUserChat(user: Int): Future[Int] = ???
 }

@@ -8,6 +8,9 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -52,7 +55,7 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
         View v = inflater.inflate(R.layout.fragment_contact, container, false);
         listView = (ListView) v.findViewById(R.id.contact_list);
         searchView = (SearchView) v.findViewById(R.id.search);
-
+        setHasOptionsMenu(true);
         return v;
     }
 
@@ -243,5 +246,26 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
         });
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_contacts, menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.my_activity) {
+
+            return true;
+        }
+
+        if (id == R.id.settings) {
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

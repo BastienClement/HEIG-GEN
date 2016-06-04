@@ -35,6 +35,8 @@ public class EventService implements IRequests, IJSONKeys {
 
     private String token;
 
+    private Integer from = null;
+
     private EventService(){
 
     }
@@ -74,36 +76,9 @@ public class EventService implements IRequests, IJSONKeys {
                                     JSONArray jsonEvents = json.getJSONArray("events");
                                     for (int i = 0; i < jsonEvents.length(); i++) {
                                         JSONObject jsonEvent = jsonEvents.getJSONObject(i);
-                                        String type = jsonEvent.getString("type");
-                                        switch (type) {
-                                            case "PRIVATE_MESSAGES_UNREAD":
-                                                User.findById(jsonEvent.getInt("contact")).setUnread(true);
-                                                break;
-                                            case "PRIVATE_MESSAGES_READ":
-                                                User.findById(jsonEvent.getInt("contact")).setUnread(false);
-                                                break;
-                                            case "CONTACT_ADDED":
-                                                // Add contact
-                                                addContact(jsonEvent);
-                                                break;
-                                            case "CONTACT_REMOVED":
-                                                // Update contacts
-                                                removeContact(jsonEvent);
-                                                break;
-                                            case "PRIVATE_MESSAGES_UPDATED":
-                                                // Load new messages
-                                                User.findById(jsonEvent.getInt("contact")).setUnread(true);
-                                                loadNewMessages(jsonEvent);
-                                                break;
-                                            default:
-                                                Log.i(TAG, "No event ! : " + result);
-                                                break;
-                                        }
+                                        handleEvent(jsonEvent);
                                     }
-                                    /**
-                                     * TODO : Gérer si next vaut quelque chose
-                                     */
-                                    Log.i(TAG, "Success : " + result);
+                                    from = json.getInt("next");
                                 } catch (Exception ex) {
                                     Log.e(TAG, ex.getMessage());
                                 }
@@ -113,7 +88,8 @@ public class EventService implements IRequests, IJSONKeys {
                             public void failure(Exception ex) {
                                 Log.e(TAG, ex.getMessage());
                             }
-                        }, token, BASE_URL + EVENTS);
+                        }, token, BASE_URL + EVENTS +  (from == null ? "" : "?from=" + from));
+                        Log.i(TAG, "Get events on url : " + BASE_URL + EVENTS +  (from == null ? "" : "?from=" + from));
 
                         get.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         get.get();
@@ -133,6 +109,34 @@ public class EventService implements IRequests, IJSONKeys {
             }
         };
         thread.start();
+    }
+
+    private void handleEvent(JSONObject jsonEvent) throws JSONException {
+        String type = jsonEvent.getString("type");
+        switch (type) {
+            case "PRIVATE_MESSAGES_UNREAD":
+                User.findById(jsonEvent.getInt("contact")).setUnread(false);
+                break;
+            case "PRIVATE_MESSAGES_READ":
+                User.findById(jsonEvent.getInt("contact")).setUnread(true);
+                break;
+            case "CONTACT_ADDED":
+                // Add contact
+                addContact(jsonEvent);
+                break;
+            case "CONTACT_REMOVED":
+                // Update contacts
+                removeContact(jsonEvent);
+                break;
+            case "PRIVATE_MESSAGES_UPDATED":
+                // Load new messages
+                User.findById(jsonEvent.getInt("contact")).setUnread(true);
+                loadNewMessages(jsonEvent);
+                break;
+            default:
+                Log.e(TAG, "UNHANDLED EVENT !");
+                break;
+        }
     }
 
     private void removeContact(JSONObject jsonEvent) throws JSONException {
@@ -175,6 +179,7 @@ public class EventService implements IRequests, IJSONKeys {
             @Override
             public void success(String result) {
                 try {
+                    System.out.println("LOAD MESSAGES DSDS D");
                     // Load new messages
                     JSONArray jsonArray = null;
                     try {

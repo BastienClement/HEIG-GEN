@@ -8,7 +8,7 @@ import scala.concurrent.ExecutionContext
 import scala.util.Try
 import services.PushService
 
-class DummyController @Inject()(push: PushService)(implicit val ec: ExecutionContext, val conf: Configuration)
+class DummyController @Inject()(implicit val ec: ExecutionContext, val conf: Configuration, val push: PushService)
 		extends Controller with ApiActionBuilder {
 
 	def nyi0() = NotYetImplemented
