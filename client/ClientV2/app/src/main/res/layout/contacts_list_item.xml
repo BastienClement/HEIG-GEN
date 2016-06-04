@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:id="@+id/unread_flag"
+        android:id="@+id/unread_flag_contact_list"
         android:textColor="#e81919" />
 
 

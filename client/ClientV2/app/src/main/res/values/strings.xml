@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Client Android</string>
+    <string name="app_name">Chat</string>
 
     <!-- LoginActivity -->
     <string name="radio_button_public_server">Public Server</string>
@@ -21,7 +21,7 @@
     <string name="error_passwords_dont_match">Passwords don\'t match</string>
     <string name="button_add_contact">Add Contact</string>
 
-    <!-- ContactListActivity -->
+    <!-- MainActivity -->
     <string name="hint_filter">Filter: username</string>
     <string name="placeholder_none_found">No users found&#8230;</string>
 

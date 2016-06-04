@@ -3,17 +3,18 @@ package ch.heigvd.gen.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +25,7 @@ import java.text.SimpleDateFormat;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.activities.ContactDiscussionActivity;
+import ch.heigvd.gen.activities.ContactAddActivity;
 import ch.heigvd.gen.adapters.ContactListAdapter;
 import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.interfaces.ICallback;
@@ -52,7 +54,7 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
         View v = inflater.inflate(R.layout.fragment_contact, container, false);
         listView = (ListView) v.findViewById(R.id.contact_list);
         searchView = (SearchView) v.findViewById(R.id.search);
-
+        setHasOptionsMenu(true);
         return v;
     }
 
@@ -108,10 +110,6 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
                 return true;
             }
         });
-
-        // Start event handler service
-        EventService.getInstance().setActivity(this, getActivity());
-        EventService.getInstance().start();
 
     }
 
@@ -232,7 +230,7 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
     }
 
     /**
-     * To update the message list
+     * To update the contact list
      */
     @Override
     public void update() {
@@ -243,5 +241,28 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
         });
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_contacts, menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.add) {
+            // start contact search activity
+            Intent intent = new Intent(getActivity(), ContactAddActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.settings) {
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

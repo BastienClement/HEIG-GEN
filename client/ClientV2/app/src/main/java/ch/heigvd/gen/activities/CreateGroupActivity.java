@@ -65,7 +65,7 @@ public class CreateGroupActivity extends AppCompatActivity  {
          * TODO
          */
         // start contact search activity
-        //Intent intent = new Intent(ContactListActivity.this, CreateGroupActivity.class);
+        //Intent intent = new Intent(MainActivity.this, CreateGroupActivity.class);
         //startActivity(intent);
     }
 

@@ -29,26 +29,26 @@
                 android:value="ch.heigvd.gen.activities.LoginActivity" />
         </activity>
         <activity
-            android:name=".activities.ContactListActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".activities.ContactDiscussionActivity"
             android:label="View contact" />
         <activity
-            android:name=".activities.ContactSearchActivity"
-            android:label="Search contact" />
+            android:name=".activities.ContactAddActivity"
+            android:label="Add contact" />
         <activity
             android:name=".activities.ContactEditActivity"
             android:label="Edit contact" />
         <activity
             android:name=".activities.CreateGroupActivity"
             android:label="Create Group">
-            <!--android:parentActivityName=".activities.ContactListActivity" >
+            <!--android:parentActivityName=".activities.MainActivity" >
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ch.heigvd.gen.activities.ContactListActivity" /> -->
+                android:value="ch.heigvd.gen.activities.MainActivity>-->
         </activity>
     </application>
 

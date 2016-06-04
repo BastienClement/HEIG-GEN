@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context="ch.heigvd.gen.activities.ContactListActivity">
+    tools:context=".activities.MainActivity">
 
    <android.support.design.widget.TabLayout
        android:id="@+id/tab_layout"

@@ -102,6 +102,14 @@ class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Con
 	}
 
 	/**
+	  * Sets groups as read.
+	  */
+	def read(id: Int) = UserAction { req =>
+		UnreadFlags.setGroupRead(req.user, id)
+		NoContent
+	}
+
+	/**
 	  * List of group messages.
 	  */
 	def messages(id: Int) = UserAction.async { req =>

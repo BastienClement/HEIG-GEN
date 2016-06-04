@@ -17,11 +17,25 @@ import ch.heigvd.gen.communications.RequestPOST;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.IJSONKeys;
 import ch.heigvd.gen.interfaces.IRequests;
-import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
  * TODO
+ * TODO : Mettre toutes les String dans les fichiers de ressources fait pour
+ * TODO : Commenter/indenter/Trier imports, compléter la javadoc
+ * TODO : Mettre tous les éléments json et les requêtes dans IJSONKEYS et IREQUESTS
+ * TODO : Faire des logs un peu mieux
+ *
+ *
+ * TODO : Faire un bouton de déconnexion
+ * TODO : Faire que les dialogues dans une discussion soient joli + afficher l'heure du message et le jour et le nom de l'utilisateur qui a envoyé pour les discussions de groupe
+ *
+ * TODO : Trier les utilisateurs par liste de derniers message
+ *
+ * TODO : Faire fonctionner les erreurs quand on perd la connection avec le server
+ *
+ * TODO : Faire les report/blocage d'utilisateur et report de message dans groupe
+ * TODO : Faire les discussion de groupe
  */
 public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequests {
 
@@ -85,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
                         } catch (Exception ex){
                             Log.e(TAG, ex.getMessage());
                         }
-                        Intent intent = new Intent(LoginActivity.this, ContactListActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         Log.i(TAG, "Success : " + result);
                     }
