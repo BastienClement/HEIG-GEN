@@ -119,6 +119,10 @@ class GroupController @Inject()(implicit val ec: ExecutionContext, val conf: Con
 					m.group === id && m.date >= member.date
 				}.sortBy { m =>
 					m.date.desc
+				}.optMap(req.getQueryStringAsInt("from")) { (q, from) =>
+					q.filter(_.id > from)
+				}.optMap(req.getQueryStringAsInt("limit")) { (q, limit) =>
+					q.take(limit)
 				}.run.map { messages =>
 					Ok(JsArray(messages.map(_.toJson)))
 				}
