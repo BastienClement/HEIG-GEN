@@ -19,6 +19,7 @@ public interface IRequests {
     String GET_CONTACT = "contacts/";
 
     String GET_GROUPS = "groups";
+    String GET_GROUP = "groups/";
 
     String GET_MESSAGES = "/messages";
 

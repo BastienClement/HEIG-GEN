@@ -20,6 +20,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.activities.ContactDiscussionActivity;
 import ch.heigvd.gen.activities.CreateGroupActivity;
@@ -29,6 +32,7 @@ import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.Group;
+import ch.heigvd.gen.models.Message;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
@@ -111,7 +115,8 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
+                    // TODO : Order by last message
+                    loadMessages();
                     Log.i(TAG, "Success : " + result);
                 }
 
@@ -129,6 +134,44 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
             Log.e(TAG, ex.getMessage());
         }
 
+    }
+
+    /**
+     * TODO
+     *
+     */
+    private void loadMessages(){
+        for(final Group group : Group.groups) {
+            new RequestGET(new ICallback<String>() {
+                @Override
+                public void success(String result) {
+                    JSONArray jsonArray = null;
+                    try {
+                        jsonArray = new JSONArray(result);
+                        for (int i = jsonArray.length() - 1; i >= 0; i--) {
+                            JSONObject jsonMessage = jsonArray.getJSONObject(i);
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            group.addMessage(new Message(jsonMessage.getInt("from"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Log.i(TAG, "Success : " + result);
+                }
+
+                @Override
+                public void failure(Exception ex) {
+                    try {
+                        Utils.showAlert(getActivity(), new JSONObject(ex.getMessage()).getString("err"));
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                    Log.e(TAG, ex.getMessage());
+                }
+            }, Utils.getToken(getActivity()), BASE_URL + GET_GROUP + group.getId() + GET_MESSAGES).execute();
+        }
     }
 
     /**
