@@ -89,15 +89,10 @@ public class EventService implements IRequests, IJSONKeys {
 
                         get.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         get.get();
-
-
-                        try {
-                            sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        sleep(1000);
                     }catch(InterruptedException e){
                         e.printStackTrace();
+                        break;
                     }catch(ExecutionException e){
                         e.printStackTrace();
                     }

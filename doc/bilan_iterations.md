@@ -231,7 +231,7 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (23H30/5H)####
+####Antoine (25H/5H)####
 
 J'ai dû refactoré le code car on n'enregistrait pas la liste des utilisateurs et des messages et pour des questions de performance, il fallait la stocker dans l'application. J'ai également généré toute la javadoc des classes du client. 3h
 
@@ -253,7 +253,9 @@ On a eu le cours où on a fait la démo et avancer sur les events et la vue de c
 
 J'ai refactoré un peu le code après les changements fait par Jonathan et j'ai résolu un problème avec les events. 1h
 
-J'ai ajouté les vues discussion de groupe et edition de groupe. J'ai implémenté l'envoi de message, la réception de message, la création de groupe, l'affichage de la liste des groupes... 3h
+J'ai ajouté les vues discussion de groupe et edition de groupe. J'ai implémenté l'envoi de message, la réception de message, la création de groupe, l'affichage de la liste des groupes... 4h
+
+J'ai ajouté le tris des contacts/groupes par dernier message reçu. 30min
 
 * Ajouter toutes les fonctionnalités relatives aux discussions publiques au protocole de communication. 
 * Aider Bastien et Guillaume pour implémenter les fonctionnalités au niveau serveur ou client.

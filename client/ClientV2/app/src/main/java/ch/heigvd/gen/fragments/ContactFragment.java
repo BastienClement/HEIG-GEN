@@ -258,8 +258,8 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
             return true;
         }
 
-        if (id == R.id.settings) {
-
+        if (id == R.id.logoff) {
+            getActivity().finish();
             return true;
         }
 

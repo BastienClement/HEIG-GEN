@@ -199,8 +199,8 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
             return true;
         }
 
-        if (id == R.id.settings) {
-
+        if (id == R.id.logoff) {
+            getActivity().finish();
             return true;
         }
 
