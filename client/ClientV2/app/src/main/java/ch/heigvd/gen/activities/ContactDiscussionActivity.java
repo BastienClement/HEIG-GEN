@@ -200,22 +200,4 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
             finish();
         }
     }
-
-    /**
-     * ¨TODO
-     */
-    @Override
-    public void onPause(){
-        super.onPause();
-        //EventService.getInstance().removeActivity();
-    }
-
-    /**
-     * TODO
-     */
-    @Override
-    public void onStop(){
-        super.onStop();
-        //EventService.getInstance().removeActivity();
-    }
 }

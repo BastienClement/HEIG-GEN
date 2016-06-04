@@ -32,6 +32,7 @@ public class RequestGET extends Communication<String> {
         setCallback(callback);
         this.token = token;
         this.url = url;
+        Log.i(TAG, "New request GET on " + url + "\n Token : " + token);
     }
 
     /**

@@ -52,7 +52,6 @@ public class EventService implements IRequests, IJSONKeys {
     }
 
     public void removeActivity(){
-        Log.i(TAG, "Activity removed");
         currentCallbackActivity = null;
     }
 
@@ -64,7 +63,6 @@ public class EventService implements IRequests, IJSONKeys {
                 while (true) {
                     Log.i(TAG, "Trying to retrieve events !");
                     try {
-                        Log.i(TAG, "Activity is set !");
                         // Event management
                         RequestGET get = new RequestGET(new ICallback<String>() {
                             @Override
@@ -88,7 +86,6 @@ public class EventService implements IRequests, IJSONKeys {
                                 Log.e(TAG, ex.getMessage());
                             }
                         }, token, BASE_URL + EVENTS +  (from == null ? "" : "?from=" + from));
-                        Log.i(TAG, "Get events on url : " + BASE_URL + EVENTS +  (from == null ? "" : "?from=" + from));
 
                         get.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         get.get();
@@ -160,7 +157,7 @@ public class EventService implements IRequests, IJSONKeys {
                         for (int i = jsonArray.length() - 1; i >= 0; i--) {
                             JSONObject jsonMessage = jsonArray.getJSONObject(i);
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                            Group.findById(id).addMessage(new Message(jsonMessage.getInt("from"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
+                            Group.findById(id).addMessage(new Message(jsonMessage.getInt("user"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -184,7 +181,6 @@ public class EventService implements IRequests, IJSONKeys {
 
     private void addGroup(JSONObject jsonEvent) {
         try {
-            Log.i(TAG, "Token : " + token);
             new RequestGET(new ICallback<String>() {
                 @Override
                 public void success(String result) {
@@ -308,7 +304,6 @@ public class EventService implements IRequests, IJSONKeys {
 
     private void addContact(JSONObject jsonEvent) throws JSONException {
         try {
-            Log.i(TAG, "Token : " + token);
             new RequestGET(new ICallback<String>() {
                 @Override
                 public void success(String result) {

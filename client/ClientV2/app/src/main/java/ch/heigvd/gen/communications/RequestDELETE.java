@@ -22,6 +22,7 @@ public class RequestDELETE extends Communication<String> {
         setCallback(callback);
         this.token = token;
         this.url = url;
+        Log.i(TAG, "New request DELETE on " + url + "\n Token : " + token);
     }
 
     @Override

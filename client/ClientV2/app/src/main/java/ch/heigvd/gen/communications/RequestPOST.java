@@ -37,6 +37,7 @@ public class RequestPOST extends Communication<String> {
         this.token = token;
         this.url = url;
         this.content = content;
+        Log.i(TAG, "New request POST on " + url + "\n Token : " + token);
     }
 
     /**

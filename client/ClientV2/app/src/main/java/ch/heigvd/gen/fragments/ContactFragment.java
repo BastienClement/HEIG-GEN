@@ -55,6 +55,12 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
         listView = (ListView) v.findViewById(R.id.contact_list);
         searchView = (SearchView) v.findViewById(R.id.search);
         setHasOptionsMenu(true);
+
+        // Load self pref
+        loadSelfPref();
+
+        // Load contacts
+        loadContacts();
         return v;
     }
 
@@ -62,15 +68,8 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
     public void onStart() {
         super.onStart();
 
-
         // Create adapter
         adapter = new ContactListAdapter(getActivity(), R.layout.contacts_list_item, User.users);
-
-        // Load self pref
-        loadSelfPref();
-
-        // Load contacts
-        loadContacts();
 
         // fill listview
         listView.setAdapter(adapter);

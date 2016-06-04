@@ -51,6 +51,8 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
         View v = inflater.inflate(R.layout.fragment_group, container, false);
         listView = (ListView) v.findViewById(R.id.groups_list);
 
+        loadGroups();
+
         return v;
 
     }
@@ -61,7 +63,6 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
 
         adapter = new GroupListAdapter(getActivity(), R.layout.groups_list_item, Group.groups);
 
-        loadGroups();
 
         // fill listview
         listView.setAdapter(adapter);
@@ -144,7 +145,7 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                         for (int i = jsonArray.length() - 1; i >= 0; i--) {
                             JSONObject jsonMessage = jsonArray.getJSONObject(i);
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                            group.addMessage(new Message(jsonMessage.getInt("from"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
+                            group.addMessage(new Message(jsonMessage.getInt("user"), jsonMessage.getString("text"), sdf.parse(jsonMessage.getString("date")), jsonMessage.getInt("id")));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

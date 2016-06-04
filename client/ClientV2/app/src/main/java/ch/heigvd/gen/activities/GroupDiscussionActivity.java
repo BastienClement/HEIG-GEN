@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.adapters.GroupDiscussionAdapter;
+import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.communications.RequestPOST;
 import ch.heigvd.gen.communications.RequestPUT;
 import ch.heigvd.gen.interfaces.ICallback;
@@ -157,8 +158,7 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
                     }
                     Log.e(TAG, ex.getMessage());
                 }
-            }, Utils.getToken(GroupDiscussionActivity.this), BASE_URL + GET_GROUP + Group.findById(b.getInt("group_id")).getId() + SET_MESSAGES_READ).execute();
-            System.out.println(BASE_URL + GET_GROUP + Group.findById(b.getInt("group_id")).getId() + SET_MESSAGES_READ);
+            }, Utils.getToken(GroupDiscussionActivity.this), BASE_URL + GET_GROUP + b.getInt("group_id") + SET_MESSAGES_READ).execute();
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }
@@ -191,23 +191,5 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
         if(Group.findById(b.getInt("group_id")) == null){
             finish();
         }
-    }
-
-    /**
-     * ¨TODO
-     */
-    @Override
-    public void onPause(){
-        super.onPause();
-        //EventService.getInstance().removeActivity();
-    }
-
-    /**
-     * TODO
-     */
-    @Override
-    public void onStop(){
-        super.onStop();
-        //EventService.getInstance().removeActivity();
     }
 }
