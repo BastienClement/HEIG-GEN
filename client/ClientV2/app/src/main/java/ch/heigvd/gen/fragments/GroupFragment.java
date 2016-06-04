@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,8 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import ch.heigvd.gen.R;
-import ch.heigvd.gen.activities.ContactDiscussionActivity;
-import ch.heigvd.gen.activities.CreateGroupActivity;
+import ch.heigvd.gen.activities.GroupCreateActivity;
 import ch.heigvd.gen.activities.GroupDiscussionActivity;
 import ch.heigvd.gen.adapters.GroupListAdapter;
 import ch.heigvd.gen.communications.RequestGET;
@@ -34,7 +32,6 @@ import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.Group;
 import ch.heigvd.gen.models.Message;
-import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
@@ -104,7 +101,7 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                         jsonArray = new JSONArray(result);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonGroup = jsonArray.getJSONObject(i);
-                            Group group = new Group(jsonGroup.getInt("id"), jsonGroup.getString("title"), jsonGroup.getString("last_massage"), jsonGroup.getBoolean("unread"));
+                            Group group = new Group(jsonGroup.getInt("id"), jsonGroup.getString("title"), jsonGroup.getBoolean("unread"));
                             Group.groups.add(group);
                         }
                         adapter.notifyDataSetChanged();
@@ -194,7 +191,7 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
 
         if (id == R.id.add) {
             // start contact create group activity
-            Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+            Intent intent = new Intent(getActivity(), GroupCreateActivity.class);
             startActivity(intent);
             return true;
         }

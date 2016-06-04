@@ -15,9 +15,6 @@ public class User implements Comparable<User> {
     private int unreadMessages;
     private boolean unread;
 
-    /**
-     * TODO
-     */
     public static List<User> users = new ArrayList<>();
 
     /**
@@ -36,10 +33,20 @@ public class User implements Comparable<User> {
         messages = new ArrayList<>();
     }
 
+    /**
+     * TODO
+     *
+     * @return
+     */
     public boolean isUnread() {
         return unread;
     }
 
+    /**
+     * TODO
+     *
+     * @param unread
+     */
     public void setUnread(boolean unread) {
         this.unread = unread;
     }

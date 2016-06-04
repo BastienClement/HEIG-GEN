@@ -33,23 +33,25 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme"/>
         <activity
-            android:name=".activities.ContactDiscussionActivity"
-            android:label="View contact" />
+        android:name=".activities.ContactDiscussionActivity"
+        android:label="Contact chat" />
         <activity
             android:name=".activities.ContactAddActivity"
             android:label="Add contact" />
         <activity
             android:name=".activities.ContactEditActivity"
             android:label="Edit contact" />
-        <activity
-            android:name=".activities.CreateGroupActivity"
-            android:label="Create Group">
-            <!--android:parentActivityName=".activities.MainActivity" >
 
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="ch.heigvd.gen.activities.MainActivity>-->
-        </activity>
+        <activity
+            android:name=".activities.GroupDiscussionActivity"
+            android:label="Group chat" />
+        <activity
+            android:name=".activities.GroupEditActivity"
+            android:label="Edit group" />
+
+        <activity
+            android:name=".activities.GroupCreateActivity"
+            android:label="Create group"/>
     </application>
 
 

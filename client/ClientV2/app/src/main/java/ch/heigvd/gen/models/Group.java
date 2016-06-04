@@ -12,13 +12,9 @@ public class Group implements Comparable<Group> {
     private final String groupname;
    // private final boolean admin;
     private List<Message> messages;
-    //private int unreadMessages;
-    private String lastMessage;
+    private List<User> members;
     private boolean unread;
 
-    /**
-     * TODO
-     */
     public static List<Group> groups = new ArrayList<>();
 
     /**
@@ -28,12 +24,36 @@ public class Group implements Comparable<Group> {
      * @param groupname
      * @param unread
      */
-    public Group(int id, String groupname, String lastMessage, boolean unread) {
+    public Group(int id, String groupname, boolean unread) {
         this.id = id;
         this.groupname = groupname;
-        this.lastMessage = lastMessage;
         this.unread = unread;
         messages = new ArrayList<>();
+        members = new ArrayList<>();
+    }
+
+    /**
+     * TODO
+     *
+     * @param name
+     * @return
+     */
+    public static boolean exists(String name){
+        for(Group group : groups){
+            if(group.getGroupname().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public List<User> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<User> members) {
+        this.members = members;
     }
 
     public boolean isUnread() {

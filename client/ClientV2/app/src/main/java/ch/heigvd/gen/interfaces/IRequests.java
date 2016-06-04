@@ -20,6 +20,8 @@ public interface IRequests {
 
     String GET_GROUPS = "groups";
     String GET_GROUP = "groups/";
+    String GET_MEMBERS = "/members";
+    String GET_MEMBER = "/members/";
 
     String GET_MESSAGES = "/messages";
 
