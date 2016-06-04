@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -73,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
                         } catch (Exception ex){
                             Log.e(TAG, ex.getMessage());
                         }
-                        Intent intent = new Intent(RegisterActivity.this, ContactListActivity.class);
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                         startActivity(intent);
                         Log.i(TAG, "Success : " + result);
                     }

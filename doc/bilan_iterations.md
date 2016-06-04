@@ -231,7 +231,7 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (19H30/5H)####
+####Antoine (20H30/5H)####
 
 J'ai dû refactoré le code car on n'enregistrait pas la liste des utilisateurs et des messages et pour des questions de performance, il fallait la stocker dans l'application. J'ai également généré toute la javadoc des classes du client. 3h
 
@@ -250,6 +250,8 @@ J'ai fait marcher les events d'ajout et suppression de contact. Et les events de
 J'ai fait marcher le système de notification pour afficher une notification dans la liste des contacts quand un nouveau message a été reçu. 1h30
 
 On a eu le cours où on a fait la démo et avancer sur les events et la vue de création de groupe. 4h
+
+J'ai refactoré un peu le code après les changements fait par Jonathan et j'ai résolu un problème avec les events. 1h
 
 * Ajouter toutes les fonctionnalités relatives aux discussions publiques au protocole de communication. 
 * Aider Bastien et Guillaume pour implémenter les fonctionnalités au niveau serveur ou client.

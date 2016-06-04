@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.activities.ContactDiscussionActivity;
+import ch.heigvd.gen.activities.CreateGroupActivity;
 import ch.heigvd.gen.adapters.GroupListAdapter;
 import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.interfaces.ICallback;
@@ -152,8 +153,10 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.my_activity) {
-
+        if (id == R.id.add) {
+            // start contact create group activity
+            Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+            startActivity(intent);
             return true;
         }
 

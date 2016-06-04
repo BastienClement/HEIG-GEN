@@ -1,6 +1,5 @@
 package ch.heigvd.gen.activities;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,12 +15,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.communications.RequestGET;
-import ch.heigvd.gen.communications.RequestPOST;
 import ch.heigvd.gen.communications.RequestPUT;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.IRequests;
@@ -31,9 +26,9 @@ import ch.heigvd.gen.utilities.Utils;
 /**
  * TODO
  */
-public class ContactSearchActivity extends AppCompatActivity implements IRequests{
+public class ContactAddActivity extends AppCompatActivity implements IRequests{
 
-    private final static String TAG = ContactSearchActivity.class.getSimpleName();
+    private final static String TAG = ContactAddActivity.class.getSimpleName();
 
     ArrayAdapter adapter = null;
 
@@ -45,7 +40,7 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contacts_search);
+        setContentView(R.layout.activity_contacts_add);
 
         // enable back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -67,7 +62,7 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
                 final User user = (User) parent.getItemAtPosition(position);
 
                 try {
-                    Log.i(TAG, "Token : " + Utils.getToken(ContactSearchActivity.this));
+                    Log.i(TAG, "Token : " + Utils.getToken(ContactAddActivity.this));
                     new RequestPUT(new ICallback<String>() {
                         @Override
                         public void success(String result) {
@@ -78,13 +73,13 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
                         @Override
                         public void failure(Exception ex) {
                             try {
-                                Utils.showAlert(ContactSearchActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                                Utils.showAlert(ContactAddActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                             } catch (JSONException e) {
                                 Log.e(TAG, e.getMessage());
                             }
                             Log.e(TAG, ex.getMessage());
                         }
-                    }, Utils.getToken(ContactSearchActivity.this), BASE_URL + GET_CONTACT + user.getId()).execute();
+                    }, Utils.getToken(ContactAddActivity.this), BASE_URL + GET_CONTACT + user.getId()).execute();
                 } catch (Exception ex) {
                     Log.e(TAG, ex.getMessage());
                 }
@@ -142,7 +137,7 @@ public class ContactSearchActivity extends AppCompatActivity implements IRequest
                 @Override
                 public void failure(Exception ex) {
                     try {
-                        Utils.showAlert(ContactSearchActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                        Utils.showAlert(ContactAddActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                     } catch (JSONException e) {
                         Log.e(TAG, e.getMessage());
                     }

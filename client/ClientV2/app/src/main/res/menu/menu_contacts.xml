@@ -8,8 +8,8 @@
             android:title="Setting"
             app:showAsAction="never" />
         <item
-            android:id="@+id/my_activity"
-            android:title="Add"
+            android:id="@+id/add"
+            android:title="Add contact"
             app:showAsAction="always"
             android:icon="@android:drawable/ic_input_add"/>
 </menu>

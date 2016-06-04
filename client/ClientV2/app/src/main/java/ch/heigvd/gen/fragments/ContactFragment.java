@@ -3,7 +3,6 @@ package ch.heigvd.gen.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +25,7 @@ import java.text.SimpleDateFormat;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.activities.ContactDiscussionActivity;
+import ch.heigvd.gen.activities.ContactAddActivity;
 import ch.heigvd.gen.adapters.ContactListAdapter;
 import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.interfaces.ICallback;
@@ -111,10 +110,6 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
                 return true;
             }
         });
-
-        // Start event handler service
-        EventService.getInstance().setActivity(this, getActivity());
-        EventService.getInstance().start();
 
     }
 
@@ -256,8 +251,10 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.my_activity) {
-
+        if (id == R.id.add) {
+            // start contact search activity
+            Intent intent = new Intent(getActivity(), ContactAddActivity.class);
+            startActivity(intent);
             return true;
         }
 
