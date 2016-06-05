@@ -24,6 +24,7 @@ import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IJSONKeys;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.Group;
+import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
 
@@ -169,7 +170,9 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
      */
     @Override
     public void update() {
-        if(Group.findById(b.getInt("group_id")) != null) {
+        if(Group.findById(b.getInt("group_id")) == null){
+            finish();
+        } else{
             setReadMessages();
         }
         this.runOnUiThread(new Runnable(){

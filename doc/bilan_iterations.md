@@ -231,7 +231,7 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (26H30/5H)####
+####Antoine (27H30/5H)####
 
 J'ai dû refactoré le code car on n'enregistrait pas la liste des utilisateurs et des messages et pour des questions de performance, il fallait la stocker dans l'application. J'ai également généré toute la javadoc des classes du client. 3h
 
@@ -258,6 +258,8 @@ J'ai ajouté les vues discussion de groupe et edition de groupe. J'ai implément
 J'ai ajouté le tris des contacts/groupes par dernier message reçu et j'ai ajouté le bouton de déconnection. 1h
 
 J'ai résolu quelques problèmes notamment la mise à jours des listes des fragments. 1h
+
+J'ai résolu des problèmes d'events (création de groupe et unread messages). 1h
 
 * Ajouter toutes les fonctionnalités relatives aux discussions publiques au protocole de communication. 
 * Aider Bastien et Guillaume pour implémenter les fonctionnalités au niveau serveur ou client.

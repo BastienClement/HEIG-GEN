@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import ch.heigvd.gen.communications.RequestGET;
+import ch.heigvd.gen.communications.RequestPOST;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IJSONKeys;
@@ -115,6 +116,10 @@ public class EventService implements IRequests, IJSONKeys {
                 //User.findById(jsonEvent.getInt("contact")).setUnread(true);
                 //updateCallbackActivity();
                 break;
+            case "GROUPS_UNREAD":
+                break;
+            case "GROUPS_READ":
+                break;
             case "CONTACT_ADDED":
                 // Add contact
                 addContact(jsonEvent);
@@ -194,16 +199,22 @@ public class EventService implements IRequests, IJSONKeys {
                     JSONObject jsonGroup = null;
                     try {
                         jsonGroup = new JSONObject(result);
-                        /**
-                         * TODO Manager admin boolean
-                         */
-                        final Group group = new Group(jsonGroup.getInt("id"), jsonGroup.getString("title"), false);
-                        Group.groups.add(group);
-                        loadMembers(group);
-
-                        updateCallbackActivity();
+                        if(Group.findById(jsonGroup.getInt("id")) == null) {
+                            /**
+                             * TODO Manager admin boolean
+                             */
+                            final Group group = new Group(jsonGroup.getInt("id"), jsonGroup.getString("title"), false);
+                            Group.groups.add(group);
+                            updateCallbackActivity();
+                            loadMembers(group);
+                            loadGroupMessages(group);
+                        }
                     } catch (JSONException e) {
                         Log.e(TAG, e.getMessage());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
                     }
 
                     // GET LES MESSAGES
@@ -221,52 +232,49 @@ public class EventService implements IRequests, IJSONKeys {
         }
     }
 
-    private void loadMembers(final Group group) {
-        new RequestGET(new ICallback<String>() {
+    private void loadMembers(final Group group) throws ExecutionException, InterruptedException {
+        RequestGET get = new RequestGET(new ICallback<String>() {
             @Override
             public void success(String result) {
                 try {
                     JSONArray jsonMembers = new JSONArray(result);
                     for (int i=0; i<jsonMembers.length(); i++) {
                         JSONObject member = jsonMembers.getJSONObject(i);
+                        if(!group.hasMemberWithId(member.getInt("id"))) {
+                            RequestGET get = new RequestGET(new ICallback<String>() {
+                                @Override
+                                public void success(String result) {
+                                    JSONObject jsonUser = null;
+                                    try {
+                                        jsonUser = new JSONObject(result);
 
-
-
-                        new RequestGET(new ICallback<String>() {
-                            @Override
-                            public void success(String result) {
-                                JSONObject jsonUser = null;
-                                try {
-                                    jsonUser = new JSONObject(result);
-
-                                    // Récup les users
-                                    /**
-                                     * TODO SET MEMBER admin
-                                     */
-                                    group.getMembers().add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), false, false));
-
-                                    updateCallbackActivity();
-                                } catch (JSONException e) {
-                                    Log.e(TAG, e.getMessage());
+                                        // Récup les users
+                                        /**
+                                         * TODO SET MEMBER admin
+                                         */
+                                        group.getMembers().add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), false, false));
+                                    } catch (JSONException e) {
+                                        Log.e(TAG, e.getMessage());
+                                    }
+                                    Log.i(TAG, "Success : " + result);
                                 }
 
-                                loadGroupMessages(group);
-                                Log.i(TAG, "Success : " + result);
-                            }
-
-                            @Override
-                            public void failure(Exception ex) {
-                                Log.e(TAG, ex.getMessage());
-                            }
-                        }, token, BASE_URL + GET_USER + member.getInt("user")).execute();
-
-
+                                @Override
+                                public void failure(Exception ex) {
+                                    Log.e(TAG, ex.getMessage());
+                                }
+                            }, token, BASE_URL + GET_USER + member.getInt("user"));
+                            get.execute();
+                            get.get();
+                        }
 
                     }
-
-                    updateCallbackActivity();
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
                 }
 
                 Log.i(TAG, "Success : " + result);
@@ -276,15 +284,17 @@ public class EventService implements IRequests, IJSONKeys {
             public void failure(Exception ex) {
                 Log.e(TAG, ex.getMessage());
             }
-        }, token, BASE_URL + GET_GROUP + group.getId() + GET_MEMBERS).execute();
+        }, token, BASE_URL + GET_GROUP + group.getId() + GET_MEMBERS);
+        get.execute();
+        get.get();
     }
 
     /**
      * TODO
      *
      */
-    private void loadGroupMessages(final Group group){
-        new RequestGET(new ICallback<String>() {
+    private void loadGroupMessages(final Group group) throws ExecutionException, InterruptedException {
+        RequestGET get = new RequestGET(new ICallback<String>() {
             @Override
             public void success(String result) {
                 JSONArray jsonArray = null;
@@ -300,7 +310,6 @@ public class EventService implements IRequests, IJSONKeys {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                updateCallbackActivity();
                 Log.i(TAG, "Success : " + result);
             }
 
@@ -308,7 +317,9 @@ public class EventService implements IRequests, IJSONKeys {
             public void failure(Exception ex) {
                 Log.e(TAG, ex.getMessage());
             }
-        }, token, BASE_URL + GET_GROUP + group.getId() + GET_MESSAGES).execute();
+        }, token, BASE_URL + GET_GROUP + group.getId() + GET_MESSAGES);
+        get.execute();
+        get.get();
     }
 
     private void removeContact(JSONObject jsonEvent) throws JSONException {

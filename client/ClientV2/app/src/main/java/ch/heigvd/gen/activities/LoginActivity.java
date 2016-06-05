@@ -36,6 +36,13 @@ import ch.heigvd.gen.utilities.Utils;
  *
  * TODO : Faire les report/blocage d'utilisateur et report de message dans groupe
  * TODO : Faire les discussion de groupe
+ *
+ *
+ * TODO : Il faut récupérer qui est l'admin du groupe et lui donner le droit de supprimer le groupe, ajouter des utilisateurs et enlever des utilisateurs
+
+ * TODO : Et pour ceux qui sont pas admin, juste voir la liste des utilisateurs et quitter le groupe
+
+ *  TODO :Après il faut aussi faire en sorte que dans un message on voit qui estl l'utilisateur qui a envoyé le message
  */
 public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequests {
 

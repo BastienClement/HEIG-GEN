@@ -203,4 +203,13 @@ public class Group implements Comparable<Group> {
             }
         });
     }
+
+    public boolean hasMemberWithId(int id){
+        for(User member: members){
+            if(member.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
 }

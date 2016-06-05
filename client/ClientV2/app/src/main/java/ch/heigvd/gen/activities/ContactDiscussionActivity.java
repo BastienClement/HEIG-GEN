@@ -177,7 +177,9 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
      */
     @Override
     public void update() {
-        if(User.findById(b.getInt("user_id")) != null){
+        if(User.findById(b.getInt("user_id")) == null){
+            finish();
+        } else{
             setReadMessages();
         }
         this.runOnUiThread(new Runnable(){
