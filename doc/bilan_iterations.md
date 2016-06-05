@@ -231,7 +231,7 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (27H30/5H)####
+####Antoine (29H/5H)####
 
 J'ai dû refactoré le code car on n'enregistrait pas la liste des utilisateurs et des messages et pour des questions de performance, il fallait la stocker dans l'application. J'ai également généré toute la javadoc des classes du client. 3h
 
@@ -261,8 +261,12 @@ J'ai résolu quelques problèmes notamment la mise à jours des listes des fragm
 
 J'ai résolu des problèmes d'events (création de groupe et unread messages). 1h
 
+Afficher la liste des membres d'un groupe et les boutons de suppression de membre. 1h30
+
 * Ajouter toutes les fonctionnalités relatives aux discussions publiques au protocole de communication. 
+	* J'ai ajouté une bonne partie des fonctionnalités de discussion publique.
 * Aider Bastien et Guillaume pour implémenter les fonctionnalités au niveau serveur ou client.
+	* Bastien c'est occupé de la partie serveur (je lui ai communiqué les quelques bugs).
 
 ####Bastien (TODO/TODO)####
 

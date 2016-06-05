@@ -117,7 +117,6 @@ public class GroupCreateActivity extends AppCompatActivity implements IRequests,
      */
     public void inviteContact(int groupId, int userId){
         try {
-            Log.i(TAG, "Token : " + Utils.getToken(GroupCreateActivity.this));
             new RequestPUT(new ICallback<String>() {
                 @Override
                 public void success(String result) {

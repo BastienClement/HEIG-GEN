@@ -149,7 +149,6 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     private void setReadMessages(){
         User.findById(b.getInt("user_id")).setUnread(false);
         try {
-            Log.i(TAG, "Token : " + Utils.getToken(ContactDiscussionActivity.this));
             new RequestPUT(new ICallback<String>() {
                 @Override
                 public void success(String result) {

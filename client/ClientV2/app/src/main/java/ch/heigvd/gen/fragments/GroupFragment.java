@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.ExecutionException;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.activities.GroupCreateActivity;
@@ -65,11 +66,9 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
 
         adapter = new GroupListAdapter(getActivity(), R.layout.groups_list_item, Group.groups);
 
-
         // fill listview
         listView.setAdapter(adapter);
         listView.setTextFilterEnabled(true);
-
 
         // handle click on group
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -94,11 +93,9 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
      */
     private void loadGroups() {
         try {
-            Log.i(TAG, "Token : " + Utils.getToken(getActivity()));
             new RequestGET(new ICallback<String>() {
                 @Override
                 public void success(String result) {
-                    adapter.clear();
                     JSONArray jsonArray = null;
                     try {
                         jsonArray = new JSONArray(result);
@@ -110,8 +107,8 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    // TODO : Order by last message
                     loadMessages();
+                    loadMembers();
                     Log.i(TAG, "Success : " + result);
                 }
 
@@ -129,6 +126,61 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
             Log.e(TAG, ex.getMessage());
         }
 
+    }
+
+    /**
+     * TODO
+     */
+    private void loadMembers() {
+        for(final Group group : Group.groups) {
+            new RequestGET(new ICallback<String>() {
+                @Override
+                public void success(String result) {
+                    try {
+                        JSONArray jsonMembers = new JSONArray(result);
+                        for (int i = 0; i < jsonMembers.length(); i++) {
+                            JSONObject member = jsonMembers.getJSONObject(i);
+                            RequestGET get = new RequestGET(new ICallback<String>() {
+                                @Override
+                                public void success(String result) {
+                                    JSONObject jsonUser = null;
+                                    try {
+                                        jsonUser = new JSONObject(result);
+
+                                        // Retrieve members
+                                        group.getMembers().add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), false));
+                                    } catch (JSONException e) {
+                                        Log.e(TAG, e.getMessage());
+                                    }
+                                    Log.i(TAG, "Success : " + result);
+                                }
+
+                                @Override
+                                public void failure(Exception ex) {
+                                    Log.e(TAG, ex.getMessage());
+                                }
+                            }, Utils.getToken(getActivity()), BASE_URL + GET_USER + member.getInt("user"));
+                            get.execute();
+                            get.get();
+
+                        }
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+
+                    Log.i(TAG, "Success : " + result);
+                }
+
+                @Override
+                public void failure(Exception ex) {
+                    Log.e(TAG, ex.getMessage());
+                }
+            }, Utils.getToken(getActivity()), BASE_URL + GET_GROUP + group.getId() + GET_MEMBERS).execute();
+        }
     }
 
     /**

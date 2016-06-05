@@ -5,15 +5,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import ch.heigvd.gen.R;
+import ch.heigvd.gen.adapters.ContactDiscussionAdapter;
+import ch.heigvd.gen.adapters.GroupMemberListAdapter;
 import ch.heigvd.gen.communications.RequestDELETE;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.IRequests;
+import ch.heigvd.gen.models.Group;
+import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
@@ -21,6 +27,8 @@ import ch.heigvd.gen.utilities.Utils;
  */
 public class GroupEditActivity extends AppCompatActivity implements IRequests {
 
+
+    private GroupMemberListAdapter adapter;
     private final static String TAG = GroupEditActivity.class.getSimpleName();
 
     Bundle b = null;
@@ -39,6 +47,13 @@ public class GroupEditActivity extends AppCompatActivity implements IRequests {
 
         // enable back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Create the ContactDiscussionAdapter
+        adapter = new GroupMemberListAdapter(this, R.layout.contacts_list_item, Group.findById(b.getInt("group_id")).getMembers());
+
+        // fill listview
+        final ListView listView = (ListView) findViewById(R.id.list_members);
+        listView.setAdapter(adapter);
 
         // set group name
         TextView title = (TextView) findViewById(R.id.group_name);

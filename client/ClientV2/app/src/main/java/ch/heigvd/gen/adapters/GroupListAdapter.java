@@ -62,7 +62,7 @@ public class GroupListAdapter  extends ArrayAdapter<Group> {
 
         convertView = LayoutInflater.from(getContext()).inflate(R.layout.groups_list_item, parent, false);
 
-        TextView groupName = (TextView)convertView.findViewById(R.id.group_item_name);
+        TextView groupName = (TextView)convertView.findViewById(R.id.group_name);
         groupName.setText(group.getGroupname());
         if (group.isUnread()) {
             TextView textView = (TextView)convertView.findViewById(R.id.unread_flag_group_list);

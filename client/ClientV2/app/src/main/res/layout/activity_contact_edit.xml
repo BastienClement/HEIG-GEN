@@ -38,7 +38,8 @@
             android:width="120dp"
             android:textStyle="bold"
             android:clickable="true"
-            android:onClick="removeContact" />
+            android:onClick="removeContact"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 

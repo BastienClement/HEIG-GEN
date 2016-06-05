@@ -126,6 +126,9 @@ public class EventService implements IRequests, IJSONKeys {
                 break;
             case "GROUP_USER_INVITED":
                 // Add group
+                /**
+                 * TODO : Only update the new user
+                 */
                 addGroup(jsonEvent);
                 break;
             case "CONTACT_REMOVED":
@@ -200,9 +203,6 @@ public class EventService implements IRequests, IJSONKeys {
                     try {
                         jsonGroup = new JSONObject(result);
                         if(Group.findById(jsonGroup.getInt("id")) == null) {
-                            /**
-                             * TODO Manager admin boolean
-                             */
                             final Group group = new Group(jsonGroup.getInt("id"), jsonGroup.getString("title"), false);
                             Group.groups.add(group);
                             updateCallbackActivity();
@@ -216,8 +216,6 @@ public class EventService implements IRequests, IJSONKeys {
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
-
-                    // GET LES MESSAGES
 
                     Log.i(TAG, "Success : " + result);
                 }
@@ -240,7 +238,7 @@ public class EventService implements IRequests, IJSONKeys {
                     JSONArray jsonMembers = new JSONArray(result);
                     for (int i=0; i<jsonMembers.length(); i++) {
                         JSONObject member = jsonMembers.getJSONObject(i);
-                        if(!group.hasMemberWithId(member.getInt("id"))) {
+                        if(!group.hasMemberWithId(member.getInt("user"))) {
                             RequestGET get = new RequestGET(new ICallback<String>() {
                                 @Override
                                 public void success(String result) {
@@ -248,11 +246,8 @@ public class EventService implements IRequests, IJSONKeys {
                                     try {
                                         jsonUser = new JSONObject(result);
 
-                                        // Récup les users
-                                        /**
-                                         * TODO SET MEMBER admin
-                                         */
-                                        group.getMembers().add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), false, false));
+                                        // Retrieve members
+                                        group.getMembers().add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), false));
                                     } catch (JSONException e) {
                                         Log.e(TAG, e.getMessage());
                                     }

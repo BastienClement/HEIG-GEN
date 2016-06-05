@@ -153,7 +153,6 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
      */
     private void loadContacts(){
         try {
-            Log.i(TAG, "Token : " + Utils.getToken(getActivity()));
             new RequestGET(new ICallback<String>() {
                 @Override
                 public void success(String result) {

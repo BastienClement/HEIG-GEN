@@ -110,7 +110,6 @@ public class ContactAddActivity extends AppCompatActivity implements IRequests{
      */
     private void loadUsers(){
         try {
-            Log.i(TAG, "Token : " + Utils.getToken(this));
             new RequestGET(new ICallback<String>() {
                 @Override
                 public void success(String result) {

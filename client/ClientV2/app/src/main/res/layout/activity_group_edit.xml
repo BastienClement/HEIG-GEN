@@ -40,6 +40,11 @@
             android:clickable="true"
             android:onClick="removeGroup" />
 
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_members" />
+
     </LinearLayout>
 
 </RelativeLayout>

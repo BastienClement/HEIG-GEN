@@ -122,8 +122,6 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
         }
     }
 
-
-
     /**
      * TODO
      *
@@ -143,7 +141,6 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
     private void setReadMessages(){
         Group.findById(b.getInt("group_id")).setUnread(false);
         try {
-            Log.i(TAG, "Token : " + Utils.getToken(GroupDiscussionActivity.this));
             new RequestPUT(new ICallback<String>() {
                 @Override
                 public void success(String result) {
