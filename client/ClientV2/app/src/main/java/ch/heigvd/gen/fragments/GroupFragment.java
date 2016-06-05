@@ -32,6 +32,8 @@ import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.Group;
 import ch.heigvd.gen.models.Message;
+import ch.heigvd.gen.models.User;
+import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
@@ -205,5 +207,12 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Group.sortGroups();
+        adapter.notifyDataSetChanged();
     }
 }

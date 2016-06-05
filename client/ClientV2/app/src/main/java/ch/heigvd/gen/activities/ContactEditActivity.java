@@ -56,7 +56,7 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
      */
     public void removeContact(final View view) {
         try {
-            new RequestDELETE(new ICallback<String>() {
+            RequestDELETE delete = new RequestDELETE(new ICallback<String>() {
                 @Override
                 public void success(String result) {
                     Log.i(TAG, "Success : " + result);
@@ -72,7 +72,9 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
                     }
                     Log.e(TAG, ex.getMessage());
                 }
-            }, Utils.getToken(ContactEditActivity.this), BASE_URL + GET_CONTACT + b.getInt("user_id")).execute();
+            }, Utils.getToken(ContactEditActivity.this), BASE_URL + GET_CONTACT + b.getInt("user_id"));
+            delete.execute();
+            delete.get();
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }

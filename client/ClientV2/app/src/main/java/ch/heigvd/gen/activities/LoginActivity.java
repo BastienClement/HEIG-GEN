@@ -26,11 +26,9 @@ import ch.heigvd.gen.utilities.Utils;
  * TODO : Mettre tous les éléments json et les requêtes dans IJSONKEYS et IREQUESTS
  * TODO : Faire des logs un peu mieux
  *
- *
- * TODO : Faire un bouton de déconnexion
  * TODO : Faire que les dialogues dans une discussion soient joli + afficher l'heure du message et le jour et le nom de l'utilisateur qui a envoyé pour les discussions de groupe
  *
- * TODO : Trier les utilisateurs par liste de derniers message
+ * TODO : Trier les utilisateurs par date creation si aucun message
  *
  * TODO : Faire fonctionner les erreurs quand on perd la connection avec le server
  *

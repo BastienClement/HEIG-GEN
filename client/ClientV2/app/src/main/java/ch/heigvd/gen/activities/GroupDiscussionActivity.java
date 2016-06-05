@@ -169,7 +169,9 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
      */
     @Override
     public void update() {
-        setReadMessages();
+        if(Group.findById(b.getInt("group_id")) != null) {
+            setReadMessages();
+        }
         this.runOnUiThread(new Runnable(){
             public void run(){
                 adapter.notifyDataSetChanged();
@@ -186,10 +188,11 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
     public void onResume()
     {
         super.onResume();
-        setReadMessages();
-        EventService.getInstance().setActivity(this);
         if(Group.findById(b.getInt("group_id")) == null){
             finish();
+        } else{
+            EventService.getInstance().setActivity(this);
+            setReadMessages();
         }
     }
 }

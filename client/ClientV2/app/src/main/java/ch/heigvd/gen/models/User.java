@@ -179,10 +179,12 @@ public class User implements Comparable<User> {
         Collections.sort(users, new Comparator<User>() {
             @Override
             public int compare(User user1, User user2) {
-                if(user1.getMessages().size() == 0 || user2.getMessages().size() == 0){
-                    return 0;
+                if(user1.getMessages().size() == 0){
+                    return -1;
+                } else if(user2.getMessages().size() == 0){
+                    return 1;
                 }
-                return user1.getMessages().get(user1.getMessages().size() - 1).getDate().compareTo(user2.getMessages().get(user2.getMessages().size() - 1).getDate());
+                return user2.getMessages().get(user2.getMessages().size() - 1).getDate().compareTo(user1.getMessages().get(user1.getMessages().size() - 1).getDate());
             }
         });
     }

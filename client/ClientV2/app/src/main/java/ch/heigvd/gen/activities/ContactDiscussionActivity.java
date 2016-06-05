@@ -177,7 +177,9 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
      */
     @Override
     public void update() {
-        setReadMessages();
+        if(User.findById(b.getInt("user_id")) != null){
+            setReadMessages();
+        }
         this.runOnUiThread(new Runnable(){
             public void run(){
                 adapter.notifyDataSetChanged();
@@ -194,10 +196,11 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     public void onResume()
     {
         super.onResume();
-        setReadMessages();
-        EventService.getInstance().setActivity(this);
         if(User.findById(b.getInt("user_id")) == null){
             finish();
+        } else{
+            EventService.getInstance().setActivity(this);
+            setReadMessages();
         }
     }
 }

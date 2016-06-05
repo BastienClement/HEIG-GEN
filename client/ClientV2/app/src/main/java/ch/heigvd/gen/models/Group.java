@@ -194,10 +194,12 @@ public class Group implements Comparable<Group> {
         Collections.sort(groups, new Comparator<Group>(){
             @Override
             public int compare(Group group1, Group group2) {
-                if(group1.getMessages().size() == 0 || group2.getMessages().size() == 0){
-                    return 0;
+                if(group1.getMessages().size() == 0){
+                    return 1;
+                } else if(group2.getMessages().size() == 0){
+                    return -1;
                 }
-                return group1.getMessages().get(group1.getMessages().size() - 1).getDate().compareTo(group2.getMessages().get(group2.getMessages().size() - 1).getDate());
+                return group2.getMessages().get(group2.getMessages().size() - 1).getDate().compareTo(group1.getMessages().get(group1.getMessages().size() - 1).getDate());
             }
         });
     }

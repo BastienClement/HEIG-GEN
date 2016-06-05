@@ -62,9 +62,10 @@ public class EventService implements IRequests, IJSONKeys {
             public void run() {
                 while (true) {
                     Log.i(TAG, "Trying to retrieve events !");
+                    RequestGET get = null;
                     try {
                         // Event management
-                        RequestGET get = new RequestGET(new ICallback<String>() {
+                        get = new RequestGET(new ICallback<String>() {
                             @Override
                             public void success(String result) {
                                 Log.i(TAG, "Success : " + result);
@@ -92,6 +93,7 @@ public class EventService implements IRequests, IJSONKeys {
                         sleep(1000);
                     }catch(InterruptedException e){
                         e.printStackTrace();
+                        get.cancel(true);
                         break;
                     }catch(ExecutionException e){
                         e.printStackTrace();
@@ -123,6 +125,9 @@ public class EventService implements IRequests, IJSONKeys {
                 // Update contacts
                 removeContact(jsonEvent);
                 break;
+            case "GROUP_DELETED":
+                removeGroup(jsonEvent);
+                break;
             case "PRIVATE_MESSAGES_UPDATED":
                 // Load new messages
                 User.findById(jsonEvent.getInt("contact")).setUnread(true);
@@ -136,6 +141,11 @@ public class EventService implements IRequests, IJSONKeys {
                 Log.e(TAG, "Unhandled event !");
                 break;
         }
+    }
+
+    private void removeGroup(JSONObject jsonEvent) throws JSONException {
+        Group.deleteById(jsonEvent.getInt("group"));
+        updateCallbackActivity();
     }
 
     private void loadNewGroupMessages(JSONObject jsonEvent) throws JSONException {
@@ -182,64 +192,12 @@ public class EventService implements IRequests, IJSONKeys {
                     JSONObject jsonGroup = null;
                     try {
                         jsonGroup = new JSONObject(result);
-                        final Group group = new Group(jsonGroup.getInt("id"), jsonGroup.getString("title"), jsonGroup.getBoolean("admin"));
+                        /**
+                         * TODO Manager admin boolean
+                         */
+                        final Group group = new Group(jsonGroup.getInt("id"), jsonGroup.getString("title"), false);
                         Group.groups.add(group);
-                        loadGroupMessages(group);
-
-
-                        new RequestGET(new ICallback<String>() {
-                            @Override
-                            public void success(String result) {
-                                try {
-                                    JSONArray jsonMembers = new JSONArray(result);
-                                    for (int i=0; i<jsonMembers.length(); i++) {
-                                        JSONObject member = jsonMembers.getJSONObject(i);
-
-
-
-                                            new RequestGET(new ICallback<String>() {
-                                                @Override
-                                                public void success(String result) {
-                                                    JSONObject jsonUser = null;
-                                                    try {
-                                                        jsonUser = new JSONObject(result);
-
-                                                        // Récup les users
-                                                        group.getMembers().add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), false));
-
-                                                        updateCallbackActivity();
-                                                    } catch (JSONException e) {
-                                                        Log.e(TAG, e.getMessage());
-                                                    }
-
-                                                    Log.i(TAG, "Success : " + result);
-                                                }
-
-                                                @Override
-                                                public void failure(Exception ex) {
-                                                    Log.e(TAG, ex.getMessage());
-                                                }
-                                            }, token, BASE_URL + GET_USER + member.getInt("user")).execute();
-
-
-
-                                    }
-
-                                    updateCallbackActivity();
-                                } catch (JSONException e) {
-                                    Log.e(TAG, e.getMessage());
-                                }
-
-                                Log.i(TAG, "Success : " + result);
-                            }
-
-                            @Override
-                            public void failure(Exception ex) {
-                                Log.e(TAG, ex.getMessage());
-                            }
-                        }, token, BASE_URL + GET_GROUP + group.getId() + GET_MEMBERS).execute();
-
-
+                        loadMembers(group);
 
                         updateCallbackActivity();
                     } catch (JSONException e) {
@@ -259,6 +217,64 @@ public class EventService implements IRequests, IJSONKeys {
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }
+    }
+
+    private void loadMembers(final Group group) {
+        new RequestGET(new ICallback<String>() {
+            @Override
+            public void success(String result) {
+                try {
+                    JSONArray jsonMembers = new JSONArray(result);
+                    for (int i=0; i<jsonMembers.length(); i++) {
+                        JSONObject member = jsonMembers.getJSONObject(i);
+
+
+
+                        new RequestGET(new ICallback<String>() {
+                            @Override
+                            public void success(String result) {
+                                JSONObject jsonUser = null;
+                                try {
+                                    jsonUser = new JSONObject(result);
+
+                                    // Récup les users
+                                    /**
+                                     * TODO SET MEMBER admin
+                                     */
+                                    group.getMembers().add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), false, false));
+
+                                    updateCallbackActivity();
+                                } catch (JSONException e) {
+                                    Log.e(TAG, e.getMessage());
+                                }
+
+                                loadGroupMessages(group);
+                                Log.i(TAG, "Success : " + result);
+                            }
+
+                            @Override
+                            public void failure(Exception ex) {
+                                Log.e(TAG, ex.getMessage());
+                            }
+                        }, token, BASE_URL + GET_USER + member.getInt("user")).execute();
+
+
+
+                    }
+
+                    updateCallbackActivity();
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+
+                Log.i(TAG, "Success : " + result);
+            }
+
+            @Override
+            public void failure(Exception ex) {
+                Log.e(TAG, ex.getMessage());
+            }
+        }, token, BASE_URL + GET_GROUP + group.getId() + GET_MEMBERS).execute();
     }
 
     /**
@@ -282,6 +298,7 @@ public class EventService implements IRequests, IJSONKeys {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                updateCallbackActivity();
                 Log.i(TAG, "Success : " + result);
             }
 
@@ -305,7 +322,7 @@ public class EventService implements IRequests, IJSONKeys {
                     JSONObject jsonUser = null;
                     try {
                         jsonUser = new JSONObject(result);
-                        User user = new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), jsonUser.getBoolean("unread"));
+                        User user = new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), false);
                         User.users.add(user);
                         updateCallbackActivity();
                     } catch (JSONException e) {

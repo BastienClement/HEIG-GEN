@@ -52,7 +52,7 @@ public class GroupEditActivity extends AppCompatActivity implements IRequests {
      */
     public void removeGroup(final View view) {
         try {
-            new RequestDELETE(new ICallback<String>() {
+            RequestDELETE delete = new RequestDELETE(new ICallback<String>() {
                 @Override
                 public void success(String result) {
                     Log.i(TAG, "Success : " + result);
@@ -68,7 +68,9 @@ public class GroupEditActivity extends AppCompatActivity implements IRequests {
                     }
                     Log.e(TAG, ex.getMessage());
                 }
-            }, Utils.getToken(GroupEditActivity.this), BASE_URL + GET_GROUP + b.getInt("group_id")).execute();
+            }, Utils.getToken(GroupEditActivity.this), BASE_URL + GET_GROUP + b.getInt("group_id"));
+            delete.execute();
+            delete.get();
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }

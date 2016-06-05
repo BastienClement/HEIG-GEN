@@ -72,7 +72,7 @@ public class GroupCreateActivity extends AppCompatActivity implements IRequests,
             String[] keys = new String[]{KEY_TITLE};
             String[] values = new String[]{text.getText().toString()};
             String content = Utils.createJSONObject(keys, values);
-            new RequestPOST(new ICallback<String>() {
+            RequestPOST post = new RequestPOST(new ICallback<String>() {
                 @Override
                 public void success(String result) {
                     try{
@@ -85,8 +85,6 @@ public class GroupCreateActivity extends AppCompatActivity implements IRequests,
                                 inviteContact(json.getInt("id"), user.getId());
                             }
                         }
-
-                        Log.i(TAG, "Token : " + json.getString("token"));
                     } catch (Exception ex){
                         Log.e(TAG, ex.getMessage());
                     }
@@ -102,7 +100,9 @@ public class GroupCreateActivity extends AppCompatActivity implements IRequests,
                     }
                     Log.e(TAG, ex.getMessage());
                 }
-            }, Utils.getToken(this), BASE_URL + GET_GROUPS, content).execute();
+            }, Utils.getToken(this), BASE_URL + GET_GROUPS, content);
+            post.execute();
+            post.get();
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }

@@ -234,6 +234,7 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
      */
     @Override
     public void update() {
+        User.sortUsers();
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
                 adapter.notifyDataSetChanged();
@@ -264,5 +265,12 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        User.sortUsers();
+        adapter.notifyDataSetChanged();
     }
 }

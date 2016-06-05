@@ -1,21 +1,23 @@
 package ch.heigvd.gen.activities;
 
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 
+import java.util.List;
+
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.adapters.ViewPagerAdapter;
 import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IRequests;
+import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.services.EventService;
 
 
-public class MainActivity extends AppCompatActivity implements IRequests{
-
-    ArrayAdapter adapter = null;
+public class MainActivity extends AppCompatActivity implements IRequests, ICustomCallback{
 
     private final static String TAG = MainActivity.class.getSimpleName();
 
@@ -84,4 +86,19 @@ public class MainActivity extends AppCompatActivity implements IRequests{
         EventService.getInstance().stop();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventService.getInstance().setActivity(this);
+    }
+
+    @Override
+    public void update() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if(fragments != null){
+            for(Fragment fragment : fragments){
+                ((ICustomCallback)fragment).update();
+            }
+        }
+    }
 }
