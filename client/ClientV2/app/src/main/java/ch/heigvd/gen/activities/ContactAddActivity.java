@@ -62,7 +62,6 @@ public class ContactAddActivity extends AppCompatActivity implements IRequests{
                 final User user = (User) parent.getItemAtPosition(position);
 
                 try {
-                    Log.i(TAG, "Token : " + Utils.getToken(ContactAddActivity.this));
                     new RequestPUT(new ICallback<String>() {
                         @Override
                         public void success(String result) {
@@ -118,7 +117,6 @@ public class ContactAddActivity extends AppCompatActivity implements IRequests{
                     JSONArray jsonArray = null;
                     try {
                         jsonArray = new JSONArray(result);
-                        Log.e(TAG, "-" + result);
                        // adapter.clear();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonUser = jsonArray.getJSONObject(i);
