@@ -180,9 +180,9 @@ public class User implements Comparable<User> {
             @Override
             public int compare(User user1, User user2) {
                 if(user1.getMessages().size() == 0){
-                    return -1;
-                } else if(user2.getMessages().size() == 0){
                     return 1;
+                } else if(user2.getMessages().size() == 0){
+                    return -1;
                 }
                 return user2.getMessages().get(user2.getMessages().size() - 1).getDate().compareTo(user1.getMessages().get(user1.getMessages().size() - 1).getDate());
             }

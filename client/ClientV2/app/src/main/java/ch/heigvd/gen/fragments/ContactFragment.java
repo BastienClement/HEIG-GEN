@@ -235,11 +235,9 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
     @Override
     public void update() {
         User.sortUsers();
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                adapter.notifyDataSetChanged();
-            }
-        });
+        if(adapter != null){
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

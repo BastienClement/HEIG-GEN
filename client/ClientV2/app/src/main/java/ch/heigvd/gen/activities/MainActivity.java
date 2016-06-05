@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements IRequests, ICusto
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                EventService.getInstance().setActivity((ICustomCallback) pagerAdapter.getItem(tab.getPosition()));
+                ((ICustomCallback) ((ICustomCallback) pagerAdapter.getItem(tab.getPosition()))).update();
                 viewPager.setCurrentItem(tab.getPosition());
             }
 
@@ -94,11 +94,18 @@ public class MainActivity extends AppCompatActivity implements IRequests, ICusto
 
     @Override
     public void update() {
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if(fragments != null){
-            for(Fragment fragment : fragments){
-                ((ICustomCallback)fragment).update();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                List<Fragment> fragments = getSupportFragmentManager().getFragments();
+                if(fragments!=null)
+
+                {
+                    for (Fragment fragment : fragments) {
+                        ((ICustomCallback) fragment).update();
+                    }
+                }
             }
-        }
+        });
     }
 }

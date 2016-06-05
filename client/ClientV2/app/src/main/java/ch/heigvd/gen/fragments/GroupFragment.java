@@ -177,11 +177,9 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
     @Override
     public void update() {
         Group.sortGroups();
-        getActivity().runOnUiThread(new Runnable() {
-            public void run() {
-                adapter.notifyDataSetChanged();
-            }
-        });
+        if(adapter != null){
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

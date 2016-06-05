@@ -108,10 +108,12 @@ public class EventService implements IRequests, IJSONKeys {
         String type = jsonEvent.getString("type");
         switch (type) {
             case "PRIVATE_MESSAGES_UNREAD":
-                User.findById(jsonEvent.getInt("contact")).setUnread(false);
+                //User.findById(jsonEvent.getInt("contact")).setUnread(false);
+                //updateCallbackActivity();
                 break;
             case "PRIVATE_MESSAGES_READ":
-                User.findById(jsonEvent.getInt("contact")).setUnread(true);
+                //User.findById(jsonEvent.getInt("contact")).setUnread(true);
+                //updateCallbackActivity();
                 break;
             case "CONTACT_ADDED":
                 // Add contact
