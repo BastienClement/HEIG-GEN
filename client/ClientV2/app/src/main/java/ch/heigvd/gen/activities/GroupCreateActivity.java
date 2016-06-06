@@ -23,6 +23,7 @@ import ch.heigvd.gen.interfaces.IJSONKeys;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.Group;
 import ch.heigvd.gen.models.User;
+import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
 
 public class GroupCreateActivity extends AppCompatActivity implements IRequests, IJSONKeys {
@@ -153,5 +154,4 @@ public class GroupCreateActivity extends AppCompatActivity implements IRequests,
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

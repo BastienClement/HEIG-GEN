@@ -188,6 +188,22 @@ public class Group implements Comparable<Group> {
     }
 
     /**
+     * TODO
+     *
+     * @param member_id
+     * @return
+     */
+    public void deleteMemberById(int member_id) {
+        for(User user : members){
+            if(user.getId() == member_id){
+                members.remove(user);
+                break;
+            }
+        }
+    }
+
+
+    /**
      *
      */
     public static void sortGroups(){
@@ -211,5 +227,14 @@ public class Group implements Comparable<Group> {
             }
         }
         return false;
+    }
+
+    public User findMemberById(int id) {
+        for(User user : members){
+            if(user.getId() == id){
+                return user;
+            }
+        }
+        return null;
     }
 }

@@ -28,21 +28,17 @@ import ch.heigvd.gen.utilities.Utils;
  *
  * TODO : Faire que les dialogues dans une discussion soient joli + afficher l'heure du message et le jour et le nom de l'utilisateur qui a envoyé pour les discussions de groupe
  *
- * TODO : Trier les utilisateurs par date creation si aucun message
+ * TODO : Trier les utilisateurs par de date creation si aucun message
  *
  * TODO : Faire fonctionner les erreurs quand on perd la connection avec le server
  *
- * TODO : Faire fonctionner la recherche dans la liste des groupes
+ * TODO : Faire fonctionner la recherche dans la liste des groupes/contact ça marche plus avec les fragments
  *
- * TODO : Faire les report/blocage d'utilisateur et report de message dans groupe
- * TODO : Faire les discussion de groupe
+ * TODO : Message read unread faire dans les events
  *
+ * TODO : faire les requêtes pour charger les membres et les messages d'un group pour que ça soit fait une seule fois dans les events
  *
- * TODO : Il faut récupérer qui est l'admin du groupe et lui donner le droit de supprimer le groupe, ajouter des utilisateurs et enlever des utilisateurs
-
- * TODO : Et pour ceux qui sont pas admin, juste voir la liste des utilisateurs et quitter le groupe
-
- *  TODO :Après il faut aussi faire en sorte que dans un message on voit qui estl l'utilisateur qui a envoyé le message
+ * TODO won't be done : Faire les report/blocage d'utilisateur et report de message dans groupe
  */
 public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequests {
 
@@ -63,22 +59,8 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        radioGroup = (RadioGroup) findViewById(R.id.radioButtons);
         login = (EditText) findViewById(R.id.login);
-        server = (TextInputLayout) findViewById(R.id.serverLayout);
         passwordBox = (EditText) findViewById(R.id.password);
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // checkedId is the RadioButton selected
-                if (checkedId == R.id.radioButton_privateServer) {
-                    server.setVisibility(View.VISIBLE);
-                } else {
-                    server.setVisibility(View.GONE);
-                }
-            }
-        });
     }
 
     /**

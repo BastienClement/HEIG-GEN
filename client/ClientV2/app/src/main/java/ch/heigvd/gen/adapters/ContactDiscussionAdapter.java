@@ -72,7 +72,6 @@ public class ContactDiscussionAdapter extends ArrayAdapter<Message>{
             message_tv.setText(message.getContent());
         }
 
-        LinearLayout line = (LinearLayout) convertView.findViewById(R.id.item_line);
         return convertView;
     }
 

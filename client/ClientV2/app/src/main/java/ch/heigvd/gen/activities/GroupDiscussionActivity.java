@@ -76,10 +76,10 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
      * @param view
      */
     public void editGroup(final View view){
-        // start group search activity
+        // start group search
         Intent intent = new Intent(GroupDiscussionActivity.this, GroupEditActivity.class);
         intent.putExtras(b);
-        startActivity(intent);
+        startActivity(intent);;
     }
 
     /**

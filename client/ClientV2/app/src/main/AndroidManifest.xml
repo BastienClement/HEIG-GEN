@@ -52,6 +52,10 @@
         <activity
             android:name=".activities.GroupCreateActivity"
             android:label="Create group"/>
+
+        <activity
+            android:name=".activities.GroupAddMemberActivity"
+            android:label="Add group member"/>
     </application>
 
 

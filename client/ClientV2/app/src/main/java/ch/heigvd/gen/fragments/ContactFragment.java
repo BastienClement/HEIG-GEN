@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.activities.ContactDiscussionActivity;
@@ -31,6 +32,7 @@ import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IRequests;
+import ch.heigvd.gen.models.Group;
 import ch.heigvd.gen.models.Message;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.services.EventService;
@@ -55,9 +57,6 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
         listView = (ListView) v.findViewById(R.id.contact_list);
         searchView = (SearchView) v.findViewById(R.id.search);
         setHasOptionsMenu(true);
-
-        // Load self pref
-        loadSelfPref();
 
         // Load contacts
         loadContacts();
@@ -110,41 +109,6 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
             }
         });
 
-    }
-
-
-
-    /**
-     * TODO
-     */
-    private void loadSelfPref(){
-        try {
-            new RequestGET(new ICallback<String>() {
-                @Override
-                public void success(String result) {
-                    try{
-                        JSONObject json = new JSONObject(result);
-                        Utils.setId(getActivity(), json.getInt("id"));
-                        Log.i(TAG, "Id : " + json.getString("id"));
-                    } catch (Exception ex){
-                        Log.e(TAG, ex.getMessage());
-                    }
-                    Log.i(TAG, "Success : " + result);
-                }
-
-                @Override
-                public void failure(Exception ex) {
-                    try {
-                        Utils.showAlert(getActivity(), new JSONObject(ex.getMessage()).getString("err"));
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
-                    }
-                    Log.e(TAG, ex.getMessage());
-                }
-            }, Utils.getToken(getActivity()), BASE_URL + GET_SELF).execute();
-        } catch (Exception ex) {
-            Log.e(TAG, ex.getMessage());
-        }
     }
 
 
@@ -257,6 +221,8 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
         }
 
         if (id == R.id.logoff) {
+            User.users = new ArrayList<>();
+            Group.groups = new ArrayList<>();
             getActivity().finish();
             return true;
         }

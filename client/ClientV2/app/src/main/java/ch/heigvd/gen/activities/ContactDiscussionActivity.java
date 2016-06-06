@@ -190,7 +190,6 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
 
     /**
      * After a pause OR at startup check if the user is still a contact, if not finish the activity
-     * TODO : Faire le check sur la liste des users et pas faire une requête au serveur
      *
      */
     @Override

@@ -5,16 +5,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.adapters.ViewPagerAdapter;
+import ch.heigvd.gen.communications.RequestGET;
+import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.services.EventService;
+import ch.heigvd.gen.utilities.Utils;
 
 
 public class MainActivity extends AppCompatActivity implements IRequests, ICustomCallback{
@@ -43,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements IRequests, ICusto
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+        setOwnId();
+
         EventService.getInstance().start(this);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -63,6 +72,38 @@ public class MainActivity extends AppCompatActivity implements IRequests, ICusto
             }
         });
 
+    }
+
+    private void setOwnId() {
+        try {
+            RequestGET get = new RequestGET(new ICallback<String>() {
+                @Override
+                public void success(String result) {
+                    try{
+                        JSONObject json = new JSONObject(result);
+                        Utils.setId(MainActivity.this, json.getInt("id"));
+                        Log.i(TAG, "Id : " + json.getString("id"));
+                    } catch (Exception ex){
+                        Log.e(TAG, ex.getMessage());
+                    }
+                    Log.i(TAG, "Success : " + result);
+                }
+
+                @Override
+                public void failure(Exception ex) {
+                    try {
+                        Utils.showAlert(MainActivity.this, new JSONObject(ex.getMessage()).getString("err"));
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                    Log.e(TAG, ex.getMessage());
+                }
+            }, Utils.getToken(this), BASE_URL + GET_SELF);
+            get.execute();
+            get.get();
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
+        }
     }
 
     /**

@@ -4,6 +4,7 @@ package ch.heigvd.gen.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +23,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import ch.heigvd.gen.R;
@@ -42,6 +45,7 @@ import ch.heigvd.gen.utilities.Utils;
  */
 public class GroupFragment extends Fragment implements IRequests, ICustomCallback{
     ListView listView;
+    SearchView searchView;
     GroupListAdapter adapter;
 
     private final static String TAG = GroupFragment.class.getSimpleName();
@@ -53,6 +57,7 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
         setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.fragment_group, container, false);
         listView = (ListView) v.findViewById(R.id.groups_list);
+        searchView = (SearchView) v.findViewById(R.id.search);
 
         loadGroups();
 
@@ -84,6 +89,24 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                 intent.putExtras(b);
                 startActivity(intent);
 
+            }
+        });
+
+        // search view
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (TextUtils.isEmpty(newText)) {
+                    listView.clearTextFilter();
+                } else {
+                    listView.setFilterText(newText.toString());
+                }
+                return true;
             }
         });
     }
@@ -139,8 +162,8 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                     try {
                         JSONArray jsonMembers = new JSONArray(result);
                         for (int i = 0; i < jsonMembers.length(); i++) {
-                            JSONObject member = jsonMembers.getJSONObject(i);
-                            RequestGET get = new RequestGET(new ICallback<String>() {
+                            final JSONObject member = jsonMembers.getJSONObject(i);
+                            new RequestGET(new ICallback<String>() {
                                 @Override
                                 public void success(String result) {
                                     JSONObject jsonUser = null;
@@ -148,7 +171,7 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                                         jsonUser = new JSONObject(result);
 
                                         // Retrieve members
-                                        group.getMembers().add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), false));
+                                        group.getMembers().add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), member.getBoolean("admin"), false));
                                     } catch (JSONException e) {
                                         Log.e(TAG, e.getMessage());
                                     }
@@ -159,17 +182,11 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
                                 public void failure(Exception ex) {
                                     Log.e(TAG, ex.getMessage());
                                 }
-                            }, Utils.getToken(getActivity()), BASE_URL + GET_USER + member.getInt("user"));
-                            get.execute();
-                            get.get();
+                            }, Utils.getToken(getActivity()), BASE_URL + GET_USER + member.getInt("user")).execute();
 
                         }
                     } catch (JSONException e) {
                         Log.e(TAG, e.getMessage());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
                     }
 
                     Log.i(TAG, "Success : " + result);
@@ -252,6 +269,8 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
         }
 
         if (id == R.id.logoff) {
+            User.users = new ArrayList<>();
+            Group.groups = new ArrayList<>();
             getActivity().finish();
             return true;
         }

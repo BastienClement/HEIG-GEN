@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -37,6 +38,8 @@ public class EventService implements IRequests, IJSONKeys {
 
     private String token;
 
+    private int id;
+
     private Integer from = null;
 
     private EventService(){
@@ -59,6 +62,7 @@ public class EventService implements IRequests, IJSONKeys {
     public void start(Activity activity){
         Log.i(TAG, "Starting event service thread !");
         token = Utils.getToken(activity);
+        id = Utils.getId(activity);
         thread = new Thread() {
             public void run() {
                 while (true) {
@@ -79,7 +83,8 @@ public class EventService implements IRequests, IJSONKeys {
                                     }
                                     from = json.getInt("next");
                                 } catch (Exception ex) {
-                                    Log.e(TAG, ex.getMessage());
+                                    ex.printStackTrace();
+                                    Log.e(TAG, "Error : " + ex.getMessage());
                                 }
                             }
 
@@ -116,6 +121,9 @@ public class EventService implements IRequests, IJSONKeys {
                 //User.findById(jsonEvent.getInt("contact")).setUnread(true);
                 //updateCallbackActivity();
                 break;
+            case "GROUP_USER_KICKED":
+                removeGroupMember(jsonEvent);
+                break;
             case "GROUPS_UNREAD":
                 break;
             case "GROUPS_READ":
@@ -150,6 +158,38 @@ public class EventService implements IRequests, IJSONKeys {
             default:
                 Log.e(TAG, "Unhandled event !");
                 break;
+        }
+    }
+
+    private void removeGroupMember(final JSONObject jsonEvent) throws JSONException{
+        try {
+                new RequestGET(new ICallback<String>() {
+                @Override
+                public void success(String result) {
+                    try{
+                        JSONObject json = new JSONObject(result);
+
+                        Group group = Group.findById(jsonEvent.getInt("group"));
+                        if(jsonEvent.getInt("user") == json.getInt("id")){
+                            Group.groups.remove(group);
+                        } else {
+                            group.deleteMemberById(jsonEvent.getInt("user"));
+                        }
+                        updateCallbackActivity();
+                        Log.i(TAG, "Id : " + json.getString("id"));
+                    } catch (Exception ex){
+                        Log.e(TAG, ex.getMessage());
+                    }
+                    Log.i(TAG, "Success : " + result);
+                }
+
+                @Override
+                public void failure(Exception ex) {
+                    Log.e(TAG, ex.getMessage());
+                }
+            }, token, BASE_URL + GET_SELF).execute();
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
         }
     }
 
@@ -206,9 +246,9 @@ public class EventService implements IRequests, IJSONKeys {
                             final Group group = new Group(jsonGroup.getInt("id"), jsonGroup.getString("title"), false);
                             Group.groups.add(group);
                             updateCallbackActivity();
-                            loadMembers(group);
-                            loadGroupMessages(group);
                         }
+                        loadMembers(Group.findById(jsonGroup.getInt("id")));
+                        loadGroupMessages(Group.findById(jsonGroup.getInt("id")));
                     } catch (JSONException e) {
                         Log.e(TAG, e.getMessage());
                     } catch (InterruptedException e) {
@@ -231,15 +271,15 @@ public class EventService implements IRequests, IJSONKeys {
     }
 
     private void loadMembers(final Group group) throws ExecutionException, InterruptedException {
-        RequestGET get = new RequestGET(new ICallback<String>() {
+        new RequestGET(new ICallback<String>() {
             @Override
             public void success(String result) {
                 try {
                     JSONArray jsonMembers = new JSONArray(result);
                     for (int i=0; i<jsonMembers.length(); i++) {
-                        JSONObject member = jsonMembers.getJSONObject(i);
+                        final JSONObject member = jsonMembers.getJSONObject(i);
                         if(!group.hasMemberWithId(member.getInt("user"))) {
-                            RequestGET get = new RequestGET(new ICallback<String>() {
+                            new RequestGET(new ICallback<String>() {
                                 @Override
                                 public void success(String result) {
                                     JSONObject jsonUser = null;
@@ -247,10 +287,11 @@ public class EventService implements IRequests, IJSONKeys {
                                         jsonUser = new JSONObject(result);
 
                                         // Retrieve members
-                                        group.getMembers().add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), false));
+                                        group.getMembers().add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), member.getBoolean("admin"), false));
                                     } catch (JSONException e) {
                                         Log.e(TAG, e.getMessage());
                                     }
+                                    updateCallbackActivity();
                                     Log.i(TAG, "Success : " + result);
                                 }
 
@@ -258,18 +299,12 @@ public class EventService implements IRequests, IJSONKeys {
                                 public void failure(Exception ex) {
                                     Log.e(TAG, ex.getMessage());
                                 }
-                            }, token, BASE_URL + GET_USER + member.getInt("user"));
-                            get.execute();
-                            get.get();
+                            }, token, BASE_URL + GET_USER + member.getInt("user")).execute();
                         }
 
                     }
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
                 }
 
                 Log.i(TAG, "Success : " + result);
@@ -279,9 +314,7 @@ public class EventService implements IRequests, IJSONKeys {
             public void failure(Exception ex) {
                 Log.e(TAG, ex.getMessage());
             }
-        }, token, BASE_URL + GET_GROUP + group.getId() + GET_MEMBERS);
-        get.execute();
-        get.get();
+        }, token, BASE_URL + GET_GROUP + group.getId() + GET_MEMBERS).execute();
     }
 
     /**
@@ -289,7 +322,7 @@ public class EventService implements IRequests, IJSONKeys {
      *
      */
     private void loadGroupMessages(final Group group) throws ExecutionException, InterruptedException {
-        RequestGET get = new RequestGET(new ICallback<String>() {
+        new RequestGET(new ICallback<String>() {
             @Override
             public void success(String result) {
                 JSONArray jsonArray = null;
@@ -312,9 +345,7 @@ public class EventService implements IRequests, IJSONKeys {
             public void failure(Exception ex) {
                 Log.e(TAG, ex.getMessage());
             }
-        }, token, BASE_URL + GET_GROUP + group.getId() + GET_MESSAGES);
-        get.execute();
-        get.get();
+        }, token, BASE_URL + GET_GROUP + group.getId() + GET_MESSAGES).execute();
     }
 
     private void removeContact(JSONObject jsonEvent) throws JSONException {
