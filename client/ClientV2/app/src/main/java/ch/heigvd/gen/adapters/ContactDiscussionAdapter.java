@@ -72,6 +72,11 @@ public class ContactDiscussionAdapter extends ArrayAdapter<Message>{
             message_tv.setText(message.getContent());
         }
 
+        TextView message_tv_date = (TextView) convertView.findViewById(R.id.item_message_date);
+        if (message_tv_date != null) {
+            message_tv_date.setText(message.getDate().toString());
+        }
+
         return convertView;
     }
 

@@ -1,14 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/item_line"
+android:id="@+id/item_line"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal">-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
+
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/item_message_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_message"
+        android:padding="4dp"
+        android:textColor="@android:color/black"
+        android:textSize="10dp"
+        android:textStyle="italic" />
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/item_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp" />
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:background="#98FB98"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:textColor="@android:color/black"
+        android:textSize="16dp" />
 
-</LinearLayout>
+
+</RelativeLayout><!--
+</LinearLayout> -->
