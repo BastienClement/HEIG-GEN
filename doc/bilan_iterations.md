@@ -280,10 +280,14 @@ Ajouter la suppression et l'ajout de membres dans un groupe. Permettre de suppri
 * Refactor de l'activité principale sous la forme de deux fragments (contact/groupes) afin de pouvoir les afficher sous la forme d'ongles facilement navigables, avec l'aide de l'assistant. 3h
 * pour implémentation de l'onglet GroupFragment: création de l'adaptateur pour l'affichage des groupes et du modèle groupe. 2h
 
-####Amel (TODO/TODO)####
+####Amel (5h/5h)####
 
-* TODO
-
+* Rédaction du rapport final
+	* Définition de la structure de base
+	* Intégration et mise en page du contenu du rapport intermédiaire
+	* Complété la partie "Analyse"
+	* Création du diagramme d'activité général
+	* Premier état des lieux pour les illustrations manquantes et les sujets à éclaircir avec l'ensemble du groupe
 
 ##Bilan itération 6##
 ###Durée###
