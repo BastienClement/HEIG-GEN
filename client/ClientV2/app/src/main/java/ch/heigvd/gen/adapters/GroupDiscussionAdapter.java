@@ -11,7 +11,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import ch.heigvd.gen.R;
+import ch.heigvd.gen.models.Group;
 import ch.heigvd.gen.models.Message;
+import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
 public class GroupDiscussionAdapter extends ArrayAdapter<Message>{
@@ -61,18 +63,19 @@ public class GroupDiscussionAdapter extends ArrayAdapter<Message>{
 
         // if own message :
         if (message.getFrom() == Utils.getId(a)) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.own_message_list_item, parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.group_own_message_list_item, parent, false);
         } else {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.other_message_list_item, parent, false);
-
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.group_other_message_list_item, parent, false);
+                TextView message_tv_user = (TextView) convertView.findViewById(R.id.group_item_message_user);
+                if (message_tv_user != null) message_tv_user.setText("User :" + Integer.toString(message.getFrom()));
         }
 
-        TextView message_tv = (TextView) convertView.findViewById(R.id.item_message);
+        TextView message_tv = (TextView) convertView.findViewById(R.id.group_item_message);
         if (message_tv != null) {
             message_tv.setText(message.getContent());
         }
 
-        TextView message_tv_date = (TextView) convertView.findViewById(R.id.item_message_date);
+        TextView message_tv_date = (TextView) convertView.findViewById(R.id.group_item_message_date);
         if (message_tv_date != null) {
             message_tv_date.setText(message.getDate().toString());
         }
