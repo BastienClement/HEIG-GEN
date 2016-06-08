@@ -67,7 +67,7 @@ public class GroupDiscussionAdapter extends ArrayAdapter<Message>{
         } else {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.group_other_message_list_item, parent, false);
                 TextView message_tv_user = (TextView) convertView.findViewById(R.id.group_item_message_user);
-                if (message_tv_user != null) message_tv_user.setText("User :" + Integer.toString(message.getFrom()));
+                if (message_tv_user != null) message_tv_user.setText(User.findById(message.getFrom()).getUsername() + " says : ");
         }
 
         TextView message_tv = (TextView) convertView.findViewById(R.id.group_item_message);
@@ -79,6 +79,8 @@ public class GroupDiscussionAdapter extends ArrayAdapter<Message>{
         if (message_tv_date != null) {
             message_tv_date.setText(message.getDate().toString());
         }
+
+        //User.findById(message.getFrom()).getUsername();
 
         //LinearLayout line = (LinearLayout) convertView.findViewById(R.id.item_line);
         return convertView;
