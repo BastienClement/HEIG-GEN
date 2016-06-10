@@ -136,7 +136,7 @@ public class Group implements Comparable<Group> {
      * @return
      */
     public boolean contains(String s) {
-        return s == null || s.isEmpty() || groupname.toLowerCase().contains(s.toLowerCase());
+        return s == null || s.isEmpty() || groupname.toLowerCase().startsWith(s.toLowerCase());
     }
 
     /**

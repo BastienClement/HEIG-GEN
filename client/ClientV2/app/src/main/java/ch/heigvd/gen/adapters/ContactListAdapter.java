@@ -5,16 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.models.User;
 
-public class ContactListAdapter extends ArrayAdapter<User>{
+public class ContactListAdapter extends ArrayAdapter<User> implements Filterable{
 
     private final List<User> users;
+    private  List<User> filteredUsers;
 
     private Activity a;
 
@@ -28,6 +32,7 @@ public class ContactListAdapter extends ArrayAdapter<User>{
     public ContactListAdapter(final Activity a, final int res, final List<User> users) {
         super(a, res, users);
         this.users = users;
+        this.filteredUsers = users;
         this.a = a;
     }
 
@@ -38,7 +43,7 @@ public class ContactListAdapter extends ArrayAdapter<User>{
      */
     @Override
     public int getCount() {
-        return users.size();
+        return filteredUsers.size();
     }
 
     /**
@@ -49,7 +54,7 @@ public class ContactListAdapter extends ArrayAdapter<User>{
      */
     @Override
     public User getItem(int position) {
-        return users.get(position);
+        return filteredUsers.get(position);
     }
 
     @Override
@@ -70,5 +75,39 @@ public class ContactListAdapter extends ArrayAdapter<User>{
         }
 
         return convertView;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
+                List<User> filteredUsers;
+                if (constraint != null && constraint.length() != 0) {
+                    filteredUsers = new ArrayList<>();
+                    for (User user : users) {
+                        if (user.contains(constraint.toString())) {
+                            filteredUsers.add(user);
+                        }
+                    }
+                } else {
+                    filteredUsers = users;
+                }
+                results.count = filteredUsers.size();
+                results.values = filteredUsers;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                ContactListAdapter.this.filteredUsers = (List<User>) results.values;
+                if (results.count == 0) {
+                    notifyDataSetInvalidated();
+                } else {
+                    notifyDataSetChanged();
+                }
+            }
+        };
     }
 }

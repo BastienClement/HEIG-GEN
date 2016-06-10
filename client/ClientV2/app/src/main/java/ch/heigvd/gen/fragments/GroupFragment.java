@@ -57,7 +57,7 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
         setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.fragment_group, container, false);
         listView = (ListView) v.findViewById(R.id.groups_list);
-        searchView = (SearchView) v.findViewById(R.id.search);
+        searchView = (SearchView) v.findViewById(R.id.search_frag_group);
 
         loadGroups();
 
@@ -71,9 +71,6 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
 
         adapter = new GroupListAdapter(getActivity(), R.layout.groups_list_item, Group.groups);
 
-        // fill listview
-        listView.setAdapter(adapter);
-        listView.setTextFilterEnabled(true);
 
         // handle click on group
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -101,14 +98,14 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (TextUtils.isEmpty(newText)) {
-                    listView.clearTextFilter();
-                } else {
-                    listView.setFilterText(newText.toString());
-                }
+                adapter.getFilter().filter(newText);
                 return true;
             }
         });
+
+        // fill listview
+        listView.setAdapter(adapter);
+        listView.setTextFilterEnabled(true);
     }
 
     /**

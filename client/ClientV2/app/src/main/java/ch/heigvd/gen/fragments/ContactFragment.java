@@ -55,7 +55,7 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_contact, container, false);
         listView = (ListView) v.findViewById(R.id.contact_list);
-        searchView = (SearchView) v.findViewById(R.id.search);
+        searchView = (SearchView) v.findViewById(R.id.search_frag_contact);
         setHasOptionsMenu(true);
 
         // Load contacts
@@ -69,10 +69,6 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
 
         // Create adapter
         adapter = new ContactListAdapter(getActivity(), R.layout.contacts_list_item, User.users);
-
-        // fill listview
-        listView.setAdapter(adapter);
-        listView.setTextFilterEnabled(true);
 
         // handle click on contact
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,7 +87,7 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
             }
         });
 
-        // search view
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -100,14 +96,14 @@ public class ContactFragment extends Fragment implements IRequests,ICustomCallba
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (TextUtils.isEmpty(newText)) {
-                    listView.clearTextFilter();
-                } else {
-                    listView.setFilterText(newText.toString());
-                }
+                adapter.getFilter().filter(newText);
                 return true;
             }
         });
+
+        // fill listview
+        listView.setAdapter(adapter);
+        listView.setTextFilterEnabled(true);
 
     }
 

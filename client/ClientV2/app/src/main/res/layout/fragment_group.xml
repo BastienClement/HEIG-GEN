@@ -1,33 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"><![CDATA[
-
-    Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create group"
-        android:id="@+id/create_group"
-
-        android:onClick="createGroup" />
-
-
-
-    ]]>
+    android:layout_height="match_parent">
 
     <SearchView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/search"
-        android:queryHint="Search" >
-
-        <SearchView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/searchView"
+            android:id="@+id/search_frag_group"
             android:queryHint="Search" />
-    </SearchView>
-
     <ListView
         android:id="@+id/groups_list"
         android:layout_width="match_parent"

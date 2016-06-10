@@ -124,7 +124,7 @@ public class User implements Comparable<User> {
      * @return
      */
     public boolean contains(String s) {
-        return s == null || s.isEmpty() || username.toLowerCase().contains(s.toLowerCase());
+        return s == null || s.isEmpty() || username.toLowerCase().startsWith(s.toLowerCase());
     }
 
     /**
