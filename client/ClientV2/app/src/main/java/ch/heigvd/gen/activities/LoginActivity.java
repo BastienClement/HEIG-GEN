@@ -32,13 +32,11 @@ import ch.heigvd.gen.utilities.Utils;
  *
  * TODO : Faire fonctionner les erreurs quand on perd la connection avec le server
  *
- * TODO : Faire fonctionner la recherche dans la liste des groupes/contact ça marche plus avec les fragments
- *
- * TODO : Message read unread faire dans les events
+ * TODO : Message read unread faire dans les events pour mettre à jour dans les 2 clients en cours si on li un message non lu
  *
  * TODO : faire les requêtes pour charger les membres et les messages d'un group pour que ça soit fait une seule fois dans les events
  *
- * TODO won't be done : Faire les report/blocage d'utilisateur et report de message dans groupe
+ * TODO : Faire les report/blocage d'utilisateur et report de message dans groupe
  */
 public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequests {
 
