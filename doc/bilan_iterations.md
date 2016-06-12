@@ -304,9 +304,12 @@ TODO
 ###Bilans personnels (Temps prévus/ Temps consacré)###
 TODO
 
-####Antoine (TODO/TODO)####
+####Antoine (3H/5H)####
 
-* TODO
+* Ajouter les fonctionnalités de signalement de message et de blocage d’utilisateur au protocole de communication.
+	* Ces fonctionnalités ne seront pas intégrées car d'une part nous avons beaucoup trop de travail pour les 2 dernières semaines de cours et d'autre part car il est important de faire le rapport bien.
+* Terminer la première version du rapport final.
+	* Nous avons commencé le rapport final
 
 ####Bastien (TODO/TODO)####
 
