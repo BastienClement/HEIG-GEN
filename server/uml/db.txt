@@ -1,0 +1,40 @@
+@startuml
+object user
+user : id
+user : username
+user : password
+user : admin
+
+object contact
+contact "*" -- "1" user
+
+object group
+group : id
+group : title
+group : last_message
+
+object member
+member : date
+member : admin
+
+member "*" -- "1" user
+member "1..*" -- "1" group
+
+object message
+message : id
+message : date
+message : text
+message "*" -- "1" user
+message "*" -- "1" group
+
+object private_message
+private_message : id
+private_message : date
+private_message : text
+private_message "*" -- "2" user : from & to
+
+object unread_flag
+unread_flag "*" -- "1" user : user
+unread_flag "*" -- "0..1" user : contact
+unread_flag "*" -- "0..1" group : group
+@enduml
