@@ -1,0 +1,9 @@
+play.crypto.secret = "change-me"
+token.key = "change-me"
+
+slick.dbs {
+	default.db.url = "jdbc:mysql://10.10.10.10/heig-gen?useSSL=false"
+	default.db.user = "heig-gen"
+	default.db.password = "XXXXXXXXXXX"
+	#default.db.logSql = true
+}
