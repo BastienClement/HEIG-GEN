@@ -14,12 +14,11 @@ import java.util.List;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.models.Group;
-import ch.heigvd.gen.models.User;
 
 /**
- * Created by guillaume on 03.06.16.
+ * Adapter used by the GroupFragment to display the user's list of groups
  */
-public class GroupListAdapter  extends ArrayAdapter<Group> implements Filterable {
+public class GroupListAdapter extends ArrayAdapter<Group> implements Filterable {
 
     private final List<Group> groups;
     private List<Group> filteredGroups;
@@ -28,11 +27,11 @@ public class GroupListAdapter  extends ArrayAdapter<Group> implements Filterable
     private Activity a;
 
     /**
-     * TODO
+     * Adapter's constructor
      *
-     * @param a
-     * @param res
-     * @param groups
+     * @param a      the current activity
+     * @param res    the ressource's id
+     * @param groups the groups to display
      */
     public GroupListAdapter(final Activity a, final int res, final List<Group> groups) {
 
@@ -43,9 +42,9 @@ public class GroupListAdapter  extends ArrayAdapter<Group> implements Filterable
     }
 
     /**
-     * TODO
+     * Get the number of groups in the list
      *
-     * @return
+     * @return the group's count
      */
     @Override
     public int getCount() {
@@ -53,34 +52,48 @@ public class GroupListAdapter  extends ArrayAdapter<Group> implements Filterable
     }
 
     /**
-     * TODO
+     * Get a single group
      *
-     * @param position
-     * @return
+     * @param position the group's position
+     * @return the group
      */
     @Override
     public Group getItem(int position) {
         return filteredGroups.get(position);
     }
 
+    /**
+     * Adds a textual notification if there are unread messages in the group discussion
+     *
+     * @param position    the group's position
+     * @param convertView the group's view
+     * @param parent      the view's parent
+     * @return the updated view
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final Group group = getItem(position);
 
         convertView = LayoutInflater.from(getContext()).inflate(R.layout.groups_list_item, parent, false);
 
-        TextView groupName = (TextView)convertView.findViewById(R.id.group_name);
+        TextView groupName = (TextView) convertView.findViewById(R.id.group_name);
         groupName.setText(group.getGroupname());
         if (group.isUnread()) {
-            TextView textView = (TextView)convertView.findViewById(R.id.unread_flag_group_list);
+            TextView textView = (TextView) convertView.findViewById(R.id.unread_flag_group_list);
             textView.setText("New messages");
         } else {
-            TextView textView = (TextView)convertView.findViewById(R.id.unread_flag_group_list);
+            TextView textView = (TextView) convertView.findViewById(R.id.unread_flag_group_list);
             textView.setText("");
         }
 
         return convertView;
     }
+
+    /**
+     * Filters and adds every groups inside the adapter
+     *
+     * @return the groups resulting from the filtering operation
+     */
     @Override
     public Filter getFilter() {
         return new Filter() {

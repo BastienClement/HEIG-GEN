@@ -12,7 +12,7 @@ import java.net.URL;
 import ch.heigvd.gen.interfaces.ICallback;
 
 /**
- * TODO
+ * Implementation of HTTP DELETE requests between the client and the server
  */
 public class RequestPUT extends Communication<String> {
 
@@ -22,11 +22,11 @@ public class RequestPUT extends Communication<String> {
     private final static String TAG = RequestPUT.class.getSimpleName();
 
     /**
-     * TODO
+     * Request's constructor
      *
-     * @param callback
-     * @param token
-     * @param url
+     * @param callback the request's callback
+     * @param token    the authentication Token
+     * @param url      The base URL
      */
     public RequestPUT(ICallback<String> callback, String token, String url) {
         setCallback(callback);
@@ -36,9 +36,9 @@ public class RequestPUT extends Communication<String> {
     }
 
     /**
-     * TODO
+     * Executing the request
      *
-     * @return
+     * @return the request
      */
     @Override
     protected String communication() {

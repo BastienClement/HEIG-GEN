@@ -18,7 +18,8 @@ import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
- * TODO
+ * This activity provides the account creation functionnality, allowing users to register for the
+ * messaging application
  */
 public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IRequests {
 
@@ -29,9 +30,11 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
     private EditText passwordConfirmationBox;
 
     /**
-     * TODO
+     * Called when the activity is first created, sets up three EditText fields allowing the user to
+     * provide the username he wants to use and his new password, with a confirmation field.
+     * A register button is also displayed to validate the account creation.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState a potential previous state saved
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +47,10 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
     }
 
     /**
-     * TODO
+     * Thid method is called to try and validate the account creation towards the server. It
+     * executes an HTTP POST request to transmit the registering query.
      *
-     * @param view
+     * @param view the current view
      */
     public void createAccount(final View view) {
         if (login.getText().toString().isEmpty()) {
@@ -65,11 +69,11 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
                 new RequestPOST(new ICallback<String>() {
                     @Override
                     public void success(String result) {
-                        try{
+                        try {
                             JSONObject json = new JSONObject(result);
                             Utils.setToken(RegisterActivity.this, json.getString("token"));
                             Log.i(TAG, "Token : " + json.getString("token"));
-                        } catch (Exception ex){
+                        } catch (Exception ex) {
                             Log.e(TAG, ex.getMessage());
                         }
                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
@@ -95,11 +99,11 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
     }
 
     /**
-     * TODO
+     * Initializes EditText fields
      */
     private void init() {
-        login = (EditText)findViewById(R.id.login);
-        passwordBox = (EditText)findViewById(R.id.password);
-        passwordConfirmationBox = (EditText)findViewById(R.id.passwordConfirmation);
+        login = (EditText) findViewById(R.id.login);
+        passwordBox = (EditText) findViewById(R.id.password);
+        passwordConfirmationBox = (EditText) findViewById(R.id.passwordConfirmation);
     }
 }

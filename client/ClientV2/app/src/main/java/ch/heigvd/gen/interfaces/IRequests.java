@@ -1,7 +1,7 @@
 package ch.heigvd.gen.interfaces;
 
 /**
- * TODO
+ * Strings used in the composition of our HTTP requests
  */
 public interface IRequests {
 

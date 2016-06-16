@@ -3,7 +3,7 @@ package ch.heigvd.gen.models;
 import java.util.Date;
 
 /**
- * TODO
+ * Model for a message
  */
 public class Message {
     private int id;
@@ -12,12 +12,12 @@ public class Message {
     private Date date;
 
     /**
-     * TODO
+     * Message constructor
      *
-     * @param from
-     * @param content
-     * @param date
-     * @param id
+     * @param from    the messages sender id
+     * @param content the messages content
+     * @param date    the message's date
+     * @param id      the message's id
      */
     public Message(int from, String content, Date date, int id) {
         this.from = from;
@@ -27,72 +27,72 @@ public class Message {
     }
 
     /**
-     * TODO
+     * Get the sender id
      *
-     * @return
+     * @return the sender id
      */
     public int getFrom() {
         return from;
     }
 
     /**
-     * TODO
+     * Set the sender id
      *
-     * @param from
+     * @param from the sender id
      */
     public void setFrom(int from) {
         this.from = from;
     }
 
     /**
-     * TODO
+     * Get the message's content
      *
-     * @return
+     * @return the text of the message
      */
     public String getContent() {
         return content;
     }
 
     /**
-     * TODO
+     * Set the message's content
      *
-     * @param content
+     * @param content the message's content
      */
     public void setContent(String content) {
         this.content = content;
     }
 
     /**
-     * TODO
+     * Get the message's date
      *
-     * @return
+     * @return the date
      */
     public Date getDate() {
         return date;
     }
 
     /**
-     * TODO
+     * Set the message's date
      *
-     * @param date
+     * @param date the date
      */
     public void setDate(Date date) {
         this.date = date;
     }
 
     /**
-     * TODO
+     * Get the message's id
      *
-     * @return
+     * @return the message's id
      */
     public int getId() {
         return id;
     }
 
     /**
-     * TODO
+     * Set the message's id
      *
-     * @param id
+     * @param id the message's id
      */
     public void setId(int id) {
         this.id = id;

@@ -27,7 +27,9 @@ import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
- * TODO
+ * The Activity displaying private discussions with a single contact, provides an EditText field
+ * to type the message and a validation button
+ *
  */
 public class ContactDiscussionActivity extends AppCompatActivity implements IRequests, IJSONKeys, ICustomCallback {
 
@@ -37,9 +39,10 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     private final static String TAG = ContactDiscussionActivity.class.getSimpleName();
 
     /**
-     * TODO
+     * Called when the activity is first created, uses the custom ContactDiscussionAdapter
+     * to display the messages and their date.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState a potential previous state saved
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +72,9 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     }
 
     /**
-     * TODO
-     *
-     * @param view
+     * Starts the ContactEdit activity when the contact's username is clicked
      */
-    public void editContact(final View view){
+    public void editContact(final View view) {
         // start contact search activity
         Intent intent = new Intent(ContactDiscussionActivity.this, ContactEditActivity.class);
         intent.putExtras(b);
@@ -81,13 +82,13 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     }
 
     /**
-     * TODO
+     * Sends a message in this discussion with an HTTP POST request
      *
-     * @param view
+     * @param view the current view
      */
-    public void sendMessage(final View view){
+    public void sendMessage(final View view) {
         final EditText text = (EditText) findViewById(R.id.write_message);
-        if(TextUtils.isEmpty(text.getText())) {
+        if (TextUtils.isEmpty(text.getText())) {
             text.setError("Message is empty !");
             return;
         }
@@ -128,12 +129,11 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     }
 
 
-
     /**
-     * TODO
+     * Implements the back button behaviour to go back to the discussion activity
      *
-     * @param item
-     * @return
+     * @param item The menuItem that was clicked
+     * @return true if the menuItem was successfully handled
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -145,7 +145,10 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
         }
     }
 
-    private void setReadMessages(){
+    /**
+     * Sets a notification in the user's discussion when unread messages are recieved
+     */
+    private void setReadMessages() {
         User.findById(b.getInt("user_id")).setUnread(false);
         try {
             new RequestPUT(new ICallback<String>() {
@@ -171,17 +174,17 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
     }
 
     /**
-     * TODO
+     * Updates the display if new messages were recieved
      */
     @Override
     public void update() {
-        if(User.findById(b.getInt("user_id")) == null){
+        if (User.findById(b.getInt("user_id")) == null) {
             finish();
-        } else{
+        } else {
             setReadMessages();
         }
-        this.runOnUiThread(new Runnable(){
-            public void run(){
+        this.runOnUiThread(new Runnable() {
+            public void run() {
                 adapter.notifyDataSetChanged();
             }
         });
@@ -189,15 +192,13 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
 
     /**
      * After a pause OR at startup check if the user is still a contact, if not finish the activity
-     *
      */
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
-        if(User.findById(b.getInt("user_id")) == null){
+        if (User.findById(b.getInt("user_id")) == null) {
             finish();
-        } else{
+        } else {
             EventService.getInstance().setActivity(this);
             setReadMessages();
         }

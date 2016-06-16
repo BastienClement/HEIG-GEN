@@ -2,9 +2,6 @@ package ch.heigvd.gen.communications;
 
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -15,10 +12,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import ch.heigvd.gen.interfaces.ICallback;
-import ch.heigvd.gen.utilities.Utils;
 
 /**
- * TODO
+ * Implementation of HTTP POST requests between the client and the server
  */
 public class RequestPOST extends Communication<String> {
 
@@ -28,13 +24,14 @@ public class RequestPOST extends Communication<String> {
 
     private final static String TAG = RequestPOST.class.getSimpleName();
 
+
     /**
-     * TODO
+     * Request's constructor
      *
-     * @param callback
-     * @param token
-     * @param url
-     * @param content
+     * @param callback the request's callback
+     * @param token    the authentication Token
+     * @param url      the base URL
+     * @param content  the POST request's content
      */
     public RequestPOST(ICallback<String> callback, String token, String url, String content) {
         setCallback(callback);
@@ -45,9 +42,9 @@ public class RequestPOST extends Communication<String> {
     }
 
     /**
-     * TODO
+     * Executing the request
      *
-     * @return
+     * @return the request
      */
     @Override
     protected String communication() {
@@ -72,12 +69,12 @@ public class RequestPOST extends Communication<String> {
             int status = connection.getResponseCode();
             InputStream is;
             Log.i(TAG, "HTTP status : " + String.valueOf(status));
-            if (status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_NO_CONTENT || status == HttpURLConnection.HTTP_CREATED ) {
+            if (status == HttpURLConnection.HTTP_OK || status == HttpURLConnection.HTTP_NO_CONTENT || status == HttpURLConnection.HTTP_CREATED) {
                 is = connection.getInputStream();
             } else {
                 is = connection.getErrorStream();
             }
-            BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf-8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
             String line;
             body = "";
             while ((line = br.readLine()) != null) {

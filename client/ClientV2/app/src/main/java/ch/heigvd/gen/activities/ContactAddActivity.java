@@ -24,18 +24,21 @@ import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
- * TODO
+ * Activity allowing the user to add contact from the server's list of users. Clicking on a username
+ * adds the corresponing contact on the user's Discussion list
  */
-public class ContactAddActivity extends AppCompatActivity implements IRequests{
+public class ContactAddActivity extends AppCompatActivity implements IRequests {
 
     private final static String TAG = ContactAddActivity.class.getSimpleName();
 
     ArrayAdapter adapter = null;
 
     /**
-     * TODO
+     * Called when the activity is first created, uses a ListView and an ArrayAdapter<User> to
+     * display the list of every user registered on the server. A search view allows the user to
+     * search for a specific user in that list.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState a potential previous state saved
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class ContactAddActivity extends AppCompatActivity implements IRequests{
         // enable back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        adapter = new ArrayAdapter<User>(this, R.layout.contacts_search_item);;
+        adapter = new ArrayAdapter<User>(this, R.layout.contacts_search_item);
 
         loadUsers();
 
@@ -107,9 +110,10 @@ public class ContactAddActivity extends AppCompatActivity implements IRequests{
     }
 
     /**
-     * TODO
+     * Execute a HTTP GET request to retrieve the users list from the server and fill the Adapter
+     * with that list
      */
-    private void loadUsers(){
+    private void loadUsers() {
         try {
             new RequestGET(new ICallback<String>() {
                 @Override
@@ -117,7 +121,6 @@ public class ContactAddActivity extends AppCompatActivity implements IRequests{
                     JSONArray jsonArray = null;
                     try {
                         jsonArray = new JSONArray(result);
-                       // adapter.clear();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonUser = jsonArray.getJSONObject(i);
                             adapter.add(new User(jsonUser.getInt("id"), jsonUser.getString("name"), jsonUser.getBoolean("admin"), false));
@@ -127,8 +130,6 @@ public class ContactAddActivity extends AppCompatActivity implements IRequests{
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    // TODO : Order by last message
-
                     Log.i(TAG, "Success : " + result);
                 }
 
@@ -149,10 +150,10 @@ public class ContactAddActivity extends AppCompatActivity implements IRequests{
     }
 
     /**
-     * TODO
+     * Implements the back button behaviour to go back to the discussion activity
      *
-     * @param item
-     * @return
+     * @param item The menuItem that was clicked
+     * @return true if the menuItem was successfully handled
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

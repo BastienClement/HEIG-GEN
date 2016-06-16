@@ -1,23 +1,23 @@
 package ch.heigvd.gen.interfaces;
 
 /**
- * TODO
+ * Interface defining the structure of our HTTP Callbacks
  *
- * @param <T>
+ * @param <T> type parameter of the callback
  */
 public interface ICallback<T> {
 
     /**
-     * TODO
+     * In case of success
      *
-     * @param result
+     * @param result callback's result
      */
     void success(T result);
 
     /**
-     * TODO
+     * In case of failure
      *
-     * @param ex
+     * @param ex raised Exception
      */
     void failure(Exception ex);
 }

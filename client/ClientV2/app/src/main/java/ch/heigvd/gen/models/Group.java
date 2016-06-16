@@ -6,13 +6,12 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * TODO
+ * Model for a group
  */
 public class Group implements Comparable<Group> {
 
     private final int id;
     private final String groupname;
-   // private final boolean admin;
     private List<Message> messages;
     private List<User> members;
     private boolean unread;
@@ -20,11 +19,11 @@ public class Group implements Comparable<Group> {
     public static List<Group> groups = new ArrayList<>();
 
     /**
-     * TODO
+     * Group Constructor
      *
-     * @param id
-     * @param groupname
-     * @param unread
+     * @param id        the group's id
+     * @param groupname the group's name
+     * @param unread    true if there are unread messages
      */
     public Group(int id, String groupname, boolean unread) {
         this.id = id;
@@ -35,14 +34,14 @@ public class Group implements Comparable<Group> {
     }
 
     /**
-     * TODO
+     * Check if a group already has that name
      *
-     * @param name
-     * @return
+     * @param name the name to check
+     * @return true if a group exists with the same name
      */
-    public static boolean exists(String name){
-        for(Group group : groups){
-            if(group.getGroupname().equals(name)){
+    public static boolean exists(String name) {
+        for (Group group : groups) {
+            if (group.getGroupname().equals(name)) {
                 return true;
             }
         }
@@ -67,70 +66,36 @@ public class Group implements Comparable<Group> {
     }
 
     /**
-     * TODO
+     * Get the list of messages
      *
-     * @return
+     * @return the messages
      */
     public List<Message> getMessages() {
         return messages;
     }
 
     /**
-     * TODO
+     * Add a message to the group's list of messages
      *
-     * @param message
+     * @param message the message to add
      */
     public void addMessage(Message message) {
         messages.add(message);
     }
 
-    /**
-     * TODO
-     *
-     * @return
 
-    public int getUnreadMessages() {
-        return unreadMessages;
-    }
-     */
-    /**
-     * TODO
-     *
-     * @param unreadMessages
-
-    public void setUnreadMessages(int unreadMessages) {
-        this.unreadMessages = unreadMessages;
-    }*/
-
-    /**
-     * TODO
-     *
-     * @return
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * TODO
-     *
-     * @return
-     */
+
     public String getGroupname() {
         return groupname;
     }
 
-    /**
-     * TODO
-     *
-     * @return
-
-    public boolean isAdmin() {
-        return admin;
-    }*/
 
     /**
-     * TODO
+     * Used to filter groups and search a group
      *
      * @param s
      * @return
@@ -140,32 +105,28 @@ public class Group implements Comparable<Group> {
     }
 
     /**
-     * TODO
+     * Compare this group with another group
      *
-     * @param g
-     * @return
+     * @param g the group to compare
+     * @return o if they are the same group
      */
     public int compareTo(Group g) {
         return groupname.compareTo(g.getGroupname());
     }
 
-    /**
-     * TODO
-     *
-     * @return
-     */
-    public String toString(){
+
+    public String toString() {
         return groupname;
     }
 
     /**
-     * TODO
+     * Delete a group
      *
-     * @param group_id
+     * @param group_id the id of the group to delete
      */
     public static void deleteById(int group_id) {
-        for(Group group : groups){
-            if(group.getId() == group_id){
+        for (Group group : groups) {
+            if (group.getId() == group_id) {
                 groups.remove(group);
                 break;
             }
@@ -173,14 +134,14 @@ public class Group implements Comparable<Group> {
     }
 
     /**
-     * TODO
+     * Find a group
      *
-     * @param group_id
-     * @return
+     * @param group_id the group's id
+     * @return the group
      */
     public static Group findById(int group_id) {
-        for(Group group : groups){
-            if(group.getId() == group_id){
+        for (Group group : groups) {
+            if (group.getId() == group_id) {
                 return group;
             }
         }
@@ -188,14 +149,13 @@ public class Group implements Comparable<Group> {
     }
 
     /**
-     * TODO
+     * Delete a member
      *
-     * @param member_id
-     * @return
+     * @param member_id the member's id
      */
     public void deleteMemberById(int member_id) {
-        for(User user : members){
-            if(user.getId() == member_id){
+        for (User user : members) {
+            if (user.getId() == member_id) {
                 members.remove(user);
                 break;
             }
@@ -204,15 +164,15 @@ public class Group implements Comparable<Group> {
 
 
     /**
-     *
+     * Sort each group alphabetically
      */
-    public static void sortGroups(){
-        Collections.sort(groups, new Comparator<Group>(){
+    public static void sortGroups() {
+        Collections.sort(groups, new Comparator<Group>() {
             @Override
             public int compare(Group group1, Group group2) {
-                if(group1.getMessages().size() == 0){
+                if (group1.getMessages().size() == 0) {
                     return 1;
-                } else if(group2.getMessages().size() == 0){
+                } else if (group2.getMessages().size() == 0) {
                     return -1;
                 }
                 return group2.getMessages().get(group2.getMessages().size() - 1).getDate().compareTo(group1.getMessages().get(group1.getMessages().size() - 1).getDate());
@@ -220,18 +180,30 @@ public class Group implements Comparable<Group> {
         });
     }
 
-    public boolean hasMemberWithId(int id){
-        for(User member: members){
-            if(member.getId() == id){
+    /**
+     * Check if the group contains a particular member
+     *
+     * @param id the member's id to look for
+     * @return true if the member is in the group
+     */
+    public boolean hasMemberWithId(int id) {
+        for (User member : members) {
+            if (member.getId() == id) {
                 return true;
             }
         }
         return false;
     }
 
+    /**
+     * Search for a member
+     *
+     * @param id the member's id to look for
+     * @return the User
+     */
     public User findMemberById(int id) {
-        for(User user : members){
-            if(user.getId() == id){
+        for (User user : members) {
+            if (user.getId() == id) {
                 return user;
             }
         }

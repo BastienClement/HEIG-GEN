@@ -42,15 +42,23 @@ import ch.heigvd.gen.utilities.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
+ * This fragment implements the Group discussion tab
  */
-public class GroupFragment extends Fragment implements IRequests, ICustomCallback{
+public class GroupFragment extends Fragment implements IRequests, ICustomCallback {
     ListView listView;
     SearchView searchView;
     GroupListAdapter adapter;
 
     private final static String TAG = GroupFragment.class.getSimpleName();
 
-
+    /**
+     * When the Fragment is created
+     *
+     * @param inflater           inflater for the view
+     * @param container          view's container
+     * @param savedInstanceState a potentially saved instance of the fragment
+     * @return the created view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,6 +73,9 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
 
     }
 
+    /**
+     * Called right after the creation of the fragment
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -108,8 +119,9 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
         listView.setTextFilterEnabled(true);
     }
 
-    /**
-     * TODO
+    /*
+     * Loads the group using an HTTP GET request
+     *
      */
     private void loadGroups() {
         try {
@@ -149,10 +161,10 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
     }
 
     /**
-     * TODO
+     * To load each group's members
      */
     private void loadMembers() {
-        for(final Group group : Group.groups) {
+        for (final Group group : Group.groups) {
             new RequestGET(new ICallback<String>() {
                 @Override
                 public void success(String result) {
@@ -198,11 +210,10 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
     }
 
     /**
-     * TODO
-     *
+     * Loads the messages using an HTTP GET request
      */
-    private void loadMessages(){
-        for(final Group group : Group.groups) {
+    private void loadMessages() {
+        for (final Group group : Group.groups) {
             new RequestGET(new ICallback<String>() {
                 @Override
                 public void success(String result) {
@@ -243,17 +254,30 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
     @Override
     public void update() {
         Group.sortGroups();
-        if(adapter != null){
+        if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
     }
 
+    /**
+     * Called when the menu is created
+     *
+     * @param menu     the Menu element
+     * @param inflater the menu's inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_groups, menu);
     }
 
+    /**
+     * Implements the different behaviours for every menu item, the add group button and the
+     * logoff button
+     *
+     * @param item the item that was clicked
+     * @return true if the MenuItem was correctly handled
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -275,6 +299,9 @@ public class GroupFragment extends Fragment implements IRequests, ICustomCallbac
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Called on resume of the activity
+     */
     @Override
     public void onResume() {
         super.onResume();

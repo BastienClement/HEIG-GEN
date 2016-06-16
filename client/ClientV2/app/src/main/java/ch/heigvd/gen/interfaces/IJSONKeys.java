@@ -1,7 +1,8 @@
 package ch.heigvd.gen.interfaces;
 
 /**
- * TODO
+ * Keys used to handle the JSON format used by the messaging application
+ *
  */
 public interface IJSONKeys {
 

@@ -16,7 +16,6 @@ import org.json.JSONObject;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.adapters.GroupDiscussionAdapter;
-import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.communications.RequestPOST;
 import ch.heigvd.gen.communications.RequestPUT;
 import ch.heigvd.gen.interfaces.ICallback;
@@ -24,12 +23,12 @@ import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IJSONKeys;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.Group;
-import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
- * TODO
+ * The Activity displaying group discussions, provides an EditText fiel to type messages and a
+ * validation button to send them
  */
 public class GroupDiscussionActivity extends AppCompatActivity implements IRequests, IJSONKeys, ICustomCallback {
 
@@ -39,9 +38,10 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
     private final static String TAG = GroupDiscussionActivity.class.getSimpleName();
 
     /**
-     * TODO
+     * Called when the activity is first created, uses the custom GroupDiscussionAdapter
+     * to display the messages, their date and the user name of the sender.
      *
-     * @param savedInstanceState
+     * @param savedInstanceState a potential previous state saved
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,25 +71,25 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
     }
 
     /**
-     * TODO
-     *
-     * @param view
+     * Starts the GroupEdit activity when the group name is clicked
      */
-    public void editGroup(final View view){
+    public void editGroup(final View view) {
         // start group search
         Intent intent = new Intent(GroupDiscussionActivity.this, GroupEditActivity.class);
         intent.putExtras(b);
-        startActivity(intent);;
+        startActivity(intent);
+        ;
     }
 
+
     /**
-     * TODO
+     * Sends a message in this group discussion with an HTTP POST request
      *
-     * @param view
+     * @param view the current view
      */
-    public void sendMessage(final View view){
+    public void sendMessage(final View view) {
         final EditText text = (EditText) findViewById(R.id.write_message);
-        if(TextUtils.isEmpty(text.getText())) {
+        if (TextUtils.isEmpty(text.getText())) {
             text.setError("Message is empty !");
             return;
         }
@@ -124,10 +124,10 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
     }
 
     /**
-     * TODO
+     * Implements the back button behaviour
      *
-     * @param item
-     * @return
+     * @param item The menuItem that was clicked
+     * @return true if the menuItem was successfully handled
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -139,7 +139,10 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
         }
     }
 
-    private void setReadMessages(){
+    /**
+     * Fetch unread messages that have been sent in this discussion
+     */
+    private void setReadMessages() {
         Group.findById(b.getInt("group_id")).setUnread(false);
         try {
             new RequestPUT(new ICallback<String>() {
@@ -165,17 +168,17 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
     }
 
     /**
-     * TODO
+     * Update the display, check if new messages have been recieved
      */
     @Override
     public void update() {
-        if(Group.findById(b.getInt("group_id")) == null){
+        if (Group.findById(b.getInt("group_id")) == null) {
             finish();
-        } else{
+        } else {
             setReadMessages();
         }
-        this.runOnUiThread(new Runnable(){
-            public void run(){
+        this.runOnUiThread(new Runnable() {
+            public void run() {
                 adapter.notifyDataSetChanged();
             }
         });
@@ -183,16 +186,13 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
 
     /**
      * After a pause OR at startup check if the grouo is still a group, if not finish the activity
-     * TODO : Faire le check sur la liste des groups et pas faire une requête au serveur
-     *
      */
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
-        if(Group.findById(b.getInt("group_id")) == null){
+        if (Group.findById(b.getInt("group_id")) == null) {
             finish();
-        } else{
+        } else {
             EventService.getInstance().setActivity(this);
             setReadMessages();
         }

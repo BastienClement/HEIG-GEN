@@ -1,11 +1,11 @@
 package ch.heigvd.gen.interfaces;
 
 /**
- *
+ * Interface defining the structure of custom Callbacks
  */
 public interface ICustomCallback {
     /**
-     * TODO
+     * on update
      */
     void update();
 }

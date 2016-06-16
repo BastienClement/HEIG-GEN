@@ -2,9 +2,6 @@ package ch.heigvd.gen.communications;
 
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,8 +10,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import ch.heigvd.gen.interfaces.ICallback;
-import ch.heigvd.gen.utilities.Utils;
 
+/**
+ * Implementation of HTTP DELETE requests between the client and the server
+ */
 public class RequestDELETE extends Communication<String> {
 
     private String token;
@@ -22,6 +21,13 @@ public class RequestDELETE extends Communication<String> {
 
     private final static String TAG = RequestDELETE.class.getSimpleName();
 
+    /**
+     * Request's constructor
+     *
+     * @param callback the request's callback
+     * @param token    the authentication Token
+     * @param url      The base URL
+     */
     public RequestDELETE(ICallback<String> callback, String token, String url) {
         setCallback(callback);
         this.token = token;
@@ -29,6 +35,11 @@ public class RequestDELETE extends Communication<String> {
         Log.i(TAG, "New request DELETE on " + url + "\n Token : " + token);
     }
 
+    /**
+     * Executing the request
+     *
+     * @return the request
+     */
     @Override
     protected String communication() {
         String body = null;

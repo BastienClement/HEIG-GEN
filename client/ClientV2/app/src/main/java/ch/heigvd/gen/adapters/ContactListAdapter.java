@@ -15,19 +15,22 @@ import java.util.List;
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.models.User;
 
-public class ContactListAdapter extends ArrayAdapter<User> implements Filterable{
+/**
+ * Adapter used by the ContactFragment to display the user's list of contacts
+ */
+public class ContactListAdapter extends ArrayAdapter<User> implements Filterable {
 
     private final List<User> users;
-    private  List<User> filteredUsers;
+    private List<User> filteredUsers;
 
     private Activity a;
 
     /**
-     * TODO
+     * Adapter's constructor
      *
-     * @param a
-     * @param res
-     * @param users
+     * @param a     the current activity
+     * @param res   the ressource's id
+     * @param users the contacts to display
      */
     public ContactListAdapter(final Activity a, final int res, final List<User> users) {
         super(a, res, users);
@@ -37,9 +40,9 @@ public class ContactListAdapter extends ArrayAdapter<User> implements Filterable
     }
 
     /**
-     * TODO
+     * Get the number of contacts in the list
      *
-     * @return
+     * @return the contact's count
      */
     @Override
     public int getCount() {
@@ -47,36 +50,49 @@ public class ContactListAdapter extends ArrayAdapter<User> implements Filterable
     }
 
     /**
-     * TODO
+     * Get a single contact
      *
-     * @param position
-     * @return
+     * @param position the contact's position
+     * @return the contact
      */
     @Override
     public User getItem(int position) {
         return filteredUsers.get(position);
     }
 
+    /**
+     * Renders the view of each contact in the list, adds a textual notification if there are unread
+     * messages in the discussion with this contact
+     *
+     * @param position    the contact's position
+     * @param convertView the contact's view
+     * @param parent      the view's parent
+     * @return the updated view
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final User user = getItem(position);
-        // TODO: check who send the message ?
 
         convertView = LayoutInflater.from(getContext()).inflate(R.layout.contacts_list_item, parent, false);
 
-        TextView contactName = (TextView)convertView.findViewById(R.id.contact_name);
+        TextView contactName = (TextView) convertView.findViewById(R.id.contact_name);
         contactName.setText(user.getUsername());
         if (user.isUnread()) {
-            TextView textView = (TextView)convertView.findViewById(R.id.unread_flag_contact_list);
+            TextView textView = (TextView) convertView.findViewById(R.id.unread_flag_contact_list);
             textView.setText("New messages");
         } else {
-            TextView textView = (TextView)convertView.findViewById(R.id.unread_flag_contact_list);
+            TextView textView = (TextView) convertView.findViewById(R.id.unread_flag_contact_list);
             textView.setText("");
         }
 
         return convertView;
     }
 
+    /**
+     * Filters and adds every contacts inside the adapter
+     *
+     * @return the contacts resulting from the filtering operation
+     */
     @Override
     public Filter getFilter() {
         return new Filter() {

@@ -1,12 +1,10 @@
 package ch.heigvd.gen.activities;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -14,14 +12,12 @@ import org.json.JSONObject;
 
 import ch.heigvd.gen.R;
 import ch.heigvd.gen.communications.RequestDELETE;
-import ch.heigvd.gen.communications.RequestPOST;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.IRequests;
-import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
- * TODO
+ * The Activity allowing to remove a Contact
  */
 public class ContactEditActivity extends AppCompatActivity implements IRequests {
 
@@ -30,7 +26,8 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
     Bundle b = null;
 
     /**
-     * TODO
+     * Called when the activity is first created, sets the TextVuew displaying the contact name
+     *
      * @param savedInstanceState
      */
     @Override
@@ -50,9 +47,10 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
     }
 
     /**
-     * TODO
+     * Execute and HTTP in order to remove a contact from the user's contact list, then go back to
+     * the ContactDiscussionActivity
      *
-     * @param view
+     * @param view the current view
      */
     public void removeContact(final View view) {
         try {
@@ -82,10 +80,10 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
     }
 
     /**
-     * TODO
+     * Implements the back button behaviour to go back to the discussion activity
      *
-     * @param item
-     * @return
+     * @param item The menuItem that was clicked
+     * @return true if the menuItem was successfully handled
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

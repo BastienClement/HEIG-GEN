@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.json.JSONException;
@@ -22,6 +21,9 @@ import ch.heigvd.gen.models.Group;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
+/**
+ * Activity allowing to add new members to the current group
+ */
 public class GroupAddMemberActivity extends AppCompatActivity implements IRequests, IJSONKeys {
 
     GroupAddMemberListAdapter adapter = null;
@@ -30,6 +32,12 @@ public class GroupAddMemberActivity extends AppCompatActivity implements IReques
 
     Bundle b = null;
 
+    /**
+     * Called when the activity is first created, uses a ListView and a custom GroupAddMemberListAdapter to
+     * display the list of the user's contact
+     *
+     * @param savedInstanceState a potential previous state saved
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,11 +69,11 @@ public class GroupAddMemberActivity extends AppCompatActivity implements IReques
     }
 
     /**
-     * TODO
+     * Execute an HTTP Put request to add a contact to the current group
      *
-     * @param groupId
+     * @param groupId the id of the group
      */
-    public void inviteContact(int groupId, int userId){
+    public void inviteContact(int groupId, int userId) {
         try {
             new RequestPUT(new ICallback<String>() {
                 @Override
@@ -91,10 +99,10 @@ public class GroupAddMemberActivity extends AppCompatActivity implements IReques
     }
 
     /**
-     * TODO
+     * Implements the back button behaviour to go back to the discussion activity
      *
-     * @param item
-     * @return
+     * @param item The menuItem that was clicked
+     * @return true if the menuItem was successfully handled
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -21,15 +21,20 @@ import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
 
-
-public class MainActivity extends AppCompatActivity implements IRequests, ICustomCallback{
+/**
+ * Main activity of our messaging app loaded after a successfull login, a Pager is used to navigate
+ * between two different tabs, the Contact tab or the Group tab, each tab is implemented by a
+ * Fragment
+ */
+public class MainActivity extends AppCompatActivity implements IRequests, ICustomCallback {
 
     private final static String TAG = MainActivity.class.getSimpleName();
 
     /**
-     * TODO
+     * Called when the activity is first created, instanciate the ViewPager and implments
+     * swiping to navigate between the two tabs
      *
-     * @param savedInstanceState
+     * @param savedInstanceState a potential previous state saved
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements IRequests, ICusto
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+        final ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -72,16 +77,19 @@ public class MainActivity extends AppCompatActivity implements IRequests, ICusto
 
     }
 
+    /**
+     * Set the user's id using a HTTP GET request
+     */
     private void setOwnId() {
         try {
             RequestGET get = new RequestGET(new ICallback<String>() {
                 @Override
                 public void success(String result) {
-                    try{
+                    try {
                         JSONObject json = new JSONObject(result);
                         Utils.setId(MainActivity.this, json.getInt("id"));
                         Log.i(TAG, "Id : " + json.getString("id"));
-                    } catch (Exception ex){
+                    } catch (Exception ex) {
                         Log.e(TAG, ex.getMessage());
                     }
                     Log.i(TAG, "Success : " + result);
@@ -113,27 +121,35 @@ public class MainActivity extends AppCompatActivity implements IRequests, ICusto
         // Do nothing
     }
 
-
+    /**
+     * Called when the activity ends
+     */
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         EventService.getInstance().removeActivity();
         EventService.getInstance().stop();
     }
 
+    /**
+     * Called on resume of the activity
+     */
     @Override
     public void onResume() {
         super.onResume();
         EventService.getInstance().setActivity(this);
     }
 
+    /**
+     * Updates the activity's view
+     */
     @Override
     public void update() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 List<Fragment> fragments = getSupportFragmentManager().getFragments();
-                if(fragments!=null)
+                if (fragments != null)
 
                 {
                     for (Fragment fragment : fragments) {

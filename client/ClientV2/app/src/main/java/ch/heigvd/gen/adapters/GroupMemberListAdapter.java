@@ -22,7 +22,10 @@ import ch.heigvd.gen.models.Group;
 import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
-public class GroupMemberListAdapter extends ArrayAdapter<User> implements IRequests{
+/**
+ * Adapter used by the GroupEditActivity to display the member's list of the group
+ */
+public class GroupMemberListAdapter extends ArrayAdapter<User> implements IRequests {
 
 
     private final static String TAG = GroupMemberListAdapter.class.getSimpleName();
@@ -34,11 +37,11 @@ public class GroupMemberListAdapter extends ArrayAdapter<User> implements IReque
     private Activity a;
 
     /**
-     * TODO
+     * Adapter's constructor
      *
-     * @param a
-     * @param res
-     * @param users
+     * @param a     the current activity
+     * @param res   the ressource's id
+     * @param users the group's members to display
      */
     public GroupMemberListAdapter(final Activity a, final int res, final Group group, final List<User> users) {
         super(a, res, users);
@@ -48,9 +51,9 @@ public class GroupMemberListAdapter extends ArrayAdapter<User> implements IReque
     }
 
     /**
-     * TODO
+     * Get the number of members in the group
      *
-     * @return
+     * @return the message's count
      */
     @Override
     public int getCount() {
@@ -58,65 +61,77 @@ public class GroupMemberListAdapter extends ArrayAdapter<User> implements IReque
     }
 
     /**
-     * TODO
+     * Get a single member
      *
-     * @param position
-     * @return
+     * @param position the member's position
+     * @return the actual User
      */
     @Override
     public User getItem(int position) {
         return users.get(position);
     }
 
+    /**
+     * Renders the view of each member of the group
+     *
+     * @param position    the groups's position
+     * @param convertView the group's view
+     * @param parent      the view's parent
+     * @return the updated View
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final User user = getItem(position);
-        // TODO: check who send the message ?
 
         convertView = LayoutInflater.from(getContext()).inflate(R.layout.members_list_item, parent, false);
 
-        TextView memberName = (TextView)convertView.findViewById(R.id.member_name);
+        TextView memberName = (TextView) convertView.findViewById(R.id.member_name);
         memberName.setText(user.getUsername());
         if (isAdmin() && user.getId() != Utils.getId(a)) {
-            ImageView remove = (ImageView)convertView.findViewById(R.id.member_remove);
+            ImageView remove = (ImageView) convertView.findViewById(R.id.member_remove);
             remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                try {
-                    new RequestDELETE(new ICallback<String>() {
-                        @Override
-                        public void success(String result) {
-                            Log.i(TAG, "Success : " + result);
-                        }
-
-                        @Override
-                        public void failure(Exception ex) {
-                            try {
-                                Utils.showAlert(a, new JSONObject(ex.getMessage()).getString("err"));
-                            } catch (JSONException e) {
-                                Utils.showAlert(a, ex.getMessage());
-                                Log.e(TAG, e.getMessage());
+                    try {
+                        new RequestDELETE(new ICallback<String>() {
+                            @Override
+                            public void success(String result) {
+                                Log.i(TAG, "Success : " + result);
                             }
-                            Log.e(TAG, ex.getMessage());
-                        }
-                    }, Utils.getToken(a), BASE_URL + GET_GROUP + group.getId() + GET_MEMBER + user.getId()).execute();
-                } catch (Exception ex) {
-                    Log.e(TAG, ex.getMessage());
-                }
+
+                            @Override
+                            public void failure(Exception ex) {
+                                try {
+                                    Utils.showAlert(a, new JSONObject(ex.getMessage()).getString("err"));
+                                } catch (JSONException e) {
+                                    Utils.showAlert(a, ex.getMessage());
+                                    Log.e(TAG, e.getMessage());
+                                }
+                                Log.e(TAG, ex.getMessage());
+                            }
+                        }, Utils.getToken(a), BASE_URL + GET_GROUP + group.getId() + GET_MEMBER + user.getId()).execute();
+                    } catch (Exception ex) {
+                        Log.e(TAG, ex.getMessage());
+                    }
                 }
             });
         } else {
-            ImageView remove = (ImageView)convertView.findViewById(R.id.member_remove);
+            ImageView remove = (ImageView) convertView.findViewById(R.id.member_remove);
             remove.setVisibility(View.INVISIBLE);
         }
 
         return convertView;
     }
 
-    private boolean isAdmin(){
+    /**
+     * Determines if the users is the administrator of the group
+     *
+     * @return true if he is the administrator of the group
+     */
+    private boolean isAdmin() {
         int id = Utils.getId(a);
-        for(User user : users){
-            if(user.getId() == id){
+        for (User user : users) {
+            if (user.getId() == id) {
                 return user.isAdmin();
             }
         }

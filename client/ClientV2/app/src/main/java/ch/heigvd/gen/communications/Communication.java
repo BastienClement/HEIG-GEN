@@ -5,19 +5,20 @@ import android.os.AsyncTask;
 import ch.heigvd.gen.interfaces.ICallback;
 
 /**
- * TODO
+ * Abstract generic class to implement the bases of every type of HTTP requests used by the messaging
+ * application to communicate with the server and the corresponding callbacks
  *
- * @param <T>
+ * @param <T> a type parameter for the request
  */
 public abstract class Communication<T> extends AsyncTask<Void, Void, T> {
     private ICallback<T> mCallback;
     private Exception mException;
 
     /**
-     * TODO
+     * To execute in the background thread
      *
-     * @param params
-     * @return
+     * @param params required ellipse
+     * @return the result
      */
     @Override
     protected T doInBackground(Void... params) {
@@ -26,9 +27,9 @@ public abstract class Communication<T> extends AsyncTask<Void, Void, T> {
     }
 
     /**
-     * TODO
+     * After executing the request
      *
-     * @param ret
+     * @param ret the request
      */
     @Override
     protected void onPostExecute(T ret) {
@@ -40,25 +41,25 @@ public abstract class Communication<T> extends AsyncTask<Void, Void, T> {
     }
 
     /**
-     * TODO
+     * Signature of the actual execution method wich will be implemented by each type of reqeust
      *
-     * @return
+     * @return the request
      */
     protected abstract T communication();
 
     /**
-     * TODO
+     * Set the request's Callback
      *
-     * @param callback
+     * @param callback the setted Callback
      */
     protected void setCallback(ICallback<T> callback) {
         mCallback = callback;
     }
 
     /**
-     * TODO
+     * When an exception has occured
      *
-     * @param exception
+     * @param exception the Exception
      */
     protected void setException(Exception exception) {
         mException = exception;

@@ -1,8 +1,7 @@
 package ch.heigvd.gen.activities;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -23,15 +22,24 @@ import ch.heigvd.gen.interfaces.IJSONKeys;
 import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.models.Group;
 import ch.heigvd.gen.models.User;
-import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
 
+/**
+ * Activity providing group creation, it displays an EditText field  to type the group's name
+ * and an ArrayAdapter<User> filling a ListView with the users contact. To add contacts to the new
+ * group, the user has to tick the checkboxes next to their respective username
+ */
 public class GroupCreateActivity extends AppCompatActivity implements IRequests, IJSONKeys {
 
     ArrayAdapter adapter = null;
 
     private final static String TAG = GroupCreateActivity.class.getSimpleName();
 
+    /**
+     * Called when the activity is first created
+     *
+     * @param savedInstanceState a potential previous state saved
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,16 +63,17 @@ public class GroupCreateActivity extends AppCompatActivity implements IRequests,
     }
 
     /**
-     * TODO Méthode de création du groupe
+     * Execute an HTTP POST request to create the group
      *
-     * @param view
+     * @param view the current view
      */
-    public void createGroup(final View view){
+    public void createGroup(final View view) {
         final EditText text = (EditText) findViewById(R.id.group_name);
-        if(TextUtils.isEmpty(text.getText())) {
+        //verify if a group with the same name exists already
+        if (TextUtils.isEmpty(text.getText())) {
             text.setError("Group name is empty !");
             return;
-        } else if(Group.exists(text.getText().toString())){
+        } else if (Group.exists(text.getText().toString())) {
             text.setError("Group name already exists !");
             return;
         }
@@ -76,17 +85,17 @@ public class GroupCreateActivity extends AppCompatActivity implements IRequests,
             RequestPOST post = new RequestPOST(new ICallback<String>() {
                 @Override
                 public void success(String result) {
-                    try{
+                    try {
                         JSONObject json = new JSONObject(result);
 
                         SparseBooleanArray checked = listView.getCheckedItemPositions();
                         for (int i = 0; i < listView.getCount(); i++) {
                             if (checked.get(i)) {
-                                User user = (User)listView.getItemAtPosition(i);
+                                User user = (User) listView.getItemAtPosition(i);
                                 inviteContact(json.getInt("id"), user.getId());
                             }
                         }
-                    } catch (Exception ex){
+                    } catch (Exception ex) {
                         Log.e(TAG, ex.getMessage());
                     }
                     Log.i(TAG, "Success : " + result);
@@ -113,11 +122,12 @@ public class GroupCreateActivity extends AppCompatActivity implements IRequests,
     }
 
     /**
-     * TODO
+     * Adds a contact to the group
      *
-     * @param groupId
+     * @param groupId the group's id
+     * @param userId  the contact's id
      */
-    public void inviteContact(int groupId, int userId){
+    public void inviteContact(int groupId, int userId) {
         try {
             new RequestPUT(new ICallback<String>() {
                 @Override
@@ -142,10 +152,10 @@ public class GroupCreateActivity extends AppCompatActivity implements IRequests,
     }
 
     /**
-     * TODO
+     * Implements the back button behaviour to go back to the discussion activity
      *
-     * @param item
-     * @return
+     * @param item The menuItem that was clicked
+     * @return true if the menuItem was successfully handled
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

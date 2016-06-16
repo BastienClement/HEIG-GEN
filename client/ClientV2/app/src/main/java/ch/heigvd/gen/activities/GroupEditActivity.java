@@ -7,18 +7,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 import ch.heigvd.gen.R;
-import ch.heigvd.gen.adapters.ContactDiscussionAdapter;
 import ch.heigvd.gen.adapters.GroupMemberListAdapter;
 import ch.heigvd.gen.communications.RequestDELETE;
 import ch.heigvd.gen.interfaces.ICallback;
@@ -30,7 +25,8 @@ import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
- * TODO
+ * Activity allowing to display the group's current members and edit the group. The group creator
+ * can remove user's from it, other users can only leave it
  */
 public class GroupEditActivity extends AppCompatActivity implements IRequests, ICustomCallback {
 
@@ -41,8 +37,10 @@ public class GroupEditActivity extends AppCompatActivity implements IRequests, I
     Bundle b = null;
 
     /**
-     * TODO
-     * @param savedInstanceState
+     * Called when the activity is first created, uses the custom GroupAddMemberListAdapter
+     * to display the group member
+     *
+     * @param savedInstanceState a potential previous state saved
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +68,8 @@ public class GroupEditActivity extends AppCompatActivity implements IRequests, I
     }
 
     /**
-     * TODO
+     * Executes an HTTP DELETE request to delete the group, only available for the group creator
+     *
      */
     public void removeGroup() {
         try {
@@ -100,7 +99,7 @@ public class GroupEditActivity extends AppCompatActivity implements IRequests, I
     }
 
     /**
-     * TODO
+     * Update the current view
      */
     @Override
     public void update() {
@@ -122,6 +121,13 @@ public class GroupEditActivity extends AppCompatActivity implements IRequests, I
         return true;
     }
 
+    /**
+     * Implements the different behaviours for every menu item, the back button, the add member
+     * button and the exit group button
+     *
+     * @param item the item that was clicked
+     * @return true if the MenuItem was correctly handled
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -154,7 +160,7 @@ public class GroupEditActivity extends AppCompatActivity implements IRequests, I
     }
 
     /**
-     * TODO
+     * Executes an HTTP DELETE request to leave the group
      */
     private void exitGroup() {
         try {
@@ -180,6 +186,11 @@ public class GroupEditActivity extends AppCompatActivity implements IRequests, I
         }
     }
 
+    /**
+     * Determines if the users is the administrator of the group
+     *
+     * @return true if he is the administrator of the group
+     */
     private boolean isAdmin(){
         int id = Utils.getId(this);
         for(User user : Group.findById(b.getInt("group_id")).getMembers()){
@@ -191,8 +202,7 @@ public class GroupEditActivity extends AppCompatActivity implements IRequests, I
     }
 
     /**
-     * After a pause OR at startup check if the grouo is still a group, if not finish the activity
-     * TODO : Faire le check sur la liste des groups et pas faire une requête au serveur
+     * Method called on resume of the activity
      *
      */
     @Override

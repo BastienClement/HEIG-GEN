@@ -8,7 +8,9 @@ import ch.heigvd.gen.fragments.ContactFragment;
 import ch.heigvd.gen.fragments.GroupFragment;
 
 /**
- * Created by guillaume on 03.06.16.
+ * Adapter rendering the view of the Pager which allows the user to select the tab he wants to
+ * display in the MainActivity, the Contact tab or the Group tab, each tab is implemented by a
+ * Fragment
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private int tabsNumber;
