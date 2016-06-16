@@ -29,7 +29,7 @@ object PrivateMessages extends TableQuery(new PrivateMessages(_)) {
 		PrivateMessages returning PrivateMessages.map(_.id) into ((msg, id) => msg.copy(id = id)) += msg
 	}
 
-	def between(a: Int, b: Int) = {
+	def between(a: Int, b: Int): Query[PrivateMessages, PrivateMessage, Seq] = {
 		PrivateMessages.filter(m => (m.from === a && m.to === b) || (m.from === b && m.to === a))
 	}
 }

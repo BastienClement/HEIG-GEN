@@ -1,0 +1,69 @@
+@startuml
+class Contacts {
+	+a: Column[Int]
+	+b: Column[Int]
+	{static}+ofUser(user: Int)
+	{static}+ofUserById(user: Int)
+	{static}+bind(a: Int, b: Int)
+	{static}+unbind(a: Int, b: Int)
+	{static}+get(a: Int, b: Int)
+	{static}+bound(a: Int, b: Int)
+}
+
+class Groups {
+	+id: column[Int]
+	+title: column[String]
+	+last_message: column[DateTime]
+	{static}+insert(group: Group)
+	{static}+accessibleBy(user: Int)
+}
+
+class Members {
+	+user: column[Int]
+	+group: column[Int]
+	+date: column[DateTime]
+	+admin: column[Boolean]
+	{static}+forGroup(group: Int)
+	{static}+invite(user: Int, group: Int, admin: Boolean)
+	{static}+kick(user: Int, group: Int)
+}
+
+class Messages {
+	+id: column[Int]
+	+group: column[Int]
+	+user: column[Int]
+	+date: column[DateTime]
+	+text: column[String]
+}
+
+class PrivateMessages {
+	+id: column[Int]
+	+from: column[Int]
+	+to: column[Int]
+	+date: column[DateTime]
+	+text: column[String]
+	{static}+insert(msg: PrivateMessage)
+	{static}+between(a: Int, b: Int)
+}
+
+class UnreadFlags {
+	+user: column[Int]
+	+contact: column[Option[Int]]
+	+group: column[Option[Int]]
+	{static}+contactUnread(user: Int, contact: Rep[Int])
+	{static}+setContactUnread(user: Int, contact: Int)
+	{static}+setContactRead(user: Int, contact: Int)
+	{static}+groupUnread(user: Int, group: Rep[Int])
+	{static}+setGroupUnread(sender: Int, group: Int)
+	{static}+setGroupRead(user: Int, group: Int)
+}
+
+class Users {
+	+id: column[Int]
+	+name: column[String]
+	+pass: column[String]
+	+admin: column[Boolean]
+	{static}+findByUsername(username: String)
+	{static}+register(username: String, password: String, admin: Boolean)
+}
+@enduml

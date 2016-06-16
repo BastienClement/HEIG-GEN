@@ -1,0 +1,12 @@
+@startuml
+class PushService {
+	+register(user: Int, from_id: Option[Int]): Future[JsObject]
+	+send(user: Int, tpe: Symbol, data: (String, JsValueWrapper)*): Unit
+	+broadcast(group: Int, tpe: Symbol, data: (String, JsValueWrapper)*)
+	+broadcastFilter(group: Int, filter: BroadcastFilter, tpe: Symbol, data: (String, JsValueWrapper)*)
+}
+
+class ServerMeta {
+	+val boot: String
+}
+@enduml

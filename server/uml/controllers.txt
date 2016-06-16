@@ -1,0 +1,55 @@
+@startuml
+class AuthController implements ApiActionBuilder {
+	+POST /api/auth
+	+POST /api/register
+}
+class ContactsController implements ApiActionBuilder {
+	+GET /api/contacts
+	+GET /api/contacts/:id
+	+PUT /api/contacts/:id
+	+DELETE /api/contacts/:id
+}
+class DummyController implements ApiActionBuilder {
+	+GET /api/events
+	+GET /api/events/debug
+}
+class GroupsController implements ApiActionBuilder {
+	+GET /api/groups
+	+POST /api/groups
+	+GET /api/groups/:id
+	+DELETE /api/groups/:id
+	+PUT /api/groups/:id/read
+	+GET /api/groups/:id/messages
+	+POST /api/groups/:id/messages
+	+GET /api/groups/:id/members
+	+PUT /api/groups/:id/members/:user
+	+DELETE /api/groups/:id/members/:user
+	+PUT /api/groups/:id/members/:user/promote
+}
+class PrivateChatsController implements ApiActionBuilder {
+	+GET /api/contacts/:id/messages
+	+POST /api/contacts/:id/messages
+	+PUT /api/contacts/:id/read
+}
+class UserController implements ApiActionBuilder {
+	+GET /api/users
+	+GET /api/users/unknowns
+	+GET /api/users/self
+	+DELETE /api/users/self
+	+GET /api/users/:id
+}
+
+class ApiRequest {
+	+user: Int
+	+admin: Boolean
+	+request: Request[A]
+}
+
+ApiRequest -- AuthController
+ApiRequest -- ContactsController
+ApiRequest -- DummyController
+ApiRequest -- GroupsController
+ApiRequest -- PrivateChatsController
+ApiRequest -- UserController
+ApiRequest -- ApiActionBuilder : creates
+@enduml
