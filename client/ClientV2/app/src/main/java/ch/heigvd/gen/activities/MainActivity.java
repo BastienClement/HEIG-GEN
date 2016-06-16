@@ -1,14 +1,11 @@
 package ch.heigvd.gen.activities;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +18,6 @@ import ch.heigvd.gen.communications.RequestGET;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IRequests;
-import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.services.EventService;
 import ch.heigvd.gen.utilities.Utils;
 
@@ -45,11 +41,6 @@ public class MainActivity extends AppCompatActivity implements IRequests, ICusto
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.fragment_group)));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        //Text view for testing
-        TextView myTextView = (TextView) findViewById(R.id.result_textview);
-        myTextView.setText("LoggedIn");
-        myTextView.setVisibility(View.GONE);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
