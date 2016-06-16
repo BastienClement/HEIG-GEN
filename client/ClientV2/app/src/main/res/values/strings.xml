@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KEEP IN TOUCH</string>
+    <string name="app_name">Keep In Touch</string>
 
     <!-- LoginActivity -->
     <string name="radio_button_public_server">Public Server</string>
