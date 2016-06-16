@@ -86,6 +86,7 @@ public class GroupEditActivity extends AppCompatActivity implements IRequests, I
                     try {
                         Utils.showAlert(GroupEditActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                     } catch (JSONException e) {
+                        Utils.showAlert(GroupEditActivity.this, ex.getMessage());
                         Log.e(TAG, e.getMessage());
                     }
                     Log.e(TAG, ex.getMessage());
@@ -168,6 +169,7 @@ public class GroupEditActivity extends AppCompatActivity implements IRequests, I
                     try {
                         Utils.showAlert(GroupEditActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                     } catch (JSONException e) {
+                        Utils.showAlert(GroupEditActivity.this, ex.getMessage());
                         Log.e(TAG, e.getMessage());
                     }
                     Log.e(TAG, ex.getMessage());

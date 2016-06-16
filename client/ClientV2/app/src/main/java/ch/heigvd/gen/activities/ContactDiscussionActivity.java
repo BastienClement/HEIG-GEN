@@ -110,18 +110,17 @@ public class ContactDiscussionActivity extends AppCompatActivity implements IReq
                     try {
                         Utils.showAlert(ContactDiscussionActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                     } catch (JSONException e) {
+                        Utils.showAlert(ContactDiscussionActivity.this, ex.getMessage());
                         Log.e(TAG, e.getMessage());
                     }
                     Log.e(TAG, ex.getMessage());
                 }
             }, Utils.getToken(this), BASE_URL + GET_CONTACT + b.getInt("user_id") + GET_MESSAGES, content).execute();
         } catch (Exception ex) {
-            /**
-             * TODO Gérer les cas ou le servuer est déco
-             */
             try {
                 Utils.showAlert(this, new JSONObject(ex.getMessage()).getString("err"));
             } catch (JSONException e) {
+                Utils.showAlert(ContactDiscussionActivity.this, ex.getMessage());
                 Log.e(TAG, e.getMessage());
             }
             Log.e(TAG, ex.getMessage());

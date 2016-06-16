@@ -112,6 +112,7 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
                     try {
                         Utils.showAlert(GroupDiscussionActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                     } catch (JSONException e) {
+                        Utils.showAlert(GroupDiscussionActivity.this, ex.getMessage());
                         Log.e(TAG, e.getMessage());
                     }
                     Log.e(TAG, ex.getMessage());
@@ -152,6 +153,7 @@ public class GroupDiscussionActivity extends AppCompatActivity implements IReque
                     try {
                         Utils.showAlert(GroupDiscussionActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                     } catch (JSONException e) {
+                        Utils.showAlert(GroupDiscussionActivity.this, ex.getMessage());
                         Log.e(TAG, e.getMessage());
                     }
                     Log.e(TAG, ex.getMessage());

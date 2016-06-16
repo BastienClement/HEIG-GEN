@@ -79,6 +79,7 @@ public class GroupAddMemberActivity extends AppCompatActivity implements IReques
                     try {
                         Utils.showAlert(GroupAddMemberActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                     } catch (JSONException e) {
+                        Utils.showAlert(GroupAddMemberActivity.this, ex.getMessage());
                         Log.e(TAG, e.getMessage());
                     }
                     Log.e(TAG, ex.getMessage());

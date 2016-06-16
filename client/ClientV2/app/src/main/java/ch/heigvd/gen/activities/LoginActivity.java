@@ -24,17 +24,10 @@ import ch.heigvd.gen.utilities.Utils;
  * TODO : Mettre toutes les String dans les fichiers de ressources fait pour
  * TODO : Commenter/indenter/Trier imports, compléter la javadoc
  * TODO : Mettre tous les éléments json et les requêtes dans IJSONKEYS et IREQUESTS
- * TODO : Faire des logs un peu mieux
- *
- * TODO : Faire que les dialogues dans une discussion soient joli + afficher l'heure du message et le jour et le nom de l'utilisateur qui a envoyé pour les discussions de groupe
- *
+ * 
  * TODO : Trier les utilisateurs par de date creation si aucun message
  *
- * TODO : Faire fonctionner les erreurs quand on perd la connection avec le server
- *
- * TODO : Message read unread faire dans les events pour mettre à jour dans les 2 clients en cours si on li un message non lu
- *
- * TODO : faire les requêtes pour charger les membres et les messages d'un group pour que ça soit fait une seule fois dans les events
+ * TODO : Modifier les requêtes pour charger les membres et les messages d'un group pour que ça soit fait une seule fois dans les events
  *
  * TODO : Faire les report/blocage d'utilisateur et report de message dans groupe
  */
@@ -96,6 +89,7 @@ public class LoginActivity extends AppCompatActivity implements IJSONKeys, IRequ
                         try {
                             Utils.showAlert(LoginActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                         } catch (JSONException e) {
+                            Utils.showAlert(LoginActivity.this, ex.getMessage());
                             Log.e(TAG, e.getMessage());
                         }
                         Log.e(TAG, ex.getMessage());

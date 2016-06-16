@@ -94,6 +94,7 @@ public class GroupMemberListAdapter extends ArrayAdapter<User> implements IReque
                             try {
                                 Utils.showAlert(a, new JSONObject(ex.getMessage()).getString("err"));
                             } catch (JSONException e) {
+                                Utils.showAlert(a, ex.getMessage());
                                 Log.e(TAG, e.getMessage());
                             }
                             Log.e(TAG, ex.getMessage());

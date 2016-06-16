@@ -2,6 +2,9 @@ package ch.heigvd.gen.communications;
 
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -12,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import ch.heigvd.gen.interfaces.ICallback;
+import ch.heigvd.gen.utilities.Utils;
 
 /**
  * TODO
@@ -58,6 +62,7 @@ public class RequestPOST extends Communication<String> {
             connection.setRequestProperty("charset", "utf-8");
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setRequestProperty("X-Auth-Token", token);
+            connection.setConnectTimeout(2000);
             connection.setUseCaches(false);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
             bw.write(content);

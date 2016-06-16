@@ -82,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity implements IJSONKeys, IR
                         try {
                             Utils.showAlert(RegisterActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                         } catch (JSONException e) {
+                            Utils.showAlert(RegisterActivity.this, ex.getMessage());
                             Log.e(TAG, e.getMessage());
                         }
                         Log.e(TAG, ex.getMessage());

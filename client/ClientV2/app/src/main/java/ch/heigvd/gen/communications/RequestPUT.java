@@ -50,6 +50,7 @@ public class RequestPUT extends Communication<String> {
             connection.setRequestMethod("PUT");
             connection.setRequestProperty("X-Auth-Token", token);
             connection.setRequestProperty("connection", "close");
+            connection.setConnectTimeout(2000);
             int status = connection.getResponseCode();
             InputStream is;
             Log.i(TAG, "HTTP status : " + String.valueOf(status));

@@ -74,6 +74,7 @@ public class ContactAddActivity extends AppCompatActivity implements IRequests{
                             try {
                                 Utils.showAlert(ContactAddActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                             } catch (JSONException e) {
+                                Utils.showAlert(ContactAddActivity.this, ex.getMessage());
                                 Log.e(TAG, e.getMessage());
                             }
                             Log.e(TAG, ex.getMessage());
@@ -136,6 +137,7 @@ public class ContactAddActivity extends AppCompatActivity implements IRequests{
                     try {
                         Utils.showAlert(ContactAddActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                     } catch (JSONException e) {
+                        Utils.showAlert(ContactAddActivity.this, ex.getMessage());
                         Log.e(TAG, e.getMessage());
                     }
                     Log.e(TAG, ex.getMessage());

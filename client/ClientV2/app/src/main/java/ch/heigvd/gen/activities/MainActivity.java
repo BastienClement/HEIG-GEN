@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements IRequests, ICusto
                     try {
                         Utils.showAlert(MainActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                     } catch (JSONException e) {
+                        Utils.showAlert(MainActivity.this, ex.getMessage());
                         Log.e(TAG, e.getMessage());
                     }
                     Log.e(TAG, ex.getMessage());

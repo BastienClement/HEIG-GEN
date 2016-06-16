@@ -2,6 +2,9 @@ package ch.heigvd.gen.communications;
 
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import ch.heigvd.gen.interfaces.ICallback;
+import ch.heigvd.gen.utilities.Utils;
 
 public class RequestDELETE extends Communication<String> {
 
@@ -35,6 +39,7 @@ public class RequestDELETE extends Communication<String> {
             connection.setRequestMethod("DELETE");
             connection.setRequestProperty("X-Auth-Token", token);
             connection.setRequestProperty("connection", "close");
+            connection.setConnectTimeout(2000);
             int status = connection.getResponseCode();
             InputStream is;
             Log.i(TAG, "HTTP status : " + String.valueOf(status));

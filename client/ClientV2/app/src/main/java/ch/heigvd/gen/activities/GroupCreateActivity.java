@@ -97,6 +97,7 @@ public class GroupCreateActivity extends AppCompatActivity implements IRequests,
                     try {
                         Utils.showAlert(GroupCreateActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                     } catch (JSONException e) {
+                        Utils.showAlert(GroupCreateActivity.this, ex.getMessage());
                         Log.e(TAG, e.getMessage());
                     }
                     Log.e(TAG, ex.getMessage());
@@ -129,6 +130,7 @@ public class GroupCreateActivity extends AppCompatActivity implements IRequests,
                     try {
                         Utils.showAlert(GroupCreateActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                     } catch (JSONException e) {
+                        Utils.showAlert(GroupCreateActivity.this, ex.getMessage());
                         Log.e(TAG, e.getMessage());
                     }
                     Log.e(TAG, ex.getMessage());

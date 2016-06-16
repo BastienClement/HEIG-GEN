@@ -68,6 +68,7 @@ public class ContactEditActivity extends AppCompatActivity implements IRequests 
                     try {
                         Utils.showAlert(ContactEditActivity.this, new JSONObject(ex.getMessage()).getString("err"));
                     } catch (JSONException e) {
+                        Utils.showAlert(ContactEditActivity.this, ex.getMessage());
                         Log.e(TAG, e.getMessage());
                     }
                     Log.e(TAG, ex.getMessage());
