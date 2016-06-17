@@ -4,6 +4,10 @@ import models.mysql._
 import scala.concurrent.{ExecutionContext, Future}
 import services.PushService
 
+/**
+  * A contact associates two users together.
+  * The ordering is always lower id first, then higher id.
+  */
 case class Contact(lower: Int, upper: Int)
 
 class Contacts(tag: Tag) extends Table[Contact](tag, "contacts") {

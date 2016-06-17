@@ -24,6 +24,4 @@ class Messages(tag: Tag) extends Table[Message](tag, "messages") {
 	def * = (id, group, user, date, text) <> (Message.tupled, Message.unapply)
 }
 
-object Messages extends TableQuery(new Messages(_)) {
-
-}
+object Messages extends TableQuery(new Messages(_))

@@ -52,6 +52,9 @@ class PrivateChatsController @Inject()(implicit val ec: ExecutionContext, val co
 		}
 	}
 
+	/**
+	  * Marks a private conversation as read.
+	  */
 	def read(user: Int) = UserAction { req =>
 		UnreadFlags.setContactRead(req.user, user)
 		NoContent

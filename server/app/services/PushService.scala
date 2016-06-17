@@ -10,7 +10,7 @@ import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future, Promise}
 
 /**
-  * Handle HTTP long-polling notifications
+  * Handles HTTP long-polling notifications.
   */
 @Singleton
 class PushService {

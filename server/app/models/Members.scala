@@ -18,10 +18,12 @@ class Members(tag: Tag) extends Table[Member](tag, "members") {
 }
 
 object Members extends TableQuery(new Members(_)) {
+	/** Lists members for group */
 	def forGroup(group: Int): Query[Members, Member, Seq] = {
 		Members.filter(m => m.group === group)
 	}
 
+	/** Invites an user to a group */
 	def invite(user: Int, group: Int, admin: Boolean = false)(implicit push: PushService, ec: ExecutionContext): Future[Int] = {
 		val member = Member(user, group, DateTime.now, admin)
 		(Members += member).run.andThen {
@@ -33,6 +35,7 @@ object Members extends TableQuery(new Members(_)) {
 		}
 	}
 
+	/** Kicks an user from a group */
 	def kick(user: Int, group: Int)(implicit push: PushService, ec: ExecutionContext): Future[Int] = {
 		Members.filter { m =>
 			m.user === user && m.group === group && m.admin === false
