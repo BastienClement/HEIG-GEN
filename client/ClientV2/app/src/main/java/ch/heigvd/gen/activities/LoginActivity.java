@@ -18,19 +18,6 @@ import ch.heigvd.gen.interfaces.IRequests;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
- * TODO
- * TODO : Mettre toutes les String dans les fichiers de ressources fait pour
- * TODO : Commenter/indenter/Trier imports, compléter la javadoc
- * TODO : Mettre tous les éléments json et les requêtes dans IJSONKEYS et IREQUESTS
- * <p/>
- * TODO : Trier les utilisateurs par de date creation si aucun message
- * <p/>
- * TODO : Modifier les requêtes pour charger les membres et les messages d'un group pour que ça soit fait une seule fois dans les events
- * <p/>
- * TODO : Faire les report/blocage d'utilisateur et report de message dans groupe
- */
-
-/**
  * First activity called at startup of our application, provides the login and account creation
  * functionnalities
  *

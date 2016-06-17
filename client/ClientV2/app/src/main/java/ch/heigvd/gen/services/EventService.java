@@ -25,6 +25,7 @@ import ch.heigvd.gen.utilities.Utils;
 
 /**
  * Event service Manager
+ * Manages the events from the server
  */
 public class EventService implements IRequests, IJSONKeys {
 
@@ -40,23 +41,45 @@ public class EventService implements IRequests, IJSONKeys {
 
     private Integer from = null;
 
+    /**
+     * Private constructor for singleton
+     */
     private EventService(){
 
     }
+
+    /**
+     * Get the singleton instance
+     *
+     * @return the instance of the EventService
+     */
     public static synchronized EventService getInstance() {
         if(mInstance == null)
             mInstance = new EventService();
         return mInstance;
     }
 
+    /**
+     * Set the current activity which will receive the updates
+     *
+     * @param callbackActivity the current activity
+     */
     public void setActivity(ICustomCallback callbackActivity){
         currentCallbackActivity = callbackActivity;
     }
 
+    /**
+     * Remove the current activity
+     */
     public void removeActivity(){
         currentCallbackActivity = null;
     }
 
+    /**
+     * Start the event handler thread
+     *
+     * @param activity the current activity
+     */
     public void start(Activity activity){
         Log.i(TAG, "Starting event service thread !");
         token = Utils.getToken(activity);
@@ -108,16 +131,18 @@ public class EventService implements IRequests, IJSONKeys {
         thread.start();
     }
 
+    /**
+     * Handle every type of events
+     *
+     * @param jsonEvent the event received from the server
+     * @throws JSONException
+     */
     private void handleEvent(JSONObject jsonEvent) throws JSONException {
         String type = jsonEvent.getString("type");
         switch (type) {
             case "PRIVATE_MESSAGES_UNREAD":
-                //User.findById(jsonEvent.getInt("contact")).setUnread(false);
-                //updateCallbackActivity();
                 break;
             case "PRIVATE_MESSAGES_READ":
-                //User.findById(jsonEvent.getInt("contact")).setUnread(true);
-                //updateCallbackActivity();
                 break;
             case "GROUP_USER_KICKED":
                 removeGroupMember(jsonEvent);
@@ -132,9 +157,6 @@ public class EventService implements IRequests, IJSONKeys {
                 break;
             case "GROUP_USER_INVITED":
                 // Add group
-                /**
-                 * TODO : Only update the new user
-                 */
                 addGroup(jsonEvent);
                 break;
             case "CONTACT_REMOVED":
@@ -159,6 +181,12 @@ public class EventService implements IRequests, IJSONKeys {
         }
     }
 
+    /**
+     * Remove a member from a group
+     *
+     * @param jsonEvent the event received from the server
+     * @throws JSONException
+     */
     private void removeGroupMember(final JSONObject jsonEvent) throws JSONException{
         try {
                 new RequestGET(new ICallback<String>() {
@@ -191,11 +219,23 @@ public class EventService implements IRequests, IJSONKeys {
         }
     }
 
+    /**
+     * Remove a group
+     *
+     * @param jsonEvent the event received from the server
+     * @throws JSONException
+     */
     private void removeGroup(JSONObject jsonEvent) throws JSONException {
         Group.deleteById(jsonEvent.getInt("group"));
         updateCallbackActivity();
     }
 
+    /**
+     * Load the new messages in a group
+     *
+     * @param jsonEvent the event received from the server
+     * @throws JSONException
+     */
     private void loadNewGroupMessages(JSONObject jsonEvent) throws JSONException {
         final int id = jsonEvent.getInt("group");
         final List<Message> messages = Group.findById(id).getMessages();
@@ -232,6 +272,11 @@ public class EventService implements IRequests, IJSONKeys {
                 (messages.size() > 0 ? ("?from=" + messages.get(messages.size() - 1).getId()) : "")).execute();
     }
 
+    /**
+     * Add a new group
+     *
+     * @param jsonEvent the event received from the server
+     */
     private void addGroup(JSONObject jsonEvent) {
         try {
             new RequestGET(new ICallback<String>() {
@@ -268,6 +313,12 @@ public class EventService implements IRequests, IJSONKeys {
         }
     }
 
+    /**
+     * Load member in a group
+     * @param group that needs to load users
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     private void loadMembers(final Group group) throws ExecutionException, InterruptedException {
         new RequestGET(new ICallback<String>() {
             @Override
@@ -316,8 +367,11 @@ public class EventService implements IRequests, IJSONKeys {
     }
 
     /**
-     * TODO
+     * Load messages in a group
      *
+     * @param group the group that needs to load messages
+     * @throws ExecutionException
+     * @throws InterruptedException
      */
     private void loadGroupMessages(final Group group) throws ExecutionException, InterruptedException {
         new RequestGET(new ICallback<String>() {
@@ -346,11 +400,23 @@ public class EventService implements IRequests, IJSONKeys {
         }, token, BASE_URL + GET_GROUP + group.getId() + GET_MESSAGES).execute();
     }
 
+    /**
+     * Remove a contact
+     *
+     * @param jsonEvent the event received from the server
+     * @throws JSONException
+     */
     private void removeContact(JSONObject jsonEvent) throws JSONException {
         User.deleteById(jsonEvent.getInt("contact"));
         updateCallbackActivity();
     }
 
+    /**
+     * Add a new contact
+     *
+     * @param jsonEvent the event received from the server
+     * @throws JSONException
+     */
     private void addContact(JSONObject jsonEvent) throws JSONException {
         try {
             new RequestGET(new ICallback<String>() {
@@ -379,6 +445,12 @@ public class EventService implements IRequests, IJSONKeys {
         }
     }
 
+    /**
+     * Load the new messages from a contact
+     *
+     * @param jsonEvent the event received from the server
+     * @throws JSONException
+     */
     private void loadNewContactMessages(JSONObject jsonEvent) throws JSONException {
         final int id = jsonEvent.getInt("contact");
         final List<Message> messages = User.findById(id).getMessages();
@@ -415,12 +487,18 @@ public class EventService implements IRequests, IJSONKeys {
                 (messages.size() > 0 ? ("?from=" + messages.get(messages.size() - 1).getId()) : "")).execute();
     }
 
+    /**
+     * Signal the current activity that changes have occured
+     */
     private void updateCallbackActivity() {
         if (currentCallbackActivity != null) {
             currentCallbackActivity.update();
         }
     }
 
+    /**
+     * Stop the event service
+     */
     public void stop(){
         thread.interrupt();
     }
