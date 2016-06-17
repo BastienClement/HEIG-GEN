@@ -1,0 +1,79 @@
+#%RAML 0.8
+---
+title: HEIG-GEN
+baseUri: http://localhost:9000/api
+
+/auth:
+    get:
+        description: Authenticates the user
+/register:
+    get:
+        description: Registers a new user
+
+/users:
+    get:
+        description: The list of all users
+    /unknowns:
+        get:
+            description: The list of users unknowns to the client
+    /self:
+        get:
+            description: The user data of the client
+        delete:
+            description: Deletes the client's account
+    /{id}:
+        get:
+            description: Data about a specific user
+
+/contacts:
+    get:
+        description: The list of every contact of the client
+    /{user}:
+        get:
+            description: Information about a specific contact
+        put:
+            description: Creates a new contact
+        delete:
+            description: Removes the user from the contacts list
+        /messages:
+            get:
+                description: The list of messages from this contact
+            post:
+                description: Sends a message to this contact
+        /read:
+            put:
+                description: Marks the contact as read by the client
+
+/groups:
+    get:
+        description: The list of every group in which the client is a member
+    post:
+        description: Creates a new group with the client as its admin
+    /{id}:
+        get:
+            description: Information about the group with the given id
+        delete:
+            description: Deletes the group with the given id
+        /read:
+            put:
+                description: Marks the group as read by the client
+        /messages:
+            get:
+                description: The list of messages in the group
+            post:
+                description: Posts a new message in the group
+        /members:
+            get:
+                description: The list of users in the group
+            /{user}:
+                put:
+                    description: Invites a new user to the group
+                delete:
+                    description: Removes the user from the group
+                /promote:
+                    put:
+                        description: Set the user as the new group admin
+
+/events:
+    get:
+        description: Foo bar baz
