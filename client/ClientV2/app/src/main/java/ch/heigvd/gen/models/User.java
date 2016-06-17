@@ -1,13 +1,12 @@
 package ch.heigvd.gen.models;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * TODO
+ * Model reprensenting an user
  */
 public class User implements Comparable<User> {
 
@@ -21,12 +20,12 @@ public class User implements Comparable<User> {
     public static List<User> users = new ArrayList<>();
 
     /**
-     * TODO
+     * User constructor
      *
-     * @param id
-     * @param username
-     * @param admin
-     * @param unread
+     * @param id the user's id
+     * @param username the user's username
+     * @param admin true if the user is an administrator
+     * @param unread true if there are unread messages in the user's discussion
      */
     public User(int id, String username, boolean admin, boolean unread) {
         this.id = id;
@@ -37,119 +36,103 @@ public class User implements Comparable<User> {
     }
 
     /**
-     * TODO
+     * Find if there are unread messages
      *
-     * @return
+     * @return true if there are unread messages
      */
     public boolean isUnread() {
         return unread;
     }
 
     /**
-     * TODO
+     * Set if there are unread messages
      *
-     * @param unread
+     * @param unread rue if there are unread messages
      */
     public void setUnread(boolean unread) {
         this.unread = unread;
     }
 
     /**
-     * TODO
+     * Get the list of messages
      *
-     * @return
+     * @return the messages
      */
     public List<Message> getMessages() {
         return messages;
     }
 
     /**
-     * TODO
+     * Adds a message to the user's message list
      *
-     * @param message
+     * @param message the message to add
      */
     public void addMessage(Message message) {
         messages.add(message);
     }
 
     /**
-     * TODO
+     * Get the unread messages
      *
-     * @return
+     * @return the messages
      */
     public int getUnreadMessages() {
         return unreadMessages;
     }
 
     /**
-     * TODO
+     *  Set the unread messages
      *
-     * @param unreadMessages
+     * @param unreadMessages the messages
      */
     public void setUnreadMessages(int unreadMessages) {
         this.unreadMessages = unreadMessages;
     }
 
-    /**
-     * TODO
-     *
-     * @return
-     */
+
     public int getId() {
         return id;
     }
 
-    /**
-     * TODO
-     *
-     * @return
-     */
+
     public String getUsername() {
         return username;
     }
 
-    /**
-     * TODO
-     *
-     * @return
-     */
+
     public boolean isAdmin() {
         return admin;
     }
 
     /**
-     * TODO
+     * Used to filter and search through usernames
      *
-     * @param s
-     * @return
+     * @param s a string to search
+     * @return true if the username contains the String
      */
     public boolean contains(String s) {
         return s == null || s.isEmpty() || username.toLowerCase().startsWith(s.toLowerCase());
     }
 
     /**
-     * TODO
+     * Compare user names
      *
-     * @param u
-     * @return
+     * @param u the user to compare usernames with
+     * @return 0 if they are the same
      */
     public int compareTo(User u) {
         return username.compareTo(u.getUsername());
     }
 
-    /**
-     * TODO
-     *
-     * @return
-     */
+
     public String toString(){
         return username;
     }
 
     /**
-     * TODO
+     * Delete an User
      *
-     * @param user_id
+     * @param user_id the user's id
      */
     public static void deleteById(int user_id) {
         for(User user : users){
@@ -161,10 +144,10 @@ public class User implements Comparable<User> {
     }
 
     /**
-     * TODO
+     * Find an User
      *
-     * @param user_id
-     * @return
+     * @param user_id the user's id
+     * @return the User found
      */
     public static User findById(int user_id) {
         for(User user : users){
@@ -175,6 +158,9 @@ public class User implements Comparable<User> {
         return null;
     }
 
+    /**
+     * Sort users
+     */
     public static void sortUsers(){
         Collections.sort(users, new Comparator<User>() {
             @Override
