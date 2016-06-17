@@ -26,7 +26,7 @@ import ch.heigvd.gen.utilities.Utils;
 
 /**
  * Activity providing group creation, it displays an EditText field  to type the group's name
- * and an ArrayAdapter<User> filling a ListView with the users contact. To add contacts to the new
+ * and an ArrayAdapter of Users filling a ListView with the users contact. To add contacts to the new
  * group, the user has to tick the checkboxes next to their respective username
  */
 public class GroupCreateActivity extends AppCompatActivity implements IRequests, IJSONKeys {

@@ -10,15 +10,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * TODO
+ * Utilitaries class for the messaging application
  */
 public final class Utils {
 
     /**
-     * TODO
+     * Get the authentication token for the current user
      *
-     * @param a
-     * @return
+     * @param a the current activity
+     * @return the Token
      */
     public static String getToken(final Activity a) {
         SharedPreferences prefs = a.getSharedPreferences("Authentication", Context.MODE_PRIVATE);
@@ -26,7 +26,7 @@ public final class Utils {
     }
 
     /**
-     * TODO
+     * Set the authentication token for the current user
      *
      * @param a
      * @param token
@@ -39,10 +39,10 @@ public final class Utils {
     }
 
     /**
-     * TODO
+     * Get the id of the current user
      *
-     * @param a
-     * @return
+     * @param a the current activity
+     * @return the id
      */
     public static int getId(final Activity a) {
         SharedPreferences prefs = a.getSharedPreferences("Authentication", Context.MODE_PRIVATE);
@@ -50,10 +50,10 @@ public final class Utils {
     }
 
     /**
-     * TODO
+     * Set the id of the current user
      *
-     * @param a
-     * @param id
+     * @param a  the current activity
+     * @param id the id
      */
     public static void setId(final Activity a, final int id) {
         SharedPreferences prefs = a.getSharedPreferences("Authentication", Context.MODE_PRIVATE);
@@ -63,10 +63,10 @@ public final class Utils {
     }
 
     /**
-     * TODO
+     * Get the user's current shared preferencies
      *
-     * @param a
-     * @return
+     * @param a the current activity
+     * @return the User's preferencies as a String
      */
     public static String getUser(final Activity a) {
         SharedPreferences prefs = a.getSharedPreferences("Authentication", Context.MODE_PRIVATE);
@@ -74,10 +74,10 @@ public final class Utils {
     }
 
     /**
-     * TODO
+     * Set the user's current shared preferencies
      *
-     * @param a
-     * @param user
+     * @param a    the current activity
+     * @param user the User's preferencies as a String
      */
     public static void setUser(final Activity a, final String user) {
         SharedPreferences prefs = a.getSharedPreferences("Authentication", Context.MODE_PRIVATE);
@@ -87,12 +87,12 @@ public final class Utils {
     }
 
     /**
-     * TODO
+     * Generates a JSON object
      *
-     * @param keys
-     * @param values
-     * @return
-     * @throws Exception
+     * @param keys   an array of the keys
+     * @param values an array of the values
+     * @return The JSON Object as a String
+     * @throws Exception a JSON exception
      */
     public static String createJSONObject(String[] keys, String[] values) throws Exception {
         if (keys.length != values.length) {
@@ -112,12 +112,12 @@ public final class Utils {
     }
 
     /**
-     * TODO
+     * Display an error message
      *
-     * @param context
-     * @param message
+     * @param context the current context
+     * @param message the message to display
      */
-    public static void showAlert(Context context, String message){
+    public static void showAlert(Context context, String message) {
         new AlertDialog.Builder(context)
                 .setTitle("Error")
                 .setMessage(message)

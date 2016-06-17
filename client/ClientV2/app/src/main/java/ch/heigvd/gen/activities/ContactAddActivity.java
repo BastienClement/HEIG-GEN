@@ -34,7 +34,7 @@ public class ContactAddActivity extends AppCompatActivity implements IRequests {
     ArrayAdapter adapter = null;
 
     /**
-     * Called when the activity is first created, uses a ListView and an ArrayAdapter<User> to
+     * Called when the activity is first created, uses a ListView and an ArrayAdapter of Users to
      * display the list of every user registered on the server. A search view allows the user to
      * search for a specific user in that list.
      *

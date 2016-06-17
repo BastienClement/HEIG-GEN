@@ -10,12 +10,10 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import ch.heigvd.gen.communications.RequestGET;
-import ch.heigvd.gen.communications.RequestPOST;
 import ch.heigvd.gen.interfaces.ICallback;
 import ch.heigvd.gen.interfaces.ICustomCallback;
 import ch.heigvd.gen.interfaces.IJSONKeys;
@@ -26,7 +24,7 @@ import ch.heigvd.gen.models.User;
 import ch.heigvd.gen.utilities.Utils;
 
 /**
- * Created by antoi on 01.06.2016.
+ * Event service Manager
  */
 public class EventService implements IRequests, IJSONKeys {
 
